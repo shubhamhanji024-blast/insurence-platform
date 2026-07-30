@@ -1,0 +1,5 @@
+{
+  "buildCommand": "next build --webpack",
+  "devCommand": "next dev --webpack",
+  "framework": "nextjs"
+}

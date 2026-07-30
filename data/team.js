@@ -1,0 +1,61 @@
+export const team = [
+  {
+    name: 'Rajesh Kumar',
+    role: 'Founder & CEO',
+    image: '👤',
+    bio: 'With over 15 years of experience in the insurance industry, Rajesh founded GrowthNest to empower aspiring insurance advisors across India.',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Priya Sharma',
+    role: 'Chief Operating Officer',
+    image: '👤',
+    bio: 'Priya leads operations with a focus on scaling training programs and partner relationships across 50+ cities.',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Amit Patel',
+    role: 'Head of Training',
+    image: '👤',
+    bio: 'A certified financial planner, Amit designs comprehensive training modules that have helped 5000+ advisors succeed.',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Sneha Reddy',
+    role: 'Head of Technology',
+    image: '👤',
+    bio: 'Sneha drives digital innovation, building tools and platforms that make insurance advisory smarter and more efficient.',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Vikram Singh',
+    role: 'VP - Business Development',
+    image: '👤',
+    bio: 'Vikram manages relationships with 20+ insurance partners and leads expansion into new markets.',
+    linkedin: '#',
+    twitter: '#',
+  },
+  {
+    name: 'Anita Desai',
+    role: 'Head of HR & Recruitment',
+    image: '👤',
+    bio: 'Anita oversees talent acquisition and advisor onboarding, ensuring every new member feels supported from day one.',
+    linkedin: '#',
+    twitter: '#',
+  },
+];
+
+export const milestones = [
+  { year: '2014', title: 'Founded', description: 'GrowthNest was established in Mumbai with a vision to transform insurance advisory in India.' },
+  { year: '2016', title: 'First 500 Advisors', description: 'Reached 500 active insurance advisors across Maharashtra and Gujarat.' },
+  { year: '2018', title: 'Digital Platform Launch', description: 'Launched our online training portal and lead management system.' },
+  { year: '2019', title: '10+ Insurance Partners', description: 'Partnered with major insurance companies including LIC, HDFC Life, and ICICI Prudential.' },
+  { year: '2020', title: 'Pan-India Expansion', description: 'Expanded operations to 15 states with 2000+ advisors.' },
+  { year: '2022', title: '₹25 Cr+ Business', description: 'Crossed ₹25 crore in total business generated through our network.' },
+  { year: '2024', title: '5000+ Advisors', description: 'Grew to 5000+ advisors with 20+ insurance partners.' },
+  { year: '2026', title: 'Vision 2030', description: 'Targeting 25,000 advisors and ₹500 Cr business by 2030.' },
+];
