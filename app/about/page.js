@@ -1,110 +1,140 @@
 'use client';
-import { team, milestones } from '@/data/team';
 import Link from 'next/link';
+import { team, milestones } from '@/data/team';
 
 export default function AboutPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="about-hero">
-        <div className="about-hero-bg" />
+      {/* Page Hero */}
+      <section className="page-hero">
         <div className="container">
-          <div className="about-hero-grid">
-            <div>
-              <span className="label">Our Story</span>
-              <h1 style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                Democratizing <span className="text-gradient">Insurance Advisory</span> in India
-              </h1>
-              <p style={{ fontSize: '1.05rem', marginBottom: '1.5rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-                GrowthNest was founded in 2014 with one belief — that anyone with dedication and the right training can build a rewarding career in insurance advisory, regardless of their background.
-              </p>
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <Link href="/careers" className="btn btn-primary">🚀 Join Our Team</Link>
-                <Link href="/contact" className="btn btn-secondary">Contact Us</Link>
-              </div>
-            </div>
-            <div className="about-stats-card glass-card">
-              {[
-                { num: '5,000+', label: 'Active Advisors', icon: '👥' },
-                { num: '20+', label: 'Insurance Partners', icon: '🤝' },
-                { num: '15 States', label: 'Pan-India Presence', icon: '🗺️' },
-                { num: '₹50 Cr+', label: 'Business Generated', icon: '💰' },
-                { num: '98%', label: 'Advisor Satisfaction', icon: '⭐' },
-                { num: '2014', label: 'Year Founded', icon: '📅' },
-              ].map((s, i) => (
-                <div key={i} className="about-stat">
-                  <div className="about-stat-icon">{s.icon}</div>
-                  <div>
-                    <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.25rem', background: 'var(--gradient-text)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{s.num}</div>
-                    <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{s.label}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <span className="hero-badge">About GrowthNest</span>
+          <h1>Financial clarity for a better tomorrow</h1>
+          <p>
+            We help individuals and families make smarter, more confident financial decisions through personalized planning, trusted guidance, and modern solutions.
+          </p>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+      <section className="section bg-gray-50">
         <div className="container">
-          <div className="grid grid-2">
-            <div className="glass-card card-hover-glow" style={{ padding: '2.5rem', borderLeft: '4px solid var(--primary)' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🎯</div>
-              <h3 style={{ marginBottom: '0.75rem' }}>Our Mission</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '0.95rem' }}>
-                To empower every Indian with the opportunity to become a financial advisor — providing free world-class training, digital tools, and a trusted network of insurance partners to build unlimited income.
+          <div className="grid grid-2" style={{ gap: '2rem' }}>
+            <div className="glass-card" style={{ padding: '2.5rem', borderLeft: '4px solid var(--primary-700)' }}>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary-700)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+              </div>
+              <h3 style={{ marginBottom: '0.75rem', color: 'var(--primary-900)' }}>Our Mission</h3>
+              <p style={{ color: 'var(--gray-600)', lineHeight: 1.8, fontSize: '0.95rem', margin: 0 }}>
+                To empower every individual and business with accessible, transparent, and personalized financial planning — helping them build lasting wealth and secure their financial future.
               </p>
             </div>
-            <div className="glass-card card-hover-glow" style={{ padding: '2.5rem', borderLeft: '4px solid var(--secondary)' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🌟</div>
-              <h3 style={{ marginBottom: '0.75rem' }}>Our Vision</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontSize: '0.95rem' }}>
-                To create 25,000 financially independent insurance advisors across India by 2030, generating ₹500 Crore in business and ensuring every Indian family has adequate insurance coverage.
+            <div className="glass-card" style={{ padding: '2.5rem', borderLeft: '4px solid var(--accent-500)' }}>
+              <div style={{ width: 48, height: 48, borderRadius: 12, background: '#fef9c3', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#854d0e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+              </div>
+              <h3 style={{ marginBottom: '0.75rem', color: 'var(--primary-900)' }}>Our Vision</h3>
+              <p style={{ color: 'var(--gray-600)', lineHeight: 1.8, fontSize: '0.95rem', margin: 0 }}>
+                To become India&apos;s most trusted financial advisory platform, known for customer-first principles, transparent recommendations, and innovative digital wealth management solutions.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Timeline */}
+      {/* Story / Split */}
       <section className="section">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">Our Journey</span>
-            <h2>10 Years of <span className="text-gradient">Impact</span></h2>
-          </div>
-          <div className="timeline">
-            {milestones.map((m, i) => (
-              <div key={i} className={`timeline-item ${i % 2 === 0 ? 'left' : 'right'}`}>
-                <div className="timeline-dot">{m.year}</div>
-                <div className="timeline-card glass-card card-hover-glow">
-                  <h4 style={{ marginBottom: '0.4rem', fontSize: '1rem' }}>{m.title}</h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.6 }}>{m.description}</p>
-                </div>
+          <div className="split-grid">
+            <div className="split-image">
+              <img
+                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="GrowthNest advisory meeting"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <span className="section-label">Our Story</span>
+              <h2 className="section-title" style={{ textAlign: 'left' }}>
+                Built on Trust, Transparency &amp; Expertise
+              </h2>
+              <p style={{ color: 'var(--gray-600)', marginBottom: '1rem', lineHeight: 1.7 }}>
+                Founded with a mission to eliminate confusion in financial planning, GrowthNest has grown into a trusted financial services platform serving thousands of clients across India.
+              </p>
+              <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', lineHeight: 1.7 }}>
+                We combine deep domain expertise in investment planning, tax strategy, and wealth management with modern digital tools to deliver an unmatched client experience.
+              </p>
+
+              <div className="grid grid-2" style={{ gap: '1rem', marginBottom: '2rem' }}>
+                {[
+                  { num: '10K+', lbl: 'Clients Supported' },
+                  { num: '₹100Cr+', lbl: 'Financial Goals Planned' },
+                  { num: '95%', lbl: 'Customer Satisfaction' },
+                  { num: '10+', lbl: 'Years of Expertise' },
+                ].map((s, i) => (
+                  <div key={i} style={{ padding: '1rem', background: 'var(--gray-50)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--gray-200)' }}>
+                    <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 700, color: 'var(--primary-700)' }}>{s.num}</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.2rem' }}>{s.lbl}</div>
+                  </div>
+                ))}
               </div>
-            ))}
+
+              <Link href="/contact" className="btn btn-primary">Talk to an Advisor</Link>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Team */}
-      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
+      {/* Leadership Team */}
+      <section className="section bg-gray-50">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">The People Behind GrowthNest</span>
-            <h2>Meet Our <span className="text-gradient">Leadership Team</span></h2>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-label">Leadership</span>
+            <h2 className="section-title">Meet Our Experts</h2>
+            <p className="section-desc">Experienced professionals dedicated to guiding your financial success.</p>
           </div>
-          <div className="grid grid-3">
+
+          <div className="grid grid-3" style={{ gap: '1.5rem' }}>
             {team.map((member, i) => (
-              <div key={i} className="glass-card card-hover-glow team-card">
-                <div className="team-avatar">{member.name.split(' ').map(n => n[0]).join('')}</div>
-                <h4 style={{ marginBottom: '0.2rem', textAlign: 'center' }}>{member.name}</h4>
-                <div style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 600, textAlign: 'center', marginBottom: '0.75rem' }}>{member.role}</div>
-                <p style={{ fontSize: '0.83rem', color: 'var(--text-secondary)', textAlign: 'center', lineHeight: 1.6, margin: '0 0 1rem' }}>{member.bio}</p>
-                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
-                  <a href={member.linkedin} className="team-social">💼</a>
-                  <a href={member.twitter} className="team-social">🐦</a>
+              <div key={i} className="service-card" style={{ textAlign: 'center' }}>
+                <div style={{
+                  width: 72, height: 72, borderRadius: '50%',
+                  background: 'var(--primary-700)', color: '#fff',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: 700, fontSize: '1.25rem', margin: '0 auto 1.25rem',
+                  fontFamily: 'Playfair Display, serif'
+                }}>
+                  {member.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <h3 style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>{member.name}</h3>
+                <p style={{ fontSize: '0.825rem', color: 'var(--primary-700)', fontWeight: 600, marginBottom: '0.75rem' }}>{member.role}</p>
+                <p style={{ fontSize: '0.875rem', color: 'var(--gray-600)', lineHeight: 1.6, margin: 0 }}>{member.bio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values */}
+      <section className="section">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-label">What Drives Us</span>
+            <h2 className="section-title">Our Core Values</h2>
+          </div>
+
+          <div className="why-grid">
+            {[
+              { title: 'Trust', desc: 'Built on absolute integrity, compliance, and transparent advisory.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+              { title: 'Customer First', desc: 'Your financial goals dictate every plan and recommendation we produce.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg> },
+              { title: 'Simplicity', desc: 'Demystifying complex investment structures into plain, actionable advice.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg> },
+              { title: 'Excellence', desc: 'Continuous research and data-driven methods to deliver top tier outcomes.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg> },
+            ].map((v, i) => (
+              <div key={i} className="why-card">
+                <div className="why-icon">{v.icon}</div>
+                <div className="why-text">
+                  <h4>{v.title}</h4>
+                  <p>{v.desc}</p>
                 </div>
               </div>
             ))}
@@ -112,112 +142,18 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Values */}
-      <section className="section">
+      {/* CTA */}
+      <section className="cta-section">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">What Drives Us</span>
-            <h2>Our Core <span className="text-gradient">Values</span></h2>
-          </div>
-          <div className="grid grid-4">
-            {[
-              { icon: '🏆', title: 'Excellence', desc: 'We set the highest standards in training and advisor support.' },
-              { icon: '🤝', title: 'Trust', desc: 'Built on integrity, transparency, and long-term relationships.' },
-              { icon: '💡', title: 'Innovation', desc: 'Constantly improving our platform with better tools and technology.' },
-              { icon: '❤️', title: 'Empathy', desc: 'We understand the advisor journey and support every step.' },
-            ].map((v, i) => (
-              <div key={i} className="glass-card card-hover-glow" style={{ padding: '1.75rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{v.icon}</div>
-                <h4 style={{ marginBottom: '0.4rem' }}>{v.title}</h4>
-                <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: 0 }}>{v.desc}</p>
-              </div>
-            ))}
+          <span className="section-label" style={{ color: '#d4af37' }}>Get In Touch</span>
+          <h2>Ready to work with GrowthNest?</h2>
+          <p>Schedule a complimentary financial review with one of our experienced advisors today.</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/contact" className="btn btn-secondary btn-lg">Contact Us</Link>
+            <Link href="/services" className="btn btn-outline-white btn-lg">Explore Services</Link>
           </div>
         </div>
       </section>
-
-      <style jsx>{`
-        .about-hero {
-          padding: calc(var(--nav-height) + 3rem) 0 4rem;
-          position: relative; overflow: hidden;
-          border-bottom: 1px solid var(--border-glass);
-        }
-        .about-hero-bg {
-          position: absolute; inset: 0;
-          background: radial-gradient(ellipse at 30% 50%, rgba(0,212,170,0.06), transparent 50%),
-                      radial-gradient(ellipse at 70% 30%, rgba(108,99,255,0.05), transparent 50%);
-        }
-        .about-hero-grid {
-          display: grid; grid-template-columns: 1fr 420px; gap: 4rem; align-items: center;
-        }
-        .about-stats-card {
-          padding: 1.5rem;
-          display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-        }
-        .about-stat {
-          display: flex; gap: 0.75rem; align-items: center;
-        }
-        .about-stat-icon {
-          font-size: 1.5rem; width: 40px; height: 40px; display: flex;
-          align-items: center; justify-content: center;
-          background: var(--bg-tertiary); border-radius: var(--radius-sm); flex-shrink: 0;
-        }
-        /* Timeline */
-        .timeline {
-          position: relative; max-width: 900px; margin: 0 auto;
-          display: flex; flex-direction: column; gap: 0;
-        }
-        .timeline::before {
-          content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
-          width: 2px; background: var(--border-glass); transform: translateX(-50%);
-        }
-        .timeline-item {
-          display: flex; gap: 2rem; align-items: flex-start;
-          padding: 1.5rem 0; position: relative;
-        }
-        .timeline-item.left { flex-direction: row; }
-        .timeline-item.right { flex-direction: row-reverse; }
-        .timeline-dot {
-          position: absolute; left: 50%; transform: translateX(-50%);
-          width: 56px; height: 56px; border-radius: 50%;
-          background: var(--gradient-primary); color: var(--bg-primary);
-          font-weight: 800; font-size: 0.75rem; font-family: var(--font-display);
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--primary);
-          z-index: 2;
-        }
-        .timeline-card {
-          width: calc(50% - 3rem); padding: 1.25rem;
-        }
-        .timeline-item.left .timeline-card { margin-right: calc(50% + 1rem); }
-        .timeline-item.right .timeline-card { margin-left: calc(50% + 1rem); }
-        /* Team */
-        .team-card { padding: 2rem; display: flex; flex-direction: column; }
-        .team-avatar {
-          width: 72px; height: 72px; border-radius: 50%;
-          background: var(--gradient-primary); display: flex; align-items: center;
-          justify-content: center; font-weight: 800; font-size: 1.4rem;
-          color: var(--bg-primary); margin: 0 auto 1rem;
-          font-family: var(--font-display);
-        }
-        .team-social {
-          width: 32px; height: 32px; background: var(--bg-tertiary);
-          border: 1px solid var(--border-glass); border-radius: var(--radius-sm);
-          display: flex; align-items: center; justify-content: center;
-          text-decoration: none; transition: all 0.2s; font-size: 0.9rem;
-        }
-        .team-social:hover { border-color: var(--primary); background: rgba(0,212,170,0.08); }
-        @media (max-width: 1024px) {
-          .about-hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-          .about-stats-card { order: -1; }
-        }
-        @media (max-width: 768px) {
-          .timeline::before { left: 24px; }
-          .timeline-dot { left: 24px; width: 48px; height: 48px; font-size: 0.65rem; }
-          .timeline-item { flex-direction: column !important; padding-left: 60px; }
-          .timeline-card { width: 100% !important; margin: 0 !important; }
-        }
-      `}</style>
     </>
   );
 }

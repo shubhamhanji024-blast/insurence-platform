@@ -23,7 +23,7 @@ function Countdown({ targetDate }) {
 
   return (
     <div className="countdown-strip">
-      ⏱️ Next event in:
+      ️ Next event in:
       {['days', 'hours', 'mins', 'secs'].map((unit, i) => (
         <>
           <div key={unit} className="countdown-unit">
@@ -77,11 +77,11 @@ export default function EventsPage() {
                 className={`chip ${activeFilter === type ? 'active' : ''}`}
                 onClick={() => setActiveFilter(type)}
               >
-                {type === 'All' && '🗓️ '}
-                {type === 'Seminar' && '🎤 '}
-                {type === 'Workshop' && '🛠️ '}
-                {type === 'Training' && '📚 '}
-                {type === 'Online Meeting' && '💻 '}
+                {type === 'All' && '️ '}
+                {type === 'Seminar' && ' '}
+                {type === 'Workshop' && '️ '}
+                {type === 'Training' && ' '}
+                {type === 'Online Meeting' && ' '}
                 {type}
               </button>
             ))}
@@ -104,7 +104,7 @@ export default function EventsPage() {
                     <div style={{ flex: 1 }}>
                       <div className="flex items-center gap-sm" style={{ marginBottom: '0.5rem', flexWrap: 'wrap' }}>
                         <span className={`badge ${event.mode === 'Online' ? 'badge-secondary' : 'badge-primary'}`}>
-                          {event.mode === 'Online' ? '🌐' : '📍'} {event.mode}
+                          {event.mode === 'Online' ? '' : ''} {event.mode}
                         </span>
                         {event.mode === 'Online' && <span className="badge badge-live">● LIVE</span>}
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
@@ -118,22 +118,22 @@ export default function EventsPage() {
                   {/* Meta */}
                   <div className="event-meta">
                     <div className="event-meta-item">
-                      <span style={{ color: 'var(--primary)' }}>📅</span>
+                      <span style={{ color: 'var(--primary)' }}></span>
                       <span>{new Date(event.date).toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</span>
                     </div>
                     <div className="event-meta-item">
-                      <span style={{ color: 'var(--primary)' }}>⏰</span>
+                      <span style={{ color: 'var(--primary)' }}></span>
                       <span>{event.time}</span>
                     </div>
                     <div className="event-meta-item">
-                      <span style={{ color: 'var(--primary)' }}>📍</span>
+                      <span style={{ color: 'var(--primary)' }}></span>
                       <span>{event.location}</span>
                     </div>
                   </div>
 
                   {/* Speaker */}
                   <div className="event-speaker">
-                    <div className="speaker-avatar">🎤</div>
+                    <div className="speaker-avatar"></div>
                     <div>
                       <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Speaker</span>
                       <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{event.speaker}</div>
@@ -148,7 +148,7 @@ export default function EventsPage() {
                     <div style={{ flex: 1 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontSize: '0.8rem' }}>
                         <span style={{ color: isUrgent ? '#ff4757' : 'var(--text-secondary)', fontWeight: 600 }}>
-                          {isUrgent ? '🔥 ' : ''}{event.spotsLeft} spots left
+                          {isUrgent ? ' ' : ''}{event.spotsLeft} spots left
                         </span>
                         <span style={{ color: 'var(--text-muted)' }}>{event.spots} total</span>
                       </div>

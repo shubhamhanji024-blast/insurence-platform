@@ -29,7 +29,7 @@ export default function BecomeAdvisorPage() {
                   'No prior experience required'
                 ].map((item, i) => (
                   <li key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1rem', padding: '1rem', background: 'var(--bg-tertiary)', borderRadius: 'var(--radius-md)' }}>
-                    <span style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>✓</span>
+                    <span style={{ color: 'var(--primary)', fontSize: '1.2rem' }}></span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -41,23 +41,23 @@ export default function BecomeAdvisorPage() {
               <div className="glass-card-static" style={{ padding: '2rem' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                   <div className="doc-item">
-                    <span className="doc-icon">🪪</span>
+                    <span className="doc-icon"></span>
                     <p>Aadhaar Card</p>
                   </div>
                   <div className="doc-item">
-                    <span className="doc-icon">💳</span>
+                    <span className="doc-icon"></span>
                     <p>PAN Card</p>
                   </div>
                   <div className="doc-item">
-                    <span className="doc-icon">🎓</span>
+                    <span className="doc-icon"></span>
                     <p>10th/12th Marksheet</p>
                   </div>
                   <div className="doc-item">
-                    <span className="doc-icon">🏦</span>
+                    <span className="doc-icon"></span>
                     <p>Bank Passbook / Cheque</p>
                   </div>
                   <div className="doc-item">
-                    <span className="doc-icon">📸</span>
+                    <span className="doc-icon"></span>
                     <p>Passport Photos</p>
                   </div>
                 </div>
@@ -74,12 +74,12 @@ export default function BecomeAdvisorPage() {
           </div>
           <div className="grid grid-3">
             {[
-              { icon: '💸', title: 'High Commission', desc: 'Earn up to 35% on first year premium and up to 7.5% on renewals.' },
-              { icon: '📈', title: 'Career Growth', desc: 'Clear path to become a Team Manager and earn overriding commissions.' },
-              { icon: '💻', title: 'Digital Tools', desc: 'Free access to our CRM, lead management, and marketing portal.' },
-              { icon: '🏆', title: 'Rewards & Recognition', desc: 'International trips, cash bonuses, and prestigious club memberships.' },
-              { icon: '🎓', title: 'Expert Training', desc: 'Continuous learning through online modules and offline seminars.' },
-              { icon: '🤝', title: 'Multiple Partners', desc: 'Don\'t limit yourself. Sell products from 20+ top insurance companies.' },
+              { icon: '', title: 'High Commission', desc: 'Earn up to 35% on first year premium and up to 7.5% on renewals.' },
+              { icon: '', title: 'Career Growth', desc: 'Clear path to become a Team Manager and earn overriding commissions.' },
+              { icon: '', title: 'Digital Tools', desc: 'Free access to our CRM, lead management, and marketing portal.' },
+              { icon: '', title: 'Rewards & Recognition', desc: 'International trips, cash bonuses, and prestigious club memberships.' },
+              { icon: '', title: 'Expert Training', desc: 'Continuous learning through online modules and offline seminars.' },
+              { icon: '', title: 'Multiple Partners', desc: 'Don\'t limit yourself. Sell products from 20+ top insurance companies.' },
             ].map((adv, i) => (
               <div key={i} className="glass-card text-center" style={{ padding: '2rem' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>{adv.icon}</div>
@@ -100,25 +100,25 @@ export default function BecomeAdvisorPage() {
           
           <div className="career-path">
             <div className="path-node">
-              <div className="node-icon">🌱</div>
+              <div className="node-icon"></div>
               <h4>Advisor</h4>
               <p>Sell policies, learn the ropes, build client base.</p>
             </div>
             <div className="path-connector"></div>
             <div className="path-node">
-              <div className="node-icon">⭐</div>
+              <div className="node-icon"></div>
               <h4>Senior Advisor</h4>
               <p>Consistent performer, higher bonus slabs, mentor others.</p>
             </div>
             <div className="path-connector"></div>
             <div className="path-node">
-              <div className="node-icon">👔</div>
+              <div className="node-icon"></div>
               <h4>Team Manager</h4>
               <p>Recruit and manage your own team of advisors. Earn overrides.</p>
             </div>
             <div className="path-connector"></div>
             <div className="path-node">
-              <div className="node-icon">👑</div>
+              <div className="node-icon"></div>
               <h4>Branch Director</h4>
               <p>Manage multiple teams, open your own franchise office.</p>
             </div>
@@ -126,7 +126,7 @@ export default function BecomeAdvisorPage() {
           
           <div className="text-center" style={{ marginTop: '4rem' }}>
             <Link href="/careers" className="btn btn-primary btn-lg">
-              Start Your Journey Now 🚀
+              Start Your Journey Now 
             </Link>
           </div>
         </div>

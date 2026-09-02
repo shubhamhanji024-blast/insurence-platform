@@ -1,113 +1,107 @@
 export const blogPosts = [
   {
-    slug: 'top-10-insurance-selling-tips',
-    title: 'Top 10 Insurance Selling Tips for New Advisors',
-    excerpt: 'Master the art of insurance sales with these proven techniques that top advisors use to close more policies and build lasting client relationships.',
-    category: 'Sales Techniques',
-    author: 'Rajesh Kumar',
-    date: '2026-07-15',
-    readTime: '8 min read',
-    featured: true,
-    image: '📊',
-    content: `Starting your insurance advisory career can feel overwhelming, but with the right techniques, you can quickly build a successful practice. Here are the top 10 tips that our most successful advisors swear by:
-
-**1. Listen More Than You Talk**
-The best advisors are great listeners. Understand your client's needs, fears, and financial goals before suggesting any product.
-
-**2. Build Trust First, Sell Later**
-People buy from people they trust. Focus on building genuine relationships rather than pushing products.
-
-**3. Know Your Products Inside Out**
-Study every product you recommend. When you can confidently answer any question, clients feel secure in their decision.
-
-**4. Use Stories and Examples**
-Real-life examples of how insurance helped someone resonate more than statistics. Share success stories (with permission).
-
-**5. Follow Up Consistently**
-80% of sales happen after the 5th follow-up. Be persistent but not pushy.
-
-**6. Leverage Social Media**
-Create educational content about insurance on platforms like WhatsApp, Instagram, and LinkedIn.
-
-**7. Ask for Referrals**
-Happy clients are your best marketing. Always ask for referrals after policy issuance.
-
-**8. Specialize in a Niche**
-Whether it's term insurance for IT professionals or health insurance for families, specializing helps you stand out.
-
-**9. Invest in Self-Education**
-Attend training sessions, read industry news, and constantly upgrade your knowledge.
-
-**10. Track Your Numbers**
-Monitor your calls, meetings, proposals, and conversions. What gets measured gets improved.`
-  },
-  {
-    slug: 'why-term-insurance-essential',
-    title: 'Why Term Insurance is Essential for Every Family',
-    excerpt: 'Understand the importance of term insurance and why financial experts consider it the foundation of every family\'s financial plan.',
-    category: 'Insurance Tips',
-    author: 'Priya Sharma',
-    date: '2026-07-10',
+    slug: 'how-to-start-building-wealth-in-your-30s',
+    title: 'How to Start Building Wealth in Your 30s',
+    excerpt: 'Practical steps to begin your wealth journey with systematic planning, smart investments, and the compound growth effect.',
+    category: 'Wealth Building',
+    author: 'Vishal Sharma',
+    date: '2026-08-15',
     readTime: '6 min read',
-    featured: false,
-    image: '🛡️',
-    content: 'Term insurance provides pure life cover at the most affordable premium. Every financial advisor recommends starting your insurance journey with term insurance...'
+    featured: true,
+    image: 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `Entering your 30s is a critical financial transition. Your income is typically rising, but so are your responsibilities. Building lasting wealth in this decade requires a disciplined approach.
+
+### 1. Build a Solid Emergency Fund
+Before aggressive investing, set aside 6 months of living expenses in high-yield liquid funds.
+
+### 2. Maximize Equity Exposure Early
+In your 30s, time is on your side. Allocate 60-70% of your portfolio to equity mutual funds via systematic investment plans (SIPs).
+
+### 3. Protect Your Downside with Pure Term & Health Insurance
+Ensure primary earners have at least 15-20x annual income in term life cover and a comprehensive family health policy.
+
+### 4. Optimize Tax Under Section 80C & 80D
+Utilize tax-saving instruments like ELSS and NPS that offer inflation-beating equity returns while lowering tax obligations.`
   },
   {
-    slug: 'how-to-stay-motivated-in-sales',
-    title: 'How to Stay Motivated in Sales: A Guide for Insurance Advisors',
-    excerpt: 'Sales can be challenging. Learn proven strategies to maintain your motivation and keep performing at your best every single day.',
-    category: 'Motivation',
-    author: 'Amit Patel',
-    date: '2026-07-05',
+    slug: '5-mistakes-to-avoid-when-investing',
+    title: '5 Mistakes to Avoid When Investing',
+    excerpt: 'Common investment pitfalls and how to avoid them — from emotional decisions to ignoring asset allocation.',
+    category: 'Investing',
+    author: 'Priya Mehta',
+    date: '2026-08-02',
     readTime: '5 min read',
     featured: false,
-    image: '🔥',
-    content: 'Motivation is like bathing — it doesn\'t last, which is why we recommend it daily. As an insurance advisor, you\'ll face rejections, but the key is persistence...'
+    image: 'https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `Investing is simple, but not easy. Avoid these 5 common mistakes that cost retail investors millions in lost potential returns:
+
+1. **Trying to Time the Market**: Consistent SIP investments beat timing the market 95% of the time.
+2. **Chasing Last Year's Top Performers**: Historical returns are no guarantee of future success. Focus on fund governance and asset quality.
+3. **Ignoring Asset Allocation**: Putting all your money in equity or real estate creates unmanaged risk.
+4. **Emotional Panic Selling**: Selling during market corrections converts temporary paper losses into permanent real losses.
+5. **Ignoring Tax Implications**: Not considering capital gains tax on short-term vs long-term holdings reduces net returns.`
   },
   {
-    slug: 'personal-finance-basics',
-    title: 'Personal Finance 101: What Every Indian Should Know',
-    excerpt: 'From emergency funds to investments, learn the basics of personal finance that will help you and your clients make better financial decisions.',
-    category: 'Personal Finance',
-    author: 'Sneha Reddy',
-    date: '2026-06-28',
-    readTime: '10 min read',
-    featured: false,
-    image: '💰',
-    content: 'Financial literacy is the foundation of a prosperous life. Here are the essential concepts every Indian should understand...'
-  },
-  {
-    slug: 'insurance-career-vs-corporate',
-    title: 'Insurance Advisory vs Corporate Job: An Honest Comparison',
-    excerpt: 'Thinking about switching to insurance advisory? Here\'s an honest comparison of both career paths to help you make an informed decision.',
-    category: 'Career Advice',
-    author: 'Rajesh Kumar',
-    date: '2026-06-20',
+    slug: 'how-much-should-you-save-for-retirement',
+    title: 'How Much Should You Save for Retirement?',
+    excerpt: 'The power of compounding explained — how starting early dramatically changes your retirement corpus requirements.',
+    category: 'Retirement',
+    author: 'Amit Patel',
+    date: '2026-07-20',
     readTime: '7 min read',
     featured: false,
-    image: '🎯',
-    content: 'Many professionals contemplate switching from corporate jobs to insurance advisory. Here\'s what you need to know before making the leap...'
+    image: 'https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `A comfortable retirement requires an inflation-adjusted corpus that can sustain 25-30 years of living without salary income.
+
+### The Rule of 25
+A simple rule of thumb: Multiply your current annual expenses by 25 to estimate your target retirement corpus. For example, if you need ₹12 Lakhs/year in retirement, aim for a ₹3 Crore corpus.
+
+### Start Early to Benefit from Compounding
+Starting at age 25 requires just ₹10,000/month to reach ₹5 Crore by age 60 (at 12% return). Delaying until age 35 increases the required monthly investment to ₹30,000!`
   },
   {
-    slug: 'health-insurance-guide-2026',
-    title: 'Complete Guide to Health Insurance in India (2026)',
-    excerpt: 'Everything you need to know about health insurance in India — types, coverage, claim process, and how to choose the right plan for your family.',
-    category: 'Insurance Tips',
-    author: 'Priya Sharma',
-    date: '2026-06-15',
-    readTime: '12 min read',
+    slug: 'understanding-risk-and-return',
+    title: 'Understanding Risk and Return in Modern Portfolios',
+    excerpt: 'How to balance risk tolerance with return expectations across different economic cycles and asset classes.',
+    category: 'Investing',
+    author: 'Vishal Sharma',
+    date: '2026-07-05',
+    readTime: '6 min read',
     featured: false,
-    image: '🏥',
-    content: 'Health insurance has become a necessity, not a luxury. With medical inflation rising at 14% annually, having adequate health cover is crucial...'
+    image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `Risk and return are inseparable partners in financial planning. Understanding your personal risk tolerance ensures you won't make panic decisions during market corrections.`
   },
+  {
+    slug: 'top-tax-saving-strategies-for-salaried-professionals',
+    title: 'Top Tax-Saving Strategies for Salaried Professionals',
+    excerpt: 'Comprehensive guide to optimizing taxes legally using old vs new tax regimes and smart investment instruments.',
+    category: 'Tax Planning',
+    author: 'Sneha Reddy',
+    date: '2026-06-25',
+    readTime: '8 min read',
+    featured: false,
+    image: 'https://images.pexels.com/photos/6863183/pexels-photo-6863183.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `Tax planning should begin at the start of the financial year, not in March. Here are key strategies for salaried professionals...`
+  },
+  {
+    slug: 'why-term-life-insurance-is-the-foundation-of-wealth',
+    title: 'Why Term Insurance is the Foundation of Wealth Planning',
+    excerpt: 'Before investing in high-return assets, ensure your financial family tree is secured with adequate term life insurance.',
+    category: 'Insurance',
+    author: 'Vishal Sharma',
+    date: '2026-06-10',
+    readTime: '5 min read',
+    featured: false,
+    image: 'https://images.pexels.com/photos/7578898/pexels-photo-7578898.jpeg?auto=compress&cs=tinysrgb&w=800',
+    content: `Term insurance is pure protection. It ensures that if the primary breadwinner passes away, family goals such as home loans, child education, and daily expenses remain fully funded.`
+  }
 ];
 
 export const blogCategories = [
   'All',
-  'Insurance Tips',
-  'Sales Techniques',
-  'Motivation',
-  'Personal Finance',
-  'Career Advice',
+  'Wealth Building',
+  'Investing',
+  'Retirement',
+  'Tax Planning',
+  'Insurance'
 ];

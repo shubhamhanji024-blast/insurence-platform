@@ -1,9 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Force webpack (Turbopack native bindings unavailable on this machine)
+  // Turbopack config (Next.js 16+)
+  turbopack: {},
+
+  // Webpack passthrough (keeps existing webpack-based behavior intact)
   webpack: (config) => config,
 
-  // Allow localtunnel and ngrok domains for public sharing
+  // Allow localtunnel and ngrok domains for public sharing / testing
   allowedDevOrigins: [
     'loca.lt',
     '*.loca.lt',

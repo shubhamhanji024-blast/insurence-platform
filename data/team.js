@@ -2,7 +2,7 @@ export const team = [
   {
     name: 'Rajesh Kumar',
     role: 'Founder & CEO',
-    image: '👤',
+    image: '',
     bio: 'With over 15 years of experience in the insurance industry, Rajesh founded GrowthNest to empower aspiring insurance advisors across India.',
     linkedin: '#',
     twitter: '#',
@@ -10,7 +10,7 @@ export const team = [
   {
     name: 'Priya Sharma',
     role: 'Chief Operating Officer',
-    image: '👤',
+    image: '',
     bio: 'Priya leads operations with a focus on scaling training programs and partner relationships across 50+ cities.',
     linkedin: '#',
     twitter: '#',
@@ -18,7 +18,7 @@ export const team = [
   {
     name: 'Amit Patel',
     role: 'Head of Training',
-    image: '👤',
+    image: '',
     bio: 'A certified financial planner, Amit designs comprehensive training modules that have helped 5000+ advisors succeed.',
     linkedin: '#',
     twitter: '#',
@@ -26,7 +26,7 @@ export const team = [
   {
     name: 'Sneha Reddy',
     role: 'Head of Technology',
-    image: '👤',
+    image: '',
     bio: 'Sneha drives digital innovation, building tools and platforms that make insurance advisory smarter and more efficient.',
     linkedin: '#',
     twitter: '#',
@@ -34,7 +34,7 @@ export const team = [
   {
     name: 'Vikram Singh',
     role: 'VP - Business Development',
-    image: '👤',
+    image: '',
     bio: 'Vikram manages relationships with 20+ insurance partners and leads expansion into new markets.',
     linkedin: '#',
     twitter: '#',
@@ -42,7 +42,7 @@ export const team = [
   {
     name: 'Anita Desai',
     role: 'Head of HR & Recruitment',
-    image: '👤',
+    image: '',
     bio: 'Anita oversees talent acquisition and advisor onboarding, ensuring every new member feels supported from day one.',
     linkedin: '#',
     twitter: '#',

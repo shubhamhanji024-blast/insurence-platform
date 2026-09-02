@@ -28,9 +28,9 @@ function ProgressRing({ pct, size = 120, stroke = 10, color = 'var(--primary)' }
 }
 
 const difficultyColors = {
-  Beginner: { bg: 'rgba(0,212,170,0.1)', color: 'var(--primary)', label: '🟢 Beginner' },
-  Intermediate: { bg: 'rgba(255,215,0,0.1)', color: 'var(--accent)', label: '🟡 Intermediate' },
-  Advanced: { bg: 'rgba(108,99,255,0.1)', color: 'var(--secondary)', label: '🔵 Advanced' },
+  Beginner: { bg: 'rgba(0,212,170,0.1)', color: 'var(--primary)', label: ' Beginner' },
+  Intermediate: { bg: 'rgba(255,215,0,0.1)', color: 'var(--accent)', label: ' Intermediate' },
+  Advanced: { bg: 'rgba(108,99,255,0.1)', color: 'var(--secondary)', label: ' Advanced' },
 };
 
 export default function TrainingPortalPreviewPage() {
@@ -113,7 +113,7 @@ export default function TrainingPortalPreviewPage() {
 
               {/* Certificate preview */}
               <div className="cert-preview-card">
-                <div className="cert-preview-badge">🏅</div>
+                <div className="cert-preview-badge"></div>
                 <div>
                   <h5 style={{ margin: 0, marginBottom: '0.25rem' }}>Advisor Certificate</h5>
                   <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--text-muted)' }}>Unlock after completing all modules. IRDAI-recognized credential.</p>
@@ -152,13 +152,13 @@ export default function TrainingPortalPreviewPage() {
                             {mod.title}
                           </h4>
                           <span className="module-status-icon" style={{ flexShrink: 0 }}>
-                            {mod.status === 'completed' ? '✅' : mod.status === 'in-progress' ? '⏳' : '🔒'}
+                            {mod.status === 'completed' ? '' : mod.status === 'in-progress' ? '' : ''}
                           </span>
                         </div>
                         <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0 0 0.5rem 0' }}>{mod.description}</p>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>⏱️ {mod.duration}</span>
-                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>📚 {mod.lessons} Lessons</span>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>️ {mod.duration}</span>
+                          <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}> {mod.lessons} Lessons</span>
                           <span style={{ fontSize: '0.7rem', padding: '2px 6px', borderRadius: '4px', background: dc.bg, color: dc.color }}>
                             {dc.label}
                           </span>
@@ -191,14 +191,14 @@ export default function TrainingPortalPreviewPage() {
           </div>
           <div className="grid grid-4">
             {[
-              { icon: '🎯', title: 'Needs Analysis', desc: 'Accurately assess a client\'s financial needs and gaps.', color: 'rgba(0,212,170,0.1)', iconBg: 'rgba(0,212,170,0.15)' },
-              { icon: '🗣️', title: 'Objection Handling', desc: 'Master answering "I don\'t have money" or "Let me think."', color: 'rgba(108,99,255,0.1)', iconBg: 'rgba(108,99,255,0.15)' },
-              { icon: '📱', title: 'Social Selling', desc: 'Generate steady leads via WhatsApp and social media.', color: 'rgba(255,215,0,0.08)', iconBg: 'rgba(255,215,0,0.15)' },
-              { icon: '📜', title: 'Underwriting Basics', desc: 'Ensure smooth policy issuance with compliance know-how.', color: 'rgba(255,99,132,0.08)', iconBg: 'rgba(255,99,132,0.15)' },
-              { icon: '💼', title: 'Portfolio Planning', desc: 'Build comprehensive insurance portfolios for clients.', color: 'rgba(0,212,170,0.06)', iconBg: 'rgba(0,212,170,0.12)' },
-              { icon: '📊', title: 'Sales Analytics', desc: 'Track performance metrics and optimize your pipeline.', color: 'rgba(108,99,255,0.06)', iconBg: 'rgba(108,99,255,0.12)' },
-              { icon: '🤝', title: 'Client Retention', desc: 'Build long-term relationships for renewals and referrals.', color: 'rgba(255,215,0,0.06)', iconBg: 'rgba(255,215,0,0.12)' },
-              { icon: '💡', title: 'Tax-Saving Strategies', desc: 'Position insurance as a powerful tax-saving instrument.', color: 'rgba(255,99,132,0.06)', iconBg: 'rgba(255,99,132,0.12)' },
+              { icon: '', title: 'Needs Analysis', desc: 'Accurately assess a client\'s financial needs and gaps.', color: 'rgba(0,212,170,0.1)', iconBg: 'rgba(0,212,170,0.15)' },
+              { icon: '️', title: 'Objection Handling', desc: 'Master answering "I don\'t have money" or "Let me think."', color: 'rgba(108,99,255,0.1)', iconBg: 'rgba(108,99,255,0.15)' },
+              { icon: '', title: 'Social Selling', desc: 'Generate steady leads via WhatsApp and social media.', color: 'rgba(255,215,0,0.08)', iconBg: 'rgba(255,215,0,0.15)' },
+              { icon: '', title: 'Underwriting Basics', desc: 'Ensure smooth policy issuance with compliance know-how.', color: 'rgba(255,99,132,0.08)', iconBg: 'rgba(255,99,132,0.15)' },
+              { icon: '', title: 'Portfolio Planning', desc: 'Build comprehensive insurance portfolios for clients.', color: 'rgba(0,212,170,0.06)', iconBg: 'rgba(0,212,170,0.12)' },
+              { icon: '', title: 'Sales Analytics', desc: 'Track performance metrics and optimize your pipeline.', color: 'rgba(108,99,255,0.06)', iconBg: 'rgba(108,99,255,0.12)' },
+              { icon: '', title: 'Client Retention', desc: 'Build long-term relationships for renewals and referrals.', color: 'rgba(255,215,0,0.06)', iconBg: 'rgba(255,215,0,0.12)' },
+              { icon: '', title: 'Tax-Saving Strategies', desc: 'Position insurance as a powerful tax-saving instrument.', color: 'rgba(255,99,132,0.06)', iconBg: 'rgba(255,99,132,0.12)' },
             ].map((item, i) => (
               <div key={i} className="master-card glass-card card-hover-glow" style={{ padding: '1.5rem', textAlign: 'center' }}>
                 <div className="master-icon" style={{ background: item.iconBg }}>{item.icon}</div>

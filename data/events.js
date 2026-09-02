@@ -11,7 +11,7 @@ export const events = [
     spots: 50,
     spotsLeft: 12,
     speaker: 'Rajesh Kumar',
-    image: '🎤',
+    image: '',
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const events = [
     spots: 200,
     spotsLeft: 85,
     speaker: 'Sneha Reddy',
-    image: '💻',
+    image: '',
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export const events = [
     spots: 100,
     spotsLeft: 45,
     speaker: 'Amit Patel',
-    image: '📚',
+    image: '',
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ export const events = [
     spots: 500,
     spotsLeft: 350,
     speaker: 'Rajesh Kumar',
-    image: '🌐',
+    image: '',
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ export const events = [
     spots: 150,
     spotsLeft: 68,
     speaker: 'Priya Sharma',
-    image: '👩‍💼',
+    image: '‍',
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ export const events = [
     spots: 300,
     spotsLeft: 180,
     speaker: 'Vikram Singh',
-    image: '📋',
+    image: '',
   },
 ];
 

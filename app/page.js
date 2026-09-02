@@ -1,1384 +1,625 @@
 'use client';
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
-/* ---- Animated Counter ---- */
-function AnimatedCounter({ end, suffix = '', prefix = '' }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef(null);
-  const started = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !started.current) {
-          started.current = true;
-          let start = 0;
-          const duration = 2000;
-          const step = (timestamp) => {
-            if (!start) start = timestamp;
-            const progress = Math.min((timestamp - start) / duration, 1);
-            setCount(Math.floor(progress * end));
-            if (progress < 1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [end]);
-
-  return <span ref={ref}>{prefix}{count}{suffix}</span>;
-}
-
-/* ---- Particles ---- */
-function Particles() {
-  const particles = useRef(
-    Array.from({ length: 20 }).map(() => ({
-      left: `${Math.random() * 100}%`,
-      top: `${Math.random() * 100}%`,
-      width: `${Math.random() * 6 + 2}px`,
-      height: `${Math.random() * 6 + 2}px`,
-      delay: `${Math.random() * 5}s`,
-      duration: `${Math.random() * 10 + 10}s`,
-      tx: `${(Math.random() - 0.5) * 200}px`,
-      ty: `${-Math.random() * 300 - 100}px`,
-    }))
-  );
+/* ---- FAQ Item ---- */
+function FAQItem({ question, answer, isOpen, onToggle }) {
   return (
-    <div className="particles">
-      {particles.current.map((p, i) => (
-        <div
-          key={i}
-          className="particle"
-          style={{
-            left: p.left, top: p.top, width: p.width, height: p.height,
-            animationDelay: p.delay, animationDuration: p.duration,
-            '--tx': p.tx, '--ty': p.ty,
-          }}
-        />
-      ))}
-      <style jsx>{`
-        .particles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-        .particle {
-          position: absolute;
-          background: var(--primary);
-          border-radius: 50%;
-          opacity: 0;
-          animation: particleFloat 15s infinite;
-        }
-      `}</style>
+    <div className={`faq-item${isOpen ? ' open' : ''}`}>
+      <button className="faq-trigger" onClick={onToggle} aria-expanded={isOpen}>
+        <span>{question}</span>
+        <svg className="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <div className="faq-answer" aria-hidden={!isOpen}>
+        <div className="faq-answer-inner">{answer}</div>
+      </div>
     </div>
   );
 }
 
-/* ---- Advisor Dashboard Mock ---- */
-function AdvisorMock() {
+/* ---- Services Data ---- */
+const services = [
+  {
+    id: 'financial-planning',
+    title: 'Financial Planning',
+    desc: 'Comprehensive financial roadmaps tailored to your life goals — from wealth building to emergency funds and beyond.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z" />
+      </svg>
+    ),
+  },
+  {
+    id: 'investment-planning',
+    title: 'Investment Planning',
+    desc: 'Personalized investment strategies and diversified portfolio management to grow your wealth steadily over time.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+        <polyline points="16 7 22 7 22 13" />
+      </svg>
+    ),
+  },
+  {
+    id: 'wealth-management',
+    title: 'Wealth Management',
+    desc: 'Holistic wealth strategies for high-net-worth individuals — asset allocation, legacy planning, and portfolio optimization.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 6v6l4 2" />
+      </svg>
+    ),
+  },
+  {
+    id: 'retirement-planning',
+    title: 'Retirement Planning',
+    desc: 'Comprehensive retirement solutions ensuring financial security with pension plans, SIPs, and long-term strategies.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    ),
+  },
+  {
+    id: 'tax-planning',
+    title: 'Tax Planning',
+    desc: 'Strategic tax-saving investment options and financial structuring to legally minimise your tax liability every year.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+        <polyline points="14 2 14 8 20 8" />
+        <line x1="16" y1="13" x2="8" y2="13" />
+        <line x1="16" y1="17" x2="8" y2="17" />
+      </svg>
+    ),
+  },
+  {
+    id: 'insurance-planning',
+    title: 'Insurance Planning',
+    desc: 'Expert guidance on life, health, and general insurance to protect you and your loved ones from unexpected events.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      </svg>
+    ),
+  },
+];
+
+/* ---- Testimonials Data ---- */
+const testimonials = [
+  {
+    name: 'Rajesh Sharma',
+    title: 'Business Owner, Delhi',
+    initial: 'R',
+    text: 'GrowthNest completely transformed my financial approach. Their personalized planning is precise and the team is always available to guide me. My portfolio has grown 40% in just 18 months.',
+    stars: 5,
+  },
+  {
+    name: 'Priya Mehta',
+    title: 'Software Engineer, Bangalore',
+    initial: 'P',
+    text: 'The retirement planning service is exceptional. They helped me structure my savings in a tax-efficient way. I feel completely secure about my financial future now.',
+    stars: 5,
+  },
+  {
+    name: 'Amit Patel',
+    title: 'Doctor, Mumbai',
+    initial: 'A',
+    text: 'As a busy professional I needed someone to manage my finances. GrowthNest handles everything perfectly. The transparent advice and data-driven insights are incredible.',
+    stars: 5,
+  },
+];
+
+/* ---- Blog Posts ---- */
+const blogPosts = [
+  {
+    tag: 'Wealth Building',
+    date: 'Aug 2026',
+    title: 'How to Start Building Wealth in Your 30s',
+    desc: 'Practical steps to begin your wealth journey with systematic planning, smart investments, and compounding returns.',
+    img: 'https://images.pexels.com/photos/6801648/pexels-photo-6801648.jpeg?auto=compress&cs=tinysrgb&w=600',
+    href: '/blog',
+  },
+  {
+    tag: 'Investing',
+    date: 'Jul 2026',
+    title: '5 Mistakes to Avoid When Investing',
+    desc: 'Common investment pitfalls and how to avoid them — from emotional decisions to ignoring diversification.',
+    img: 'https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=600',
+    href: '/blog',
+  },
+  {
+    tag: 'Retirement',
+    date: 'Jul 2026',
+    title: 'How Much Should You Save for Retirement?',
+    desc: 'The power of compounding explained — how starting early dramatically changes your retirement wealth accumulation.',
+    img: 'https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=600',
+    href: '/blog',
+  },
+];
+
+/* ---- FAQ Data ---- */
+const faqs = [
+  {
+    question: 'What services does GrowthNest provide?',
+    answer: 'GrowthNest provides a comprehensive suite of financial services including Financial Planning, Investment Planning, Wealth Management, Retirement Planning, Tax Planning, and Insurance Planning. Our expert advisors create personalized strategies tailored to your unique financial goals.',
+  },
+  {
+    question: 'How does financial planning work?',
+    answer: 'Our financial planning process starts with a thorough understanding of your current financial position, income, expenses, and long-term goals. We then analyze your situation, identify opportunities, and create a personalized roadmap. We continuously monitor and adjust your plan as your life circumstances evolve.',
+  },
+  {
+    question: 'Can I create an investment plan?',
+    answer: "Absolutely! We create customized investment plans based on your risk tolerance, time horizon, and financial goals. Whether you're interested in mutual funds, stocks, bonds, or alternative investments, we help you build a diversified portfolio designed for long-term growth.",
+  },
+  {
+    question: 'How can I get started?',
+    answer: 'Getting started is simple. Click "Get Started" on our website to create your free account, or reach out to us via the Contact page to schedule a complimentary consultation. Our advisor will connect with you within 24 hours to understand your needs.',
+  },
+  {
+    question: 'Is financial planning personalized?',
+    answer: 'Yes, absolutely. We believe there is no one-size-fits-all approach to financial planning. Every strategy we create is tailored to your specific financial situation, goals, risk tolerance, and life stage. We take the time to understand you before recommending any solutions.',
+  },
+  {
+    question: 'How do I contact a financial advisor?',
+    answer: 'You can contact us through our Contact page, by email at hello@growthnest.com, or by phone at +91 98765 43210. Our advisors are available Monday to Friday from 9 AM to 7 PM IST, and Saturday from 10 AM to 5 PM. We also offer video consultations.',
+  },
+];
+
+/* ---- SIP Calculator Component ---- */
+function SipCalculator() {
+  const [monthly, setMonthly] = useState(5000);
+  const [years, setYears] = useState(10);
+  const [rate, setRate] = useState(12);
+
+  const months = years * 12;
+  const r = rate / 100 / 12;
+  const maturity = Math.round(monthly * (((Math.pow(1 + r, months) - 1) / r) * (1 + r)));
+  const invested = monthly * months;
+  const returns = maturity - invested;
+
+  const fmt = (n) => {
+    if (n >= 10000000) return `₹${(n / 10000000).toFixed(2)} Cr`;
+    if (n >= 100000) return `₹${(n / 100000).toFixed(2)} L`;
+    return `₹${n.toLocaleString('en-IN')}`;
+  };
+
   return (
-    <div className="advisor-mock-card">
-      <div className="mock-header">
-        <div className="mock-avatar">S</div>
-        <div>
-          <div className="mock-name">Shubham K.</div>
-          <div className="mock-badge">🥇 Gold Advisor</div>
-        </div>
-        <div className="mock-notif">🔔</div>
+    <div className="calculator-card">
+      <h3 style={{ fontFamily: "'Playfair Display', serif", marginBottom: '1.5rem', color: '#101b3b' }}>SIP Returns Calculator</h3>
+      <div style={{ marginBottom: '1.25rem' }}>
+        <label style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+          <span>Monthly Investment</span>
+          <strong style={{ color: '#1e3a8a' }}>₹{monthly.toLocaleString('en-IN')}</strong>
+        </label>
+        <input type="range" min={500} max={100000} step={500} value={monthly} onChange={e => setMonthly(+e.target.value)} />
       </div>
-      <div className="mock-stats-row">
-        <div className="mock-stat">
-          <span className="mock-stat-val">₹45,200</span>
-          <span className="mock-stat-lbl">This Month</span>
-        </div>
-        <div className="mock-stat-divider" />
-        <div className="mock-stat">
-          <span className="mock-stat-val">24</span>
-          <span className="mock-stat-lbl">Active Leads</span>
-        </div>
-        <div className="mock-stat-divider" />
-        <div className="mock-stat">
-          <span className="mock-stat-val">85%</span>
-          <span className="mock-stat-lbl">Training</span>
-        </div>
+      <div style={{ marginBottom: '1.25rem' }}>
+        <label style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+          <span>Investment Period</span>
+          <strong style={{ color: '#1e3a8a' }}>{years} Years</strong>
+        </label>
+        <input type="range" min={1} max={30} step={1} value={years} onChange={e => setYears(+e.target.value)} />
       </div>
-      <div className="mock-chart">
-        {[40, 65, 45, 80, 55, 90, 75].map((h, i) => (
-          <div
-            key={i}
-            className="mock-bar"
-            style={{
-              height: `${h}%`,
-              background: i === 6 ? 'var(--primary)' : 'rgba(0,212,170,0.2)',
-            }}
-          />
-        ))}
+      <div style={{ marginBottom: '1.25rem' }}>
+        <label style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+          <span>Expected Annual Returns</span>
+          <strong style={{ color: '#1e3a8a' }}>{rate}%</strong>
+        </label>
+        <input type="range" min={6} max={24} step={0.5} value={rate} onChange={e => setRate(+e.target.value)} />
       </div>
-      <div className="mock-leads">
-        {[
-          { name: 'Amit Kumar', status: 'Converted', color: '#4caf50' },
-          { name: 'Priya Singh', status: 'Meeting Set', color: '#2196f3' },
-          { name: 'Rahul Gupta', status: 'New Lead', color: '#ffd700' },
-        ].map((l, i) => (
-          <div key={i} className="mock-lead-row">
-            <div className="mock-lead-dot" style={{ background: l.color }} />
-            <span className="mock-lead-name">{l.name}</span>
-            <span className="mock-lead-status" style={{ color: l.color }}>{l.status}</span>
+      <div className="calc-result">
+        <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.7)', marginBottom: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Estimated Maturity Value</p>
+        <div className="calc-result-num">{fmt(maturity)}</div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.25rem' }}>Total Invested</p>
+            <p style={{ fontSize: '1rem', fontWeight: 600, color: '#fff' }}>{fmt(invested)}</p>
           </div>
-        ))}
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', marginBottom: '0.25rem' }}>Wealth Gained</p>
+            <p style={{ fontSize: '1rem', fontWeight: 600, color: '#d4af37' }}>{fmt(returns)}</p>
+          </div>
+        </div>
+      </div>
+      <div style={{ marginTop: '1.25rem' }}>
+        <Link href="/contact" className="btn btn-outline w-full" style={{ justifyContent: 'center' }}>
+          Get a Free Consultation
+        </Link>
       </div>
     </div>
   );
 }
 
-/* ---- Home Page ---- */
+/* ---- HomePage ---- */
 export default function HomePage() {
-  const [typeIndex, setTypeIndex] = useState(0);
-  const words = ['Insurance Advisor', 'Financial Expert', 'Wealth Creator', 'Life Changer'];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTypeIndex(prev => (prev + 1) % words.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  const [openFaq, setOpenFaq] = useState(0);
+  const toggleFaq = (i) => setOpenFaq(openFaq === i ? -1 : i);
 
   return (
     <>
-      {/* ======= HERO SECTION ======= */}
+      {/* ======= HERO ======= */}
       <section className="hero" id="hero-section">
-        <Particles />
-        <div className="hero-bg-gradient" />
-        <div className="hero-bg-grid" />
-
-        <div className="container hero-split">
-          {/* Left: Content */}
-          <div className="hero-content animate-fade-in-up">
+        <div className="container">
+          <div className="hero-content fade-in-up">
             <div className="hero-badge">
-              <span className="pulse-dot" />
-              🚀 India&apos;s #1 Insurance Advisor Platform
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" /></svg>
+              India&apos;s Trusted Financial Advisory
             </div>
-
-            <h1 className="hero-title">
-              Grow Beyond <span className="text-gradient">Limits</span>
+            <h1>
+              Build a Smarter<br />
+              <span style={{ color: '#d4af37' }}>Financial Future</span>
             </h1>
-
-            <div className="hero-subtitle">
-              Become a{' '}
-              <span className="typewriter-text" key={typeIndex}>
-                {words[typeIndex]}
-              </span>
-            </div>
-
-            <p className="hero-desc">
-              Join 5,000+ advisors earning unlimited income with 20+ top insurance companies.
-              Get trained, certified, and supported every step of the way.
+            <p className="hero-subtitle">
+              GrowthNest helps individuals and businesses make informed financial decisions through personalized planning, trusted guidance, and modern financial solutions.
             </p>
-
             <div className="hero-actions">
-              <Link href="/careers" className="btn btn-primary btn-lg" id="hero-join-btn">
-                🚀 Join as Advisor
-              </Link>
-              <Link href="/calculator" className="btn btn-glass btn-lg" id="hero-calc-btn">
-                💰 Calculate Income
-              </Link>
+              <Link href="/register" className="btn btn-secondary btn-lg" id="hero-getstarted-btn">Get Started</Link>
+              <Link href="/services" className="btn btn-outline-white btn-lg" id="hero-services-btn">Explore Services</Link>
             </div>
-
-            <div className="hero-trust">
-              <div className="trust-avatars">
-                {['👨‍💼', '👩‍💼', '👨‍💼', '👩‍💼', '👨‍💼'].map((a, i) => (
-                  <span key={i} className="trust-avatar" style={{ zIndex: 5 - i }}>{a}</span>
-                ))}
-              </div>
-              <span className="trust-text">
-                <strong>5,000+</strong> advisors already earning
-              </span>
-              <div className="trust-rating">
-                <span style={{ color: '#ffd700' }}>★★★★★</span>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>4.9/5</span>
-              </div>
-            </div>
-
-            <div style={{ marginTop: '1.5rem' }}>
-              <Link href="/dashboard" style={{ fontSize: '0.85rem', color: 'var(--primary)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                📊 Or explore the live dashboard →
-              </Link>
-            </div>
-          </div>
-
-          {/* Right: Advisor Dashboard Mock */}
-          <div className="hero-visual animate-slide-right">
-            <div className="hero-visual-glow" />
-            <AdvisorMock />
-            <div className="hero-float-badge float-badge-1">
-              <span>🎉</span>
-              <span>Rahul earned <strong>₹3.2L</strong> this month!</span>
-            </div>
-            <div className="hero-float-badge float-badge-2">
-              <span>✅</span>
-              <span><strong>New policy</strong> sold — LIC Term</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="hero-scroll">
-          <div className="scroll-indicator">
-            <div className="scroll-dot" />
           </div>
         </div>
       </section>
 
-      {/* Social Proof Strip */}
-      <div className="social-proof-strip">
+      {/* ======= TRUST SECTION ======= */}
+      <section className="trust-section" id="trust-section" aria-label="Why trust GrowthNest">
         <div className="container">
-          <div className="social-proof-items">
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <p style={{ fontSize: '0.95rem', color: 'var(--gray-500)', fontWeight: 500 }}>Helping people make better financial decisions</p>
+          </div>
+          <div className="trust-grid">
             {[
-              { num: '5,000+', label: 'Active Advisors', icon: '👥' },
-              { num: '20+', label: 'Insurance Partners', icon: '🏢' },
-              { num: '₹50Cr+', label: 'Business Generated', icon: '💰' },
-              { num: '98%', label: 'Advisor Satisfaction', icon: '⭐' },
-              { num: '10+', label: 'Years of Excellence', icon: '🏆' },
+              { title: 'Trusted Guidance', desc: 'SEBI-registered advisors with decade-long expertise', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+              { title: 'Transparent Advice', desc: 'Fee-only model — no hidden commissions, ever', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
+              { title: 'Personalized Planning', desc: 'Every strategy built uniquely around your goals', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
+              { title: 'Long-Term Approach', desc: 'We focus on sustainable, lasting wealth creation', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg> },
             ].map((item, i) => (
-              <div key={i} className="social-proof-item">
-                <span style={{ fontSize: '1.4rem' }}>{item.icon}</span>
-                <div>
-                  <div className="sp-num">{item.num}</div>
-                  <div className="sp-label">{item.label}</div>
-                </div>
-                {i < 4 && <div className="sp-divider" />}
+              <div key={i} className="trust-item">
+                <div className="trust-icon">{item.icon}</div>
+                <div className="trust-text"><h4>{item.title}</h4><p>{item.desc}</p></div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ======= STATS SECTION ======= */}
-      <section className="section stats-section" id="stats-section">
+      {/* ======= SERVICES ======= */}
+      <section className="section bg-gray-50" id="services-section">
         <div className="container">
-          <div className="stats-grid">
-            {[
-              { number: 5000, suffix: '+', label: 'Advisors', icon: '👥', sparkline: [30, 50, 45, 70, 60, 85, 100], color: 'var(--primary)' },
-              { number: 20, suffix: '+', label: 'Insurance Partners', icon: '🏢', sparkline: [60, 65, 70, 75, 80, 90, 100], color: 'var(--secondary)' },
-              { number: 50, suffix: ' Cr+', prefix: '₹', label: 'Business Generated', icon: '💰', sparkline: [20, 35, 50, 55, 70, 85, 100], color: 'var(--accent)' },
-              { number: 10, suffix: '+', label: 'Years Experience', icon: '📅', sparkline: [10, 25, 40, 55, 65, 80, 100], color: '#ff6384' },
-            ].map((stat, i) => (
-              <div key={i} className="stat-card glass-card card-hover-glow">
-                <div className="stat-top">
-                  <span className="stat-icon">{stat.icon}</span>
-                  <div className="sparkline">
-                    {stat.sparkline.map((h, j) => (
-                      <div key={j} className={`sparkline-bar ${j === 6 ? 'highlight' : ''}`}
-                        style={{ height: `${h}%`, background: j === 6 ? stat.color : undefined }} />
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-label">Our Services</span>
+            <h2 className="section-title">Financial solutions designed around you</h2>
+            <p className="section-desc">From financial planning to wealth management — comprehensive guidance tailored to your unique needs.</p>
+          </div>
+          <div className="services-grid">
+            {services.map((s) => (
+              <div key={s.id} className="service-card" id={`service-${s.id}`}>
+                <div className="service-icon">{s.icon}</div>
+                <h3>{s.title}</h3>
+                <p>{s.desc}</p>
+                <Link href={`/services/${s.id}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.25rem', marginTop: '1rem', fontSize: '0.875rem', fontWeight: 600, color: '#1e3a8a' }}>
+                  Learn More
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======= ABOUT ======= */}
+      <section className="section" id="about-section">
+        <div className="container">
+          <div className="split-grid">
+            <div className="split-image">
+              <img src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&w=800" alt="GrowthNest team meeting" loading="lazy" />
+              <div style={{ position: 'absolute', bottom: '1.5rem', left: '1.5rem', right: '1.5rem', background: 'rgba(16,27,59,0.92)', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid rgba(255,255,255,0.2)', paddingRight: '1rem' }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>95%</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.15rem' }}>Client Satisfaction</div>
+                </div>
+                <div style={{ textAlign: 'center', flex: 1 }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>10+</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.15rem' }}>Years of Expertise</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span className="section-label">About GrowthNest</span>
+              <h2 className="section-title" style={{ textAlign: 'left' }}>Financial clarity for a better tomorrow.</h2>
+              <p style={{ color: '#4b5563', marginBottom: '1.5rem', lineHeight: 1.7 }}>
+                At GrowthNest, we believe everyone deserves clear, unbiased financial guidance. We simplify complex financial decisions through personalized planning, transparent recommendations, and a deep commitment to your long-term prosperity.
+              </p>
+              <div className="feature-list">
+                {[
+                  { title: 'Understanding Your Goals', desc: 'We listen first, then plan — ensuring our strategies align with what truly matters to you.' },
+                  { title: 'Transparent Recommendations', desc: 'No conflicts of interest. Our fee-only model means your success is our only motivation.' },
+                  { title: 'Personalized Financial Planning', desc: 'Every client receives a unique financial roadmap, not a generic template.' },
+                  { title: 'Long-Term Financial Growth', desc: 'We focus on sustainable wealth creation strategies that work across market cycles.' },
+                ].map((f, i) => (
+                  <div key={i} className="feature-item">
+                    <div className="feature-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                    </div>
+                    <div className="feature-text"><h4>{f.title}</h4><p>{f.desc}</p></div>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginTop: '2rem' }}>
+                <Link href="/about" className="btn btn-primary" id="about-learn-more-btn">Learn More</Link>
+                <Link href="/contact" className="btn btn-outline" id="about-contact-btn">Talk to an Advisor</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======= FEATURED / ONE CLEAR PLAN ======= */}
+      <section className="section bg-gray-50" id="featured-section">
+        <div className="container">
+          <div className="split-grid">
+            <div>
+              <span className="section-label">One Clear Plan</span>
+              <h2 className="section-title" style={{ textAlign: 'left' }}>One clear plan for your financial goals.</h2>
+              <p style={{ color: '#4b5563', marginBottom: '2rem', lineHeight: 1.7 }}>
+                GrowthNest gives you a single, unified view of your financial life — tracking goals, monitoring investments, analyzing risk, and measuring progress — all in one intelligent platform.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
+                {[
+                  { icon: '📊', title: 'Financial Goal Tracking', desc: 'Set, monitor and achieve every financial milestone.' },
+                  { icon: '📈', title: 'Investment Planning', desc: 'Personalized investment portfolios with regular rebalancing.' },
+                  { icon: '🔍', title: 'Risk Analysis', desc: 'Understand your risk profile and invest accordingly.' },
+                  { icon: '💼', title: 'Portfolio Overview', desc: 'Consolidated view of all your assets and investments.' },
+                ].map((item, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', padding: '1rem 1.25rem', background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div style={{ fontSize: '1.5rem', flexShrink: 0 }}>{item.icon}</div>
+                    <div>
+                      <p style={{ fontWeight: 700, color: '#101b3b', marginBottom: '0.1rem', fontSize: '0.95rem' }}>{item.title}</p>
+                      <p style={{ fontSize: '0.82rem', color: '#6b7280', margin: 0 }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Link href="/register" className="btn btn-primary">Get Started Today</Link>
+            </div>
+
+            {/* Dashboard Mockup */}
+            <div style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+              <div style={{ background: '#101b3b', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9rem' }}>My Financial Dashboard</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#f59e0b' }} />
+                  <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#22c55e' }} />
+                </div>
+              </div>
+              <div style={{ padding: '1.25rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
+                  {[
+                    { label: 'Portfolio Value', value: '₹24.8L', delta: '+12.4%', color: '#22c55e' },
+                    { label: 'Monthly Savings', value: '₹45,000', delta: 'On Track', color: '#3b82f6' },
+                    { label: 'Financial Goals', value: '3 Active', delta: '2 Near Target', color: '#f59e0b' },
+                    { label: 'Investments', value: '₹18.2L', delta: '+8.7%', color: '#8b5cf6' },
+                  ].map((s, i) => (
+                    <div key={i} style={{ background: '#f9fafb', borderRadius: '10px', padding: '0.875rem', border: '1px solid #e5e7eb' }}>
+                      <p style={{ fontSize: '0.7rem', color: '#6b7280', margin: '0 0 0.3rem' }}>{s.label}</p>
+                      <p style={{ fontSize: '1.1rem', fontWeight: 700, color: '#101b3b', margin: '0 0 0.2rem', fontFamily: "'Playfair Display', serif" }}>{s.value}</p>
+                      <span style={{ fontSize: '0.7rem', color: s.color, fontWeight: 600 }}>{s.delta}</span>
+                    </div>
+                  ))}
+                </div>
+                <div style={{ background: '#f9fafb', borderRadius: '10px', padding: '1rem', border: '1px solid #e5e7eb', marginBottom: '1rem' }}>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', marginBottom: '0.75rem' }}>Portfolio Performance — 2026</p>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '60px' }}>
+                    {[35, 45, 40, 60, 55, 70, 65, 80, 75, 90, 85, 100].map((h, i) => (
+                      <div key={i} style={{ flex: 1, height: `${h}%`, background: i === 11 ? '#1e3a8a' : i >= 9 ? '#93c5fd' : '#dbeafe', borderRadius: '3px 3px 0 0' }} />
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.4rem' }}>
+                    {['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'].map(m => (
+                      <span key={m} style={{ fontSize: '0.6rem', color: '#9ca3af' }}>{m}</span>
                     ))}
                   </div>
                 </div>
-                <div className="stat-number">
-                  <AnimatedCounter end={stat.number} suffix={stat.suffix} prefix={stat.prefix || ''} />
-                </div>
-                <p className="stat-label">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ======= ABOUT PREVIEW ======= */}
-      <section className="section" id="about-preview">
-        <div className="container">
-          <div className="about-grid">
-            <div className="about-image-area">
-              <div className="about-image-card glass-card-static">
-                <div className="about-emoji">🌱</div>
-                <div className="about-image-label">
-                  Empowering India&apos;s Future Financial Advisors
-                </div>
-                <div className="about-stats-mini">
-                  <div className="mini-stat">
-                    <span className="text-gradient" style={{ fontWeight: 800 }}>15</span>
-                    <span>States</span>
-                  </div>
-                  <div className="mini-stat-div" />
-                  <div className="mini-stat">
-                    <span className="text-gradient" style={{ fontWeight: 800 }}>5K+</span>
-                    <span>Advisors</span>
-                  </div>
-                  <div className="mini-stat-div" />
-                  <div className="mini-stat">
-                    <span className="text-gradient" style={{ fontWeight: 800 }}>2014</span>
-                    <span>Founded</span>
-                  </div>
+                <div style={{ background: '#f9fafb', borderRadius: '10px', padding: '1rem', border: '1px solid #e5e7eb' }}>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', marginBottom: '0.75rem' }}>Goal Progress</p>
+                  {[
+                    { goal: 'Emergency Fund', pct: 85, color: '#1e3a8a' },
+                    { goal: 'Home Down Payment', pct: 42, color: '#d4af37' },
+                    { goal: 'Retirement Corpus', pct: 28, color: '#22c55e' },
+                  ].map((g, i) => (
+                    <div key={i} style={{ marginBottom: '0.6rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+                        <span style={{ fontSize: '0.72rem', color: '#374151' }}>{g.goal}</span>
+                        <span style={{ fontSize: '0.72rem', color: g.color, fontWeight: 600 }}>{g.pct}%</span>
+                      </div>
+                      <div style={{ height: '6px', background: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
+                        <div style={{ width: `${g.pct}%`, height: '100%', background: g.color, borderRadius: '3px' }} />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <div className="about-float-card glass-card-static">
-                <span className="text-gradient" style={{ fontSize: '1.5rem', fontWeight: 800 }}>98%</span>
-                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Advisor Satisfaction</span>
-              </div>
-            </div>
-            <div className="about-content">
-              <div className="section-heading" style={{ textAlign: 'left' }}>
-                <span className="label">About GrowthNest</span>
-                <h2>Building India&apos;s Largest Insurance <span className="text-gradient">Advisory Network</span></h2>
-              </div>
-              <p style={{ marginBottom: '1rem' }}>
-                GrowthNest was founded in 2014 with a single mission — to democratize insurance advisory in India. We believe that anyone with dedication and the right training can build a rewarding career in insurance.
-              </p>
-              <p style={{ marginBottom: '1.5rem' }}>
-                Today, we&apos;re proud to have trained 5,000+ advisors across 15 states, partnering with 20+ leading insurance companies to offer the best products to Indian families.
-              </p>
-              <div className="about-features">
-                {[
-                  { icon: '🎓', text: 'World-class training' },
-                  { icon: '💰', text: 'Unlimited income potential' },
-                  { icon: '🏢', text: '20+ insurance partners' },
-                  { icon: '📱', text: 'Full digital support' },
-                ].map((f, i) => (
-                  <div key={i} className="about-feature">
-                    <span className="feature-check">{f.icon}</span>
-                    <span>{f.text}</span>
-                  </div>
-                ))}
-              </div>
-              <Link href="/about" className="btn btn-primary" style={{ marginTop: '1.5rem' }} id="about-more-btn">
-                Learn More About Us
-              </Link>
             </div>
           </div>
         </div>
       </section>
 
       {/* ======= HOW IT WORKS ======= */}
-      <section className="section" id="how-it-works" style={{ background: 'var(--bg-secondary)' }}>
+      <section className="process-section" id="how-it-works">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">How It Works</span>
-            <h2>Start Your Journey in <span className="text-gradient">4 Simple Steps</span></h2>
-            <p>From registration to earning — we&apos;ve made the process seamless.</p>
+          <div style={{ textAlign: 'center' }}>
+            <span className="section-label">Our Process</span>
+            <h2 className="section-title">Your financial journey, simplified.</h2>
+            <p className="section-desc">A clear, structured approach to help you achieve your financial goals at every step.</p>
           </div>
-
-          <div className="steps-grid">
+          <div className="process-grid">
             {[
-              { step: '01', icon: '📝', title: 'Register', desc: 'Fill the online application form with your basic details and documents.', color: 'var(--primary)' },
-              { step: '02', icon: '📚', title: 'Get Trained', desc: 'Complete our comprehensive training modules at your own pace.', color: 'var(--secondary)' },
-              { step: '03', icon: '🤝', title: 'Start Selling', desc: 'Access leads, tools, and support to begin selling insurance policies.', color: 'var(--accent)' },
-              { step: '04', icon: '💰', title: 'Earn Income', desc: 'Earn commissions, bonuses, and rewards with no income ceiling.', color: '#25D366' },
-            ].map((s, i) => (
-              <div key={i} className="step-card glass-card card-hover-glow" style={{ '--step-color': s.color }}>
-                <div className="step-number">{s.step}</div>
-                <div className="step-icon-wrap" style={{ background: `${s.color}15`, border: `1px solid ${s.color}30` }}>
-                  <span className="step-icon">{s.icon}</span>
-                </div>
-                <h4>{s.title}</h4>
-                <p>{s.desc}</p>
-                {i < 3 && <div className="step-arrow hide-mobile">→</div>}
+              { num: '01', title: 'Understand', desc: 'Understand your goals, income, expenses, and current financial position through an in-depth consultation.' },
+              { num: '02', title: 'Analyze', desc: 'Analyze your financial needs, risk tolerance, opportunities, and potential risks with data-driven tools.' },
+              { num: '03', title: 'Plan', desc: 'Create a personalized, actionable financial strategy aligned with your short-term and long-term goals.' },
+              { num: '04', title: 'Grow', desc: 'Implement your plan, track progress regularly, and make smarter financial decisions over time.' },
+            ].map((step, i) => (
+              <div key={i} className="process-card">
+                <div className="process-number">{step.num}</div>
+                <h3>{step.title}</h3>
+                <p>{step.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======= PERSONA SECTION (NEW) ======= */}
-      <section className="section" id="persona-section">
+      {/* ======= WHY GROWTHNEST ======= */}
+      <section className="why-section" id="why-growthnest">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">Who Is It For?</span>
-            <h2>GrowthNest is Built for <span className="text-gradient">Everyone</span></h2>
-            <p>No matter your background, there&apos;s a place for you.</p>
+          <div style={{ textAlign: 'center' }}>
+            <span className="section-label">Why Choose Us</span>
+            <h2 className="section-title">Why GrowthNest?</h2>
+            <p className="section-desc">We combine expert knowledge, technology, and a genuine client-first philosophy to deliver exceptional results.</p>
           </div>
-          <div className="persona-grid">
+          <div className="why-grid">
             {[
-              {
-                cls: 'persona-advisor',
-                icon: '👨‍💼',
-                title: 'Aspiring Advisors',
-                desc: 'Zero experience? No problem. We train you from scratch — insurance basics to advanced selling.',
-                perks: ['Free IRDAI exam prep', 'Mentorship program', 'Lead generation tools'],
-                cta: '🚀 Start Free',
-                href: '/careers',
-              },
-              {
-                cls: 'persona-client',
-                icon: '🏢',
-                title: 'Experienced Professionals',
-                desc: 'Already in finance or sales? Leverage your skills to earn 3–5x more through insurance advisory.',
-                perks: ['Advanced product training', 'HNI client access', 'Dedicated support manager'],
-                cta: '📋 Apply Now',
-                href: '/careers',
-              },
-              {
-                cls: 'persona-business',
-                icon: '👩‍💼',
-                title: 'Homemakers & Part-timers',
-                desc: 'Work on your schedule. Earn a second income without leaving home. We support 40%+ women advisors.',
-                perks: ['Work from home', 'Flexible hours', 'WhatsApp selling tools'],
-                cta: '💡 Learn More',
-                href: '/about',
-              },
-            ].map((p, i) => (
-              <div key={i} className={`persona-card ${p.cls} card-hover-glow`}>
-                <div className="persona-icon">{p.icon}</div>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.75rem' }}>{p.title}</h3>
-                <p style={{ fontSize: '0.9rem', marginBottom: '1.25rem' }}>{p.desc}</p>
-                <div className="persona-perks">
-                  {p.perks.map((perk, j) => (
-                    <div key={j} className="persona-perk">
-                      <span style={{ color: 'var(--primary)' }}>✓</span>
-                      <span>{perk}</span>
-                    </div>
-                  ))}
-                </div>
-                <Link href={p.href} className="btn btn-secondary btn-sm" style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}>
-                  {p.cta}
-                </Link>
+              { title: 'Personalized Approach', desc: 'No two clients are alike. We craft strategies unique to your financial situation and aspirations.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
+              { title: 'Transparent Recommendations', desc: 'Every recommendation comes with a clear rationale. No hidden fees, no conflicts of interest.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
+              { title: 'Data-Driven Insights', desc: 'Our decisions are backed by real data, sophisticated analysis, and market intelligence.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg> },
+              { title: 'Long-Term Planning', desc: 'We look beyond the immediate future to help you build wealth that lasts across generations.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg> },
+              { title: 'Easy-to-Understand Guidance', desc: 'We break down complex financial concepts into simple, actionable advice you can act on today.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /></svg> },
+              { title: 'Customer First', desc: 'Your financial success is our success. We measure our performance by the goals you achieve.', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg> },
+            ].map((item, i) => (
+              <div key={i} className="why-card">
+                <div className="why-icon">{item.icon}</div>
+                <div className="why-text"><h4>{item.title}</h4><p>{item.desc}</p></div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======= APP SHOWCASE (NEW — inspired by TurtlemintPro) ======= */}
-      <section className="section app-showcase-section" id="app-showcase">
+      {/* ======= TESTIMONIALS ======= */}
+      <section className="section" id="client-experiences">
         <div className="container">
-          <div className="app-showcase-grid">
-            <div className="app-showcase-content">
-              <span className="label">GrowthNest Pro</span>
-              <h2 style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-                Your Business in <span className="text-gradient">Your Pocket</span>
-              </h2>
-              <p style={{ marginBottom: '2rem' }}>
-                The GrowthNest advisor app gives you everything you need to run and grow your insurance business — leads, training, income tracking, and more.
-              </p>
-              <div className="app-features">
-                {[
-                  { icon: '👥', title: 'Lead Management', desc: 'Track and nurture leads through a visual CRM pipeline' },
-                  { icon: '📊', title: 'Income Dashboard', desc: 'Real-time commissions, bonuses, and monthly earnings' },
-                  { icon: '🎓', title: 'Training on the Go', desc: 'Access 100+ video lessons and mock tests anywhere' },
-                  { icon: '📄', title: 'Policy Tracker', desc: 'Monitor renewals, claims, and client policy status' },
-                ].map((f, i) => (
-                  <div key={i} className="app-feature-item">
-                    <div className="app-feature-icon">{f.icon}</div>
-                    <div>
-                      <h5 style={{ marginBottom: '0.2rem' }}>{f.title}</h5>
-                      <p style={{ fontSize: '0.85rem', margin: 0 }}>{f.desc}</p>
-                    </div>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <span className="section-label">Client Experiences</span>
+            <h2 className="section-title">What Our Clients Say</h2>
+            <p className="section-desc">Real stories from people who trusted us with their financial journey.</p>
+          </div>
+          <div className="testimonials-grid">
+            {testimonials.map((t, i) => (
+              <div key={i} className="testimonial-card" id={`testimonial-${i}`}>
+                <div className="stars">{'★'.repeat(t.stars)}</div>
+                <p className="testimonial-text">&ldquo;{t.text}&rdquo;</p>
+                <div className="testimonial-author">
+                  <div className="author-avatar">{t.initial}</div>
+                  <div>
+                    <p className="author-name">{t.name}</p>
+                    <p className="author-title">{t.title}</p>
                   </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ======= SIP CALCULATOR ======= */}
+      <section className="section bg-gray-50" id="calculators-section">
+        <div className="container">
+          <div className="split-grid">
+            <div>
+              <span className="section-label">Planning Tools</span>
+              <h2 className="section-title" style={{ textAlign: 'left' }}>Calculate Your Financial Future</h2>
+              <p style={{ color: '#4b5563', marginBottom: '2rem', lineHeight: 1.7 }}>
+                Use our interactive SIP calculator to plan your investments and understand the power of compounding over time.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {[
+                  { title: 'SIP Calculator', desc: 'Plan your monthly mutual fund investments' },
+                  { title: 'Retirement Corpus Calculator', desc: 'Find out how much you need to retire comfortably' },
+                  { title: 'Tax Savings Planner', desc: 'See how much tax you can save with smart investments' },
+                  { title: 'Goal-Based Planning', desc: 'Plan for specific goals like home, education, or travel' },
+                ].map((c, i) => (
+                  <Link key={i} href="/contact" style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem 1.25rem', border: '1px solid #e5e7eb', borderRadius: '12px', background: '#fff', transition: 'all 0.3s', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 8, background: '#eef2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="10" x2="16" y2="10" /><line x1="8" y1="14" x2="12" y2="14" /></svg>
+                    </div>
+                    <div>
+                      <p style={{ fontWeight: 600, color: '#101b3b', marginBottom: '0.1rem', fontSize: '0.95rem' }}>{c.title}</p>
+                      <p style={{ fontSize: '0.8rem', color: '#6b7280', margin: 0 }}>{c.desc}</p>
+                    </div>
+                    <svg style={{ marginLeft: 'auto', flexShrink: 0 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6" /></svg>
+                  </Link>
                 ))}
               </div>
-              <div className="flex gap-md" style={{ marginTop: '2rem', flexWrap: 'wrap' }}>
-                <Link href="/careers" className="btn btn-primary" id="app-join-btn">
-                  Get Access — Join Free
-                </Link>
-                <Link href="/dashboard" className="btn btn-secondary" id="app-login-btn">
-                  Open Dashboard →
-                </Link>
-              </div>
             </div>
-
-            {/* Phone-style app mockup */}
-            <div className="app-phone-wrap">
-              <div className="app-phone">
-                <div className="phone-notch" />
-                <div className="phone-screen">
-                  <div className="phone-header">
-                    <span style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--primary)' }}>GrowthNest Pro</span>
-                    <span style={{ fontSize: '0.7rem' }}>🔔</span>
-                  </div>
-                  <div className="phone-welcome">Good morning, Shubham 👋</div>
-                  <div className="phone-stats">
-                    <div className="phone-stat">
-                      <span className="phone-stat-val">₹45K</span>
-                      <span className="phone-stat-lbl">This Month</span>
-                    </div>
-                    <div className="phone-stat">
-                      <span className="phone-stat-val">24</span>
-                      <span className="phone-stat-lbl">Leads</span>
-                    </div>
-                    <div className="phone-stat">
-                      <span className="phone-stat-val">85%</span>
-                      <span className="phone-stat-lbl">Training</span>
-                    </div>
-                  </div>
-                  <div className="phone-chart">
-                    {[30, 60, 45, 80, 55, 90].map((h, i) => (
-                      <div key={i} className="phone-bar"
-                        style={{ height: `${h}%`, background: i === 5 ? 'var(--primary)' : 'rgba(0,212,170,0.2)' }} />
-                    ))}
-                  </div>
-                  <div className="phone-actions">
-                    {['➕ Lead', '📅 Event', '💬 Chat', '📊 Report'].map((a, i) => (
-                      <div key={i} className="phone-action-btn">{a}</div>
-                    ))}
-                  </div>
-                  <div className="phone-notification">
-                    <span>🎉</span>
-                    <span style={{ fontSize: '0.65rem' }}>Policy sold! Commission ₹3,200 credited</span>
-                  </div>
-                </div>
-              </div>
-              <div className="app-phone-glow" />
-            </div>
+            <div><SipCalculator /></div>
           </div>
         </div>
       </section>
 
-      {/* ======= PARTNERS MARQUEE ======= */}
-      <section className="section-sm" id="partners-preview">
+      {/* ======= BLOG / INSIGHTS ======= */}
+      <section className="section" id="insights-section">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">Our Partners</span>
-            <h2>Trusted by <span className="text-gradient">India&apos;s Best</span></h2>
+          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', marginBottom: '3rem' }}>
+            <div>
+              <span className="section-label">Financial Insights</span>
+              <h2 className="section-title" style={{ marginBottom: 0 }}>Latest From Our Blog</h2>
+            </div>
+            <Link href="/blog" className="btn btn-outline btn-sm" id="view-all-blog-btn">View All Articles</Link>
           </div>
-        </div>
-        <div className="marquee-wrapper">
-          <div className="marquee-track">
-            {[
-              { name: 'LIC', icon: '🏛️', color: '#1565C0' },
-              { name: 'HDFC Life', icon: '🔵', color: '#0072BB' },
-              { name: 'ICICI Prudential', icon: '🟠', color: '#F36B21' },
-              { name: 'SBI Life', icon: '🔷', color: '#0047BA' },
-              { name: 'Max Life', icon: '🟡', color: '#D4002D' },
-              { name: 'Tata AIA', icon: '🔴', color: '#E31E24' },
-              { name: 'Bajaj Allianz', icon: '🟢', color: '#1D4F8C' },
-              { name: 'Kotak Life', icon: '🔶', color: '#ED1C24' },
-              { name: 'LIC', icon: '🏛️', color: '#1565C0' },
-              { name: 'HDFC Life', icon: '🔵', color: '#0072BB' },
-              { name: 'ICICI Prudential', icon: '🟠', color: '#F36B21' },
-              { name: 'SBI Life', icon: '🔷', color: '#0047BA' },
-              { name: 'Max Life', icon: '🟡', color: '#D4002D' },
-              { name: 'Tata AIA', icon: '🔴', color: '#E31E24' },
-              { name: 'Bajaj Allianz', icon: '🟢', color: '#1D4F8C' },
-              { name: 'Kotak Life', icon: '🔶', color: '#ED1C24' },
-            ].map((p, i) => (
-              <div key={i} className="marquee-item glass-card-static">
-                <span className="marquee-dot" style={{ background: p.color }} />
-                <span style={{ fontSize: '0.95rem', fontWeight: 600 }}>{p.name}</span>
-              </div>
+          <div className="blog-grid">
+            {blogPosts.map((post, i) => (
+              <Link key={i} href={post.href} className="blog-card" id={`blog-card-${i}`}>
+                <div className="blog-image"><img src={post.img} alt={post.title} loading="lazy" /></div>
+                <div className="blog-body">
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.75rem' }}>
+                    <span className="blog-tag">{post.tag}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#9ca3af' }}>{post.date}</span>
+                  </div>
+                  <h3>{post.title}</h3>
+                  <p>{post.desc}</p>
+                  <span className="blog-link">
+                    Read More
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
+                  </span>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ======= SUCCESS STORIES PREVIEW ======= */}
-      <section className="section" id="success-preview" style={{ background: 'var(--bg-secondary)' }}>
+      {/* ======= FAQ ======= */}
+      <section className="faq-section" id="faq-section">
         <div className="container">
-          <div className="section-heading">
-            <span className="label">Success Stories</span>
-            <h2>Our Advisors Are <span className="text-gradient">Thriving</span></h2>
-            <p>Real stories from real people who transformed their lives with GrowthNest.</p>
+          <div style={{ textAlign: 'center' }}>
+            <span className="section-label">FAQ</span>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+            <p className="section-desc">Everything you need to know about GrowthNest and our services.</p>
           </div>
-
-          <div className="grid grid-3">
-            {[
-              { name: 'Rahul Verma', city: 'Mumbai', income: '₹3,20,000/mo', prevIncome: '₹15,000/mo', emoji: '🥇', quote: 'GrowthNest gave me financial freedom.', badge: 'Gold Advisor', badgeClass: 'badge-accent' },
-              { name: 'Sneha Kulkarni', city: 'Pune', income: '₹2,40,000/mo', prevIncome: '₹22,000/mo', emoji: '🥈', quote: 'If I can do it, anyone can.', badge: 'Rising Star', badgeClass: 'badge-primary' },
-              { name: 'Amit Saxena', city: 'Delhi', income: '₹2,80,000/mo', prevIncome: '₹30,000/mo', emoji: '🥉', quote: 'The training made all the difference.', badge: 'Silver Advisor', badgeClass: 'badge-secondary' },
-            ].map((t, i) => (
-              <div key={i} className="glass-card testimonial-card card-hover-glow">
-                <div className="testimonial-header">
-                  <div className="testimonial-avatar">{t.emoji}</div>
-                  <div>
-                    <h4 style={{ fontSize: '1.1rem' }}>{t.name}</h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{t.city}</p>
-                  </div>
-                  <span className={`badge ${t.badgeClass}`} style={{ marginLeft: 'auto' }}>{t.badge}</span>
-                </div>
-                <div className="income-comparison">
-                  <div className="income-prev">
-                    <span>Before</span>
-                    <span className="income-val-prev">{t.prevIncome}</span>
-                  </div>
-                  <div className="income-arrow">→</div>
-                  <div className="income-now">
-                    <span>Now</span>
-                    <span className="income-val-now text-gradient">{t.income}</span>
-                  </div>
-                </div>
-                <p style={{ fontStyle: 'italic', fontSize: '0.95rem' }}>&ldquo;{t.quote}&rdquo;</p>
-              </div>
+          <div className="faq-list">
+            {faqs.map((faq, i) => (
+              <FAQItem key={i} question={faq.question} answer={faq.answer} isOpen={openFaq === i} onToggle={() => toggleFaq(i)} />
             ))}
-          </div>
-
-          <div className="text-center" style={{ marginTop: '2rem' }}>
-            <Link href="/success-stories" className="btn btn-secondary" id="view-all-stories-btn">
-              View All Success Stories →
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* ======= CTA SECTION ======= */}
+      {/* ======= CTA ======= */}
       <section className="cta-section" id="cta-section">
-        <Particles />
-        <div className="container text-center" style={{ position: 'relative', zIndex: 1 }}>
-          <div className="cta-badge">🎯 Limited Seats Available — Apply Today</div>
-          <h2 style={{ marginBottom: '1rem' }}>
-            Ready to Start Your <span className="text-gradient">Insurance Career</span>?
-          </h2>
-          <p style={{ fontSize: '1.15rem', maxWidth: '600px', margin: '0 auto 2rem', color: 'var(--text-secondary)' }}>
-            Join thousands of advisors who are already earning unlimited income. No experience needed — we&apos;ll train you from scratch.
-          </p>
-          <div className="flex items-center justify-center gap-md" style={{ flexWrap: 'wrap' }}>
-            <Link href="/careers" className="btn btn-accent btn-lg" id="cta-apply-btn">
-              🎯 Apply Now — It&apos;s Free
-            </Link>
-            <Link href="/calculator" className="btn btn-glass btn-lg" id="cta-calc-btn">
-              💰 Calculate Your Income
-            </Link>
+        <div className="container">
+          <span className="section-label" style={{ color: '#d4af37' }}>Start Today</span>
+          <h2>Your financial future starts today.</h2>
+          <p>Take the next step toward making smarter and more confident financial decisions.</p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link href="/register" className="btn btn-secondary btn-lg" id="cta-start-btn">Get Started</Link>
+            <Link href="/contact" className="btn btn-outline-white btn-lg" id="cta-contact-btn">Contact Us</Link>
           </div>
         </div>
       </section>
-
-      <style jsx>{`
-        /* ---- HERO SPLIT ---- */
-        .hero {
-          min-height: 90vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          overflow: hidden;
-          padding: 5rem 0 3rem;
-        }
-
-        .hero-bg-gradient {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse at 20% 50%, rgba(0, 212, 170, 0.1) 0%, transparent 60%),
-                      radial-gradient(ellipse at 80% 30%, rgba(108, 99, 255, 0.08) 0%, transparent 50%),
-                      radial-gradient(ellipse at 50% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 40%);
-        }
-
-        .hero-bg-grid {
-          position: absolute;
-          inset: 0;
-          background-image:
-            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-          background-size: 60px 60px;
-        }
-
-        .hero-split {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 4rem;
-          align-items: center;
-          position: relative;
-          z-index: 1;
-          width: 100%;
-        }
-
-        .hero-content { max-width: 580px; }
-
-        .hero-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 0.5rem 1.2rem;
-          background: rgba(0, 212, 170, 0.08);
-          border: 1px solid rgba(0, 212, 170, 0.2);
-          border-radius: var(--radius-full);
-          font-size: 0.85rem;
-          font-weight: 600;
-          color: var(--primary);
-          margin-bottom: 1.5rem;
-        }
-
-        .pulse-dot {
-          width: 8px; height: 8px;
-          background: var(--primary);
-          border-radius: 50%;
-          animation: pulse 2s infinite;
-          flex-shrink: 0;
-        }
-
-        .hero-title {
-          font-size: clamp(2.8rem, 5vw, 4.2rem);
-          font-weight: 900;
-          line-height: 1.1;
-          margin-bottom: 1rem;
-        }
-
-        .hero-subtitle {
-          font-size: clamp(1.1rem, 2vw, 1.4rem);
-          color: var(--text-secondary);
-          margin-bottom: 1rem;
-          font-weight: 400;
-        }
-
-        .typewriter-text {
-          color: var(--accent);
-          font-weight: 700;
-          display: inline-block;
-          animation: fadeIn 0.5s ease;
-        }
-
-        .hero-desc {
-          font-size: 1.05rem;
-          color: var(--text-muted);
-          margin-bottom: 2rem;
-          line-height: 1.7;
-        }
-
-        .hero-actions {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          flex-wrap: wrap;
-          margin-bottom: 2rem;
-        }
-
-        .hero-trust {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        .trust-avatars { display: flex; }
-
-        .trust-avatar {
-          width: 36px; height: 36px;
-          display: flex; align-items: center; justify-content: center;
-          background: var(--bg-tertiary);
-          border: 2px solid var(--bg-primary);
-          border-radius: 50%;
-          margin-left: -8px;
-          font-size: 1.1rem;
-        }
-        .trust-avatar:first-child { margin-left: 0; }
-
-        .trust-text { font-size: 0.9rem; color: var(--text-muted); }
-        .trust-rating { display: flex; align-items: center; gap: 4px; }
-
-        /* Hero Visual */
-        .hero-visual {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: flex-start;
-          padding-top: 1rem;
-        }
-
-        .hero-visual-glow {
-          position: absolute;
-          width: 300px; height: 300px;
-          background: radial-gradient(circle, rgba(0,212,170,0.15), transparent 70%);
-          top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          pointer-events: none;
-        }
-
-        /* Floating notification badges */
-        .hero-float-badge {
-          position: absolute;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 0.5rem 1rem;
-          background: rgba(10, 22, 40, 0.95);
-          border: 1px solid var(--border-glass);
-          border-radius: var(--radius-full);
-          font-size: 0.8rem;
-          white-space: nowrap;
-          backdrop-filter: blur(10px);
-          box-shadow: var(--shadow-md);
-          z-index: 10;
-        }
-
-        .float-badge-1 {
-          bottom: 30px; left: -20px;
-          animation: float 4s ease-in-out infinite;
-          border-color: rgba(0,212,170,0.3);
-        }
-
-        .float-badge-2 {
-          top: 20px; right: -20px;
-          animation: float 4s ease-in-out infinite 2s;
-          border-color: rgba(255,215,0,0.3);
-        }
-
-        /* Advisor Mock Card */
-        .advisor-mock-card {
-          background: var(--bg-card);
-          border: 1px solid var(--border-glass);
-          border-radius: var(--radius-xl);
-          padding: 1.5rem;
-          width: 340px;
-          backdrop-filter: blur(20px);
-          box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-          position: relative;
-          z-index: 5;
-        }
-
-        .mock-header {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 1.25rem;
-        }
-
-        .mock-avatar {
-          width: 40px; height: 40px;
-          border-radius: 50%;
-          background: var(--gradient-primary);
-          color: var(--bg-primary);
-          display: flex; align-items: center; justify-content: center;
-          font-weight: 800; font-size: 1.1rem;
-          flex-shrink: 0;
-        }
-
-        .mock-name { font-weight: 600; font-size: 0.95rem; }
-        .mock-badge { font-size: 0.7rem; color: var(--accent); }
-        .mock-notif { margin-left: auto; font-size: 1.2rem; cursor: pointer; }
-
-        .mock-stats-row {
-          display: flex;
-          align-items: center;
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-md);
-          padding: 0.75rem 1rem;
-          margin-bottom: 1rem;
-          gap: 8px;
-        }
-
-        .mock-stat {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 2px;
-        }
-
-        .mock-stat-val {
-          font-size: 0.9rem;
-          font-weight: 800;
-          font-family: var(--font-display);
-          background: var(--gradient-text);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .mock-stat-lbl { font-size: 0.65rem; color: var(--text-muted); }
-
-        .mock-stat-divider {
-          width: 1px; height: 30px;
-          background: var(--border-glass);
-        }
-
-        .mock-chart {
-          display: flex;
-          align-items: flex-end;
-          gap: 5px;
-          height: 70px;
-          padding: 0 4px;
-          margin-bottom: 1rem;
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-md);
-          padding: 8px;
-        }
-
-        .mock-bar {
-          flex: 1;
-          border-radius: 3px 3px 0 0;
-          min-height: 4px;
-        }
-
-        .mock-leads {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-        }
-
-        .mock-lead-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 8px;
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-sm);
-        }
-
-        .mock-lead-dot {
-          width: 8px; height: 8px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-
-        .mock-lead-name { flex: 1; font-size: 0.8rem; font-weight: 500; }
-        .mock-lead-status { font-size: 0.7rem; font-weight: 600; }
-
-        /* ---- STATS ---- */
-        .stats-section {
-          margin-top: -3rem;
-          position: relative;
-          z-index: 2;
-        }
-
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
-        }
-
-        .stat-card {
-          padding: 1.5rem;
-        }
-
-        .stat-top {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 1rem;
-        }
-
-        .stat-icon { font-size: 2rem; }
-
-        .stat-number {
-          font-family: var(--font-display);
-          font-size: 2.2rem;
-          font-weight: 800;
-          background: var(--gradient-text);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          margin-bottom: 0.25rem;
-        }
-
-        .stat-label {
-          font-size: 0.85rem;
-          color: var(--text-muted);
-        }
-
-        /* ---- ABOUT ---- */
-        .about-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 4rem;
-          align-items: center;
-        }
-
-        .about-image-area { position: relative; }
-
-        .about-image-card {
-          text-align: center;
-          padding: 2.5rem;
-          background: linear-gradient(135deg, rgba(0, 212, 170, 0.05), rgba(108, 99, 255, 0.05));
-        }
-
-        .about-emoji { font-size: 5rem; margin-bottom: 1rem; }
-
-        .about-image-label {
-          font-size: 0.95rem;
-          color: var(--text-secondary);
-          font-weight: 500;
-          margin-bottom: 1.5rem;
-        }
-
-        .about-stats-mini {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 16px;
-          padding-top: 1.25rem;
-          border-top: 1px solid var(--border-glass);
-        }
-
-        .mini-stat {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 2px;
-          font-size: 0.8rem;
-          color: var(--text-muted);
-        }
-
-        .mini-stat span:first-child { font-size: 1.1rem; }
-
-        .mini-stat-div {
-          width: 1px; height: 30px;
-          background: var(--border-glass);
-        }
-
-        .about-float-card {
-          position: absolute;
-          bottom: -20px;
-          right: -20px;
-          padding: 1rem 1.5rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 4px;
-          animation: float 3s ease-in-out infinite;
-        }
-
-        .about-features {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.75rem;
-        }
-
-        .about-feature {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 0.9rem;
-          color: var(--text-secondary);
-          padding: 0.5rem;
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-sm);
-        }
-
-        .feature-check { font-size: 1.1rem; }
-
-        /* ---- STEPS ---- */
-        .steps-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 1.5rem;
-          position: relative;
-        }
-
-        .step-card {
-          text-align: center;
-          position: relative;
-        }
-
-        .step-number {
-          font-family: var(--font-display);
-          font-size: 3rem;
-          font-weight: 900;
-          color: rgba(255,255,255,0.04);
-          position: absolute;
-          top: 12px;
-          right: 16px;
-        }
-
-        .step-icon-wrap {
-          width: 60px; height: 60px;
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          margin: 0 auto 1rem;
-        }
-
-        .step-icon { font-size: 1.8rem; }
-        .step-card h4 { margin-bottom: 0.5rem; }
-        .step-card p { font-size: 0.9rem; }
-
-        .step-arrow {
-          position: absolute;
-          right: -18px;
-          top: 40%;
-          transform: translateY(-50%);
-          font-size: 1.3rem;
-          color: var(--primary);
-          z-index: 2;
-        }
-
-        /* ---- PERSONA ---- */
-        .persona-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.5rem;
-        }
-
-        .persona-icon {
-          font-size: 3rem;
-          margin-bottom: 1rem;
-          display: block;
-        }
-
-        .persona-perks {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .persona-perk {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-size: 0.85rem;
-          color: var(--text-secondary);
-        }
-
-        /* ---- APP SHOWCASE ---- */
-        .app-showcase-section {
-          background: linear-gradient(135deg, var(--bg-secondary), rgba(0,212,170,0.02));
-        }
-
-        .app-showcase-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 5rem;
-          align-items: center;
-        }
-
-        .app-features {
-          display: flex;
-          flex-direction: column;
-          gap: 1.25rem;
-        }
-
-        .app-feature-item {
-          display: flex;
-          gap: 1rem;
-          align-items: flex-start;
-        }
-
-        .app-feature-icon {
-          width: 44px; height: 44px;
-          background: var(--bg-tertiary);
-          border: 1px solid var(--border-glass);
-          border-radius: var(--radius-sm);
-          display: flex; align-items: center; justify-content: center;
-          font-size: 1.3rem;
-          flex-shrink: 0;
-        }
-
-        /* Phone Mockup */
-        .app-phone-wrap {
-          position: relative;
-          display: flex;
-          justify-content: center;
-        }
-
-        .app-phone-glow {
-          position: absolute;
-          width: 200px; height: 200px;
-          background: radial-gradient(circle, rgba(0,212,170,0.2), transparent 70%);
-          bottom: -30px; left: 50%;
-          transform: translateX(-50%);
-          pointer-events: none;
-        }
-
-        .app-phone {
-          width: 260px;
-          background: var(--bg-card);
-          border: 2px solid var(--border-glass);
-          border-radius: 32px;
-          padding: 16px 12px;
-          box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-          position: relative;
-          z-index: 2;
-        }
-
-        .phone-notch {
-          width: 80px; height: 6px;
-          background: var(--bg-tertiary);
-          border-radius: 3px;
-          margin: 0 auto 14px;
-        }
-
-        .phone-screen {
-          background: var(--bg-secondary);
-          border-radius: 20px;
-          padding: 14px 12px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          min-height: 380px;
-        }
-
-        .phone-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .phone-welcome {
-          font-size: 0.7rem;
-          font-weight: 600;
-          color: var(--text-primary);
-        }
-
-        .phone-stats {
-          display: flex;
-          gap: 6px;
-        }
-
-        .phone-stat {
-          flex: 1;
-          background: var(--bg-tertiary);
-          border-radius: 8px;
-          padding: 6px 4px;
-          display: flex; flex-direction: column;
-          align-items: center; gap: 2px;
-        }
-
-        .phone-stat-val {
-          font-size: 0.75rem;
-          font-weight: 800;
-          background: var(--gradient-text);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .phone-stat-lbl {
-          font-size: 0.55rem;
-          color: var(--text-muted);
-        }
-
-        .phone-chart {
-          display: flex;
-          align-items: flex-end;
-          gap: 4px;
-          height: 60px;
-          background: var(--bg-tertiary);
-          border-radius: 8px;
-          padding: 6px;
-        }
-
-        .phone-bar {
-          flex: 1;
-          border-radius: 2px 2px 0 0;
-          min-height: 4px;
-        }
-
-        .phone-actions {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 6px;
-        }
-
-        .phone-action-btn {
-          padding: 6px 4px;
-          background: var(--bg-tertiary);
-          border-radius: 6px;
-          font-size: 0.6rem;
-          font-weight: 600;
-          text-align: center;
-          color: var(--text-secondary);
-        }
-
-        .phone-notification {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          padding: 6px 8px;
-          background: rgba(0,212,170,0.08);
-          border: 1px solid rgba(0,212,170,0.2);
-          border-radius: 8px;
-          font-size: 0.65rem;
-          color: var(--text-secondary);
-        }
-
-        /* ---- MARQUEE ---- */
-        .marquee-wrapper { overflow: hidden; width: 100%; }
-        .marquee-track {
-          display: flex;
-          gap: 1.5rem;
-          animation: marquee 30s linear infinite;
-          width: max-content;
-        }
-
-        .marquee-item {
-          padding: 0.75rem 1.5rem;
-          white-space: nowrap;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        .marquee-dot {
-          width: 10px; height: 10px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-
-        /* ---- TESTIMONIALS ---- */
-        .testimonial-card { display: flex; flex-direction: column; }
-        .testimonial-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; }
-        .testimonial-avatar { font-size: 2.5rem; }
-
-        .income-comparison {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          background: var(--bg-tertiary);
-          border-radius: var(--radius-md);
-          padding: 0.75rem 1rem;
-          margin-bottom: 1rem;
-        }
-
-        .income-prev, .income-now {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-        }
-
-        .income-prev span:first-child,
-        .income-now span:first-child {
-          font-size: 0.7rem;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          color: var(--text-muted);
-        }
-
-        .income-val-prev {
-          font-size: 0.95rem;
-          font-weight: 700;
-          color: var(--text-muted);
-          text-decoration: line-through;
-        }
-
-        .income-val-now {
-          font-size: 1.1rem;
-          font-weight: 800;
-        }
-
-        .income-arrow {
-          font-size: 1.2rem;
-          color: var(--primary);
-        }
-
-        /* ---- CTA ---- */
-        .cta-section {
-          padding: 5rem 0;
-          position: relative;
-          overflow: hidden;
-          background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-        }
-
-        .cta-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 0.4rem 1.2rem;
-          background: rgba(255, 215, 0, 0.1);
-          border: 1px solid rgba(255, 215, 0, 0.25);
-          border-radius: var(--radius-full);
-          font-size: 0.8rem;
-          font-weight: 600;
-          color: var(--accent);
-          margin-bottom: 1.5rem;
-        }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 1024px) {
-          .hero-split { grid-template-columns: 1fr; gap: 3rem; }
-          .hero-visual { display: none; }
-          .stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .steps-grid { grid-template-columns: repeat(2, 1fr); }
-          .step-arrow { display: none; }
-          .persona-grid { grid-template-columns: repeat(2, 1fr); }
-          .app-showcase-grid { grid-template-columns: 1fr; }
-          .app-phone-wrap { display: none; }
-        }
-
-        @media (max-width: 768px) {
-          .stats-grid { grid-template-columns: repeat(2, 1fr); }
-          .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-          .steps-grid { grid-template-columns: 1fr; }
-          .about-features { grid-template-columns: 1fr; }
-          .about-float-card { bottom: -10px; right: 10px; }
-          .persona-grid { grid-template-columns: 1fr; }
-          .hero-content { text-align: center; }
-          .hero-badge, .hero-trust, .hero-actions { justify-content: center; }
-        }
-      `}</style>
     </>
   );
 }

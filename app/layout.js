@@ -2,14 +2,19 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import WhatsAppFloat from '@/components/WhatsAppFloat';
+import { AuthProvider } from '@/context/AuthContext';
+
+export const viewport = {
+  themeColor: '#1e3a8a',
+};
 
 export const metadata = {
-  title: 'GrowthNest - Grow Beyond Limits | Insurance Advisor Platform',
-  description: 'Join India\'s fastest-growing insurance advisor network. Get trained, certified, and earn unlimited income with 20+ insurance partners. 5000+ advisors trust GrowthNest.',
-  keywords: 'insurance advisor, insurance career, LIC agent, HDFC Life, insurance training, earn money, financial advisor, GrowthNest',
+  title: 'GrowthNest | Smarter Financial Decisions',
+  description: 'GrowthNest helps individuals and businesses make smarter financial decisions through personalized financial planning, investment guidance, and modern financial solutions.',
+  keywords: 'financial planning, investment planning, wealth management, retirement planning, tax planning, insurance planning, GrowthNest',
   openGraph: {
-    title: 'GrowthNest - Grow Beyond Limits',
-    description: 'Join India\'s fastest-growing insurance advisor network. Start your insurance career today!',
+    title: 'GrowthNest | Smarter Financial Decisions',
+    description: 'GrowthNest helps individuals and businesses make smarter financial decisions through personalized financial planning, investment guidance, and modern financial solutions.',
     type: 'website',
     locale: 'en_IN',
     siteName: 'GrowthNest',
@@ -20,12 +25,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main style={{ minHeight: '100vh', paddingTop: 'var(--nav-height)' }}>
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppFloat />
+        <AuthProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppFloat />
+        </AuthProvider>
       </body>
     </html>
   );

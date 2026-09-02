@@ -1,222 +1,150 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { faqs, faqCategories } from '@/data/faqs';
+
+const faqCategories = [
+  {
+    category: 'General Questions',
+    questions: [
+      {
+        q: 'What services does GrowthNest provide?',
+        a: 'GrowthNest provides a comprehensive suite of financial services including Financial Planning, Investment Planning, Wealth Management, Retirement Planning, Tax Planning, and Insurance Planning. Our expert advisors create personalized strategies tailored to your unique financial goals.'
+      },
+      {
+        q: 'Is GrowthNest a SEBI-registered advisory?',
+        a: 'Yes, GrowthNest is a SEBI-registered investment advisory firm. We adhere strictly to SEBI regulations and fiduciary standards to ensure that all recommendations are unbiased and in our clients’ best interests.'
+      },
+      {
+        q: 'How does financial planning work with GrowthNest?',
+        a: 'Our financial planning process starts with an in-depth assessment of your current financial health, income, liabilities, and goals. We then create a customized roadmap, implement the chosen strategy, and provide continuous monitoring and periodic rebalancing.'
+      }
+    ]
+  },
+  {
+    category: 'Investment & Wealth Management',
+    query: 'investments',
+    questions: [
+      {
+        q: 'Can I create a customized investment plan?',
+        a: 'Absolutely. We design bespoke portfolios based on your risk appetite, horizon, tax bracket, and specific life goals. We curate investments across equities, mutual funds, debt, gold, and alternative assets.'
+      },
+      {
+        q: 'What is the minimum amount needed to start investing?',
+        a: 'You can start a Systematic Investment Plan (SIP) with as little as ₹500 per month. For comprehensive wealth management services, we recommend speaking with a senior advisor to evaluate your asset base.'
+      },
+      {
+        q: 'How often will my portfolio be reviewed?',
+        a: 'We monitor portfolios continuously. Formal portfolio reviews and rebalancing consultations are conducted quarterly or semi-annually depending on market conditions and your service tier.'
+      }
+    ]
+  },
+  {
+    category: 'Retirement & Tax Planning',
+    questions: [
+      {
+        q: 'How much money do I need to retire comfortably?',
+        a: 'As a rule of thumb, aiming for 25x your annual post-retirement expenses is a common starting benchmark. However, we calculate your exact corpus requirement using inflation-adjusted models customized to your retirement age and lifestyle expectations.'
+      },
+      {
+        q: 'How can GrowthNest help me save taxes?',
+        a: 'We evaluate deductions under Section 80C, 80D, 80CCD (NPS), and capital gains tax harvesting to structure your income and investments legally for maximum tax efficiency under both old and new tax regimes.'
+      }
+    ]
+  }
+];
 
 export default function FAQPage() {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [openIndex, setOpenIndex] = useState('0-0');
   const [searchQuery, setSearchQuery] = useState('');
-  const [openItem, setOpenItem] = useState(null);
 
-  const allQuestions = faqs.flatMap(cat =>
-    cat.questions.map(q => ({ ...q, category: cat.category }))
-  );
-
-  const searchResults = searchQuery
-    ? allQuestions.filter(q =>
-        q.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        q.a.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : null;
-
-  const displayedCategories = searchResults
-    ? [{ category: `Results for "${searchQuery}"`, questions: searchResults }]
-    : activeCategory === 'All'
-      ? faqs
-      : faqs.filter(cat => cat.category === activeCategory);
+  const toggleFaq = (key) => {
+    setOpenIndex(openIndex === key ? null : key);
+  };
 
   return (
     <>
-      {/* Hero */}
-      <section className="faq-hero">
-        <div className="faq-hero-bg" />
-        <div className="container text-center">
-          <span className="label">Have Questions?</span>
-          <h1 style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-            Frequently Asked <span className="text-gradient">Questions</span>
-          </h1>
-          <p style={{ maxWidth: '550px', margin: '0 auto 2rem', color: 'var(--text-secondary)' }}>
-            Everything you need to know about joining GrowthNest as an insurance advisor.
+      {/* Page Hero */}
+      <section className="page-hero">
+        <div className="container">
+          <span className="hero-badge">Knowledge Base</span>
+          <h1>Frequently Asked Questions</h1>
+          <p>
+            Find quick answers to common questions about our financial advisory services, investment planning, and client experience.
           </p>
-          {/* Search */}
-          <div className="faq-search-wrap">
-            <span className="faq-search-icon">🔍</span>
-            <input
-              type="text"
-              placeholder="Search questions…"
-              value={searchQuery}
-              onChange={e => { setSearchQuery(e.target.value); setOpenItem(null); }}
-              className="faq-search-input"
-            />
-            {searchQuery && (
-              <button className="faq-search-clear" onClick={() => setSearchQuery('')}>✕</button>
-            )}
-          </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="faq-layout">
-            {/* Sidebar */}
-            {!searchQuery && (
-              <div className="faq-sidebar">
-                <h4 style={{ marginBottom: '1rem', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>Categories</h4>
-                {faqCategories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => { setActiveCategory(cat); setOpenItem(null); }}
-                    className={`faq-sidebar-item ${activeCategory === cat ? 'active' : ''}`}
-                  >
-                    {cat === 'All' ? '📋 All Questions' :
-                     cat === 'Getting Started' ? '🚀 Getting Started' :
-                     cat === 'Earnings' ? '💰 Earnings' :
-                     cat === 'Training' ? '📚 Training' :
-                     cat === 'Work & Lifestyle' ? '🏠 Work & Lifestyle' :
-                     '🤝 Support'}
-                  </button>
-                ))}
-                <div className="faq-cta-box">
-                  <h5 style={{ margin: '0 0 0.5rem' }}>Still have questions?</h5>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: '0 0 1rem' }}>Our team is here to help you.</p>
-                  <Link href="/contact" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center', display: 'block' }}>
-                    Contact Us →
-                  </Link>
+      {/* Main FAQ List */}
+      <section className="section bg-gray-50">
+        <div className="container" style={{ maxWidth: '840px' }}>
+          
+          {/* Search Box */}
+          <div className="search-input-wrap" style={{ maxWidth: '100%', marginBottom: '3rem' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input 
+              type="text" 
+              placeholder="Search questions by keyword (e.g. SIP, Tax, Retirement, SEBI)..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ width: '100%', borderRadius: 'var(--radius-lg)' }}
+            />
+          </div>
+
+          {/* FAQ Groups */}
+          {faqCategories.map((group, gIdx) => {
+            const filteredQuestions = group.questions.filter(q => 
+              searchQuery === '' ||
+              q.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              q.a.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+
+            if (filteredQuestions.length === 0) return null;
+
+            return (
+              <div key={gIdx} style={{ marginBottom: '3rem' }}>
+                <h3 style={{ fontSize: '1.3rem', color: 'var(--primary-900)', marginBottom: '1.25rem', paddingBottom: '0.5rem', borderBottom: '2px solid var(--primary-700)' }}>
+                  {group.category}
+                </h3>
+
+                <div className="faq-list">
+                  {filteredQuestions.map((faq, qIdx) => {
+                    const key = `${gIdx}-${qIdx}`;
+                    const isOpen = openIndex === key;
+                    return (
+                      <div key={qIdx} className={`faq-item${isOpen ? ' open' : ''}`}>
+                        <button className="faq-trigger" onClick={() => toggleFaq(key)} aria-expanded={isOpen}>
+                          <span>{faq.q}</span>
+                          <svg className="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                          </svg>
+                        </button>
+                        <div className="faq-answer" aria-hidden={!isOpen}>
+                          <div className="faq-answer-inner">{faq.a}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            )}
-
-            {/* FAQ Content */}
-            <div className="faq-content">
-              {displayedCategories.length === 0 ? (
-                <div className="text-center" style={{ padding: '4rem 0', color: 'var(--text-muted)' }}>
-                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-                  <p>No results found. Try a different search term.</p>
-                </div>
-              ) : displayedCategories.map((group, gi) => (
-                <div key={gi} className="faq-group">
-                  <h3 className="faq-group-title">{group.category}</h3>
-                  <div className="faq-list">
-                    {group.questions.map((item, qi) => {
-                      const key = `${gi}-${qi}`;
-                      const isOpen = openItem === key;
-                      return (
-                        <div key={qi} className={`faq-item ${isOpen ? 'open' : ''}`} onClick={() => setOpenItem(isOpen ? null : key)}>
-                          <div className="faq-question">
-                            <span>{item.q}</span>
-                            <span className="faq-chevron">{isOpen ? '▲' : '▼'}</span>
-                          </div>
-                          {isOpen && (
-                            <div className="faq-answer animate-fade-in">
-                              {item.a}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container text-center">
-          <h3 style={{ marginBottom: '1rem' }}>Ready to Get <span className="text-gradient">Started?</span></h3>
-          <p style={{ marginBottom: '1.5rem', color: 'var(--text-secondary)' }}>
-            Join 5,000+ advisors building financial freedom with GrowthNest.
-          </p>
+      {/* CTA */}
+      <section className="cta-section">
+        <div className="container">
+          <span className="section-label" style={{ color: '#d4af37' }}>Still Have Questions?</span>
+          <h2>We&apos;re here to answer all your queries.</h2>
+          <p>Contact our support team or schedule a 1-on-1 discovery call with an advisor.</p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/careers" className="btn btn-primary">🚀 Apply Now — It's Free</Link>
-            <Link href="/contact" className="btn btn-secondary">Talk to Us</Link>
+            <Link href="/contact" className="btn btn-secondary btn-lg">Contact Us</Link>
+            <Link href="/register" className="btn btn-outline-white btn-lg">Get Started</Link>
           </div>
         </div>
       </section>
-
-      <style jsx>{`
-        .faq-hero {
-          padding: calc(var(--nav-height) + 3rem) 0 3rem;
-          position: relative; overflow: hidden;
-          background: var(--bg-secondary); border-bottom: 1px solid var(--border-glass);
-        }
-        .faq-hero-bg {
-          position: absolute; inset: 0;
-          background: radial-gradient(ellipse at 50% 0%, rgba(255,215,0,0.06), transparent 60%);
-        }
-        .faq-search-wrap {
-          position: relative; max-width: 500px; margin: 0 auto;
-          display: flex; align-items: center;
-        }
-        .faq-search-icon {
-          position: absolute; left: 1rem; font-size: 1rem; z-index: 2;
-        }
-        .faq-search-input {
-          width: 100%; padding: 0.85rem 3rem;
-          background: var(--bg-card); border: 1px solid var(--border-glass);
-          border-radius: var(--radius-full); color: var(--text-primary);
-          font-family: var(--font-body); font-size: 0.95rem;
-          outline: none; transition: border-color 0.2s;
-        }
-        .faq-search-input:focus { border-color: var(--primary); }
-        .faq-search-clear {
-          position: absolute; right: 1rem; background: none; border: none;
-          color: var(--text-muted); cursor: pointer; font-size: 0.85rem;
-        }
-        .faq-layout {
-          display: grid; grid-template-columns: 220px 1fr; gap: 3rem; align-items: start;
-        }
-        .faq-sidebar {
-          position: sticky; top: calc(var(--nav-height) + 1rem);
-          display: flex; flex-direction: column; gap: 0.4rem;
-        }
-        .faq-sidebar-item {
-          padding: 0.65rem 1rem; border-radius: var(--radius-md);
-          background: transparent; border: none; text-align: left;
-          color: var(--text-secondary); cursor: pointer; font-size: 0.88rem;
-          transition: all 0.2s; font-family: var(--font-body);
-        }
-        .faq-sidebar-item:hover { background: var(--bg-tertiary); color: var(--text-primary); }
-        .faq-sidebar-item.active { background: rgba(0,212,170,0.1); color: var(--primary); font-weight: 600; }
-        .faq-cta-box {
-          margin-top: 1.5rem; padding: 1.25rem;
-          background: var(--bg-tertiary); border-radius: var(--radius-md);
-          border: 1px solid var(--border-glass);
-        }
-        .faq-group { margin-bottom: 2.5rem; }
-        .faq-group-title {
-          font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem;
-          padding-bottom: 0.5rem; border-bottom: 1px solid var(--border-glass);
-          color: var(--text-primary);
-        }
-        .faq-list { display: flex; flex-direction: column; gap: 0.5rem; }
-        .faq-item {
-          background: var(--bg-card); border: 1px solid var(--border-glass);
-          border-radius: var(--radius-md); cursor: pointer; overflow: hidden;
-          transition: border-color 0.2s, box-shadow 0.2s;
-        }
-        .faq-item:hover { border-color: rgba(0,212,170,0.3); }
-        .faq-item.open { border-color: var(--primary); box-shadow: 0 0 20px rgba(0,212,170,0.08); }
-        .faq-question {
-          display: flex; justify-content: space-between; align-items: center;
-          padding: 1rem 1.25rem; gap: 1rem; font-weight: 500;
-          font-size: 0.95rem;
-        }
-        .faq-chevron { color: var(--primary); font-size: 0.7rem; flex-shrink: 0; }
-        .faq-answer {
-          padding: 0 1.25rem 1rem; font-size: 0.88rem; color: var(--text-secondary);
-          line-height: 1.7; border-top: 1px solid var(--border-glass);
-          padding-top: 0.75rem;
-        }
-        @media (max-width: 768px) {
-          .faq-layout { grid-template-columns: 1fr; }
-          .faq-sidebar { position: static; flex-direction: row; flex-wrap: wrap; }
-          .faq-sidebar-item { font-size: 0.8rem; padding: 0.4rem 0.75rem; }
-          .faq-cta-box { display: none; }
-        }
-      `}</style>
     </>
   );
 }

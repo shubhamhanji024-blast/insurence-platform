@@ -7,7 +7,7 @@ export const trainingModules = [
     lessons: 8,
     status: 'completed',
     progress: 100,
-    icon: '📘',
+    icon: '',
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ export const trainingModules = [
     lessons: 12,
     status: 'completed',
     progress: 100,
-    icon: '🛡️',
+    icon: '️',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const trainingModules = [
     lessons: 10,
     status: 'in-progress',
     progress: 60,
-    icon: '🎯',
+    icon: '',
   },
   {
     id: 4,
@@ -37,7 +37,7 @@ export const trainingModules = [
     lessons: 8,
     status: 'locked',
     progress: 0,
-    icon: '🏥',
+    icon: '',
   },
   {
     id: 5,
@@ -47,7 +47,7 @@ export const trainingModules = [
     lessons: 6,
     status: 'locked',
     progress: 0,
-    icon: '📱',
+    icon: '',
   },
   {
     id: 6,
@@ -57,7 +57,7 @@ export const trainingModules = [
     lessons: 6,
     status: 'locked',
     progress: 0,
-    icon: '⚖️',
+    icon: '️',
   },
   {
     id: 7,
@@ -67,7 +67,7 @@ export const trainingModules = [
     lessons: 8,
     status: 'locked',
     progress: 0,
-    icon: '📊',
+    icon: '',
   },
 ];
 

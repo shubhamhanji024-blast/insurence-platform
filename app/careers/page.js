@@ -39,17 +39,17 @@ export default function CareersPage() {
   };
 
   const steps = [
-    { num: 1, label: 'Personal', icon: '👤' },
-    { num: 2, label: 'Experience', icon: '💼' },
-    { num: 3, label: 'Preferences', icon: '⚙️' },
-    { num: 4, label: 'Upload', icon: '📎' },
+    { num: 1, label: 'Personal', icon: '' },
+    { num: 2, label: 'Experience', icon: '' },
+    { num: 3, label: 'Preferences', icon: '️' },
+    { num: 4, label: 'Upload', icon: '' },
   ];
 
   if (isSuccess) {
     return (
       <section className="section" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
         <div className="container text-center">
-          <div className="success-confetti">🎉</div>
+          <div className="success-confetti"></div>
           <h2 className="animate-fade-in-up" style={{ marginBottom: '1rem' }}>
             Application Submitted <span className="text-gradient">Successfully!</span>
           </h2>
@@ -94,7 +94,7 @@ export default function CareersPage() {
             {/* Income Calculator Mini */}
             <div className="income-calc-mini glass-card-static" style={{ marginBottom: '1.5rem' }}>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-                💡 Potential First-Year Earnings
+                 Potential First-Year Earnings
               </div>
               <div className="income-range-bar">
                 <div className="income-range-fill" />
@@ -109,12 +109,12 @@ export default function CareersPage() {
             {/* Benefits List */}
             <div className="benefits-list">
               {[
-                { icon: '📚', title: 'Free Training', desc: 'World-class IRDAI exam prep & product knowledge at zero cost.' },
-                { icon: '💰', title: 'Unlimited Earnings', desc: 'No income ceiling. Your effort directly maps to your rewards.' },
-                { icon: '🏆', title: '20+ Partners', desc: 'Access India\'s top insurance companies through a single platform.' },
-                { icon: '📱', title: 'Digital Tools', desc: 'CRM, lead tracker, income dashboard — all in one app.' },
-                { icon: '🤝', title: 'Mentorship', desc: 'Dedicated mentor and weekly team meetings to keep you on track.' },
-                { icon: '🎓', title: 'Certifications', desc: 'IRDAI-recognized certificates that boost your credibility.' },
+                { icon: '', title: 'Free Training', desc: 'World-class IRDAI exam prep & product knowledge at zero cost.' },
+                { icon: '', title: 'Unlimited Earnings', desc: 'No income ceiling. Your effort directly maps to your rewards.' },
+                { icon: '', title: '20+ Partners', desc: 'Access India\'s top insurance companies through a single platform.' },
+                { icon: '', title: 'Digital Tools', desc: 'CRM, lead tracker, income dashboard — all in one app.' },
+                { icon: '', title: 'Mentorship', desc: 'Dedicated mentor and weekly team meetings to keep you on track.' },
+                { icon: '', title: 'Certifications', desc: 'IRDAI-recognized certificates that boost your credibility.' },
               ].map((b, i) => (
                 <div key={i} className="benefit-item">
                   <div className="benefit-icon">{b.icon}</div>
@@ -147,7 +147,7 @@ export default function CareersPage() {
                 {steps.map((s, i) => (
                   <div key={s.num} className="form-step-item">
                     <div className={`step-circle ${step > s.num ? 'done' : step === s.num ? 'current' : ''}`}>
-                      {step > s.num ? '✓' : s.icon}
+                      {step > s.num ? '' : s.icon}
                     </div>
                     <span className={`step-lbl ${step >= s.num ? 'active-lbl' : ''}`}>{s.label}</span>
                     {i < steps.length - 1 && (
@@ -266,7 +266,7 @@ export default function CareersPage() {
                     <div className="file-upload-zone">
                       <input type="file" id="resume-upload" onChange={handleFileChange} accept=".pdf,.doc,.docx" className="file-input" />
                       <label htmlFor="resume-upload" className="file-label">
-                        <div className="upload-icon">{formData.resume ? '✅' : '📄'}</div>
+                        <div className="upload-icon">{formData.resume ? '' : ''}</div>
                         <div className="upload-text">
                           {formData.resume ? formData.resume.name : 'Click to upload or drag and drop'}
                         </div>
@@ -276,7 +276,7 @@ export default function CareersPage() {
 
                     {/* Summary */}
                     <div className="application-summary">
-                      <h5 style={{ margin: '0 0 0.75rem' }}>📋 Application Summary</h5>
+                      <h5 style={{ margin: '0 0 0.75rem' }}> Application Summary</h5>
                       <div className="summary-grid">
                         {[
                           { label: 'Name', val: formData.name || '—' },
@@ -306,7 +306,7 @@ export default function CareersPage() {
                     <button type="submit" className="btn btn-primary">Next →</button>
                   ) : (
                     <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-                      {isSubmitting ? '⏳ Submitting...' : '✅ Submit Application'}
+                      {isSubmitting ? ' Submitting...' : ' Submit Application'}
                     </button>
                   )}
                 </div>

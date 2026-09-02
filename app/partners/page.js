@@ -93,9 +93,9 @@ export default function PartnersPage() {
                       </div>
                     </div>
                     <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                      <span>📅 Founded: <strong style={{ color: 'var(--text-primary)' }}>{p.founded}</strong></span>
-                      <span>🏙️ HQ: <strong style={{ color: 'var(--text-primary)' }}>{p.headquarters}</strong></span>
-                      <span>📊 Share: <strong style={{ color: 'var(--primary)' }}>{p.marketShare}</strong></span>
+                      <span> Founded: <strong style={{ color: 'var(--text-primary)' }}>{p.founded}</strong></span>
+                      <span>️ HQ: <strong style={{ color: 'var(--text-primary)' }}>{p.headquarters}</strong></span>
+                      <span> Share: <strong style={{ color: 'var(--primary)' }}>{p.marketShare}</strong></span>
                     </div>
                   </div>
                 )}
@@ -120,10 +120,10 @@ export default function PartnersPage() {
           </div>
           <div className="grid grid-4">
             {[
-              { icon: '💰', title: 'Best Commission', desc: '15–35% first year + renewal commissions credited within 15 days.' },
-              { icon: '🎯', title: 'Single Platform', desc: 'Manage all your insurance companies through one dashboard.' },
-              { icon: '📚', title: 'Product Training', desc: 'Dedicated product training for every insurance company we partner with.' },
-              { icon: '🤝', title: 'Partner Support', desc: '24/7 partner helpdesk for quick query resolution and claim support.' },
+              { icon: '', title: 'Best Commission', desc: '15–35% first year + renewal commissions credited within 15 days.' },
+              { icon: '', title: 'Single Platform', desc: 'Manage all your insurance companies through one dashboard.' },
+              { icon: '', title: 'Product Training', desc: 'Dedicated product training for every insurance company we partner with.' },
+              { icon: '', title: 'Partner Support', desc: '24/7 partner helpdesk for quick query resolution and claim support.' },
             ].map((item, i) => (
               <div key={i} className="glass-card card-hover-glow" style={{ padding: '1.5rem', textAlign: 'center' }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{item.icon}</div>

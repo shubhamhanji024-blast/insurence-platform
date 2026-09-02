@@ -31,7 +31,7 @@ export default function SuccessStoriesPage() {
       <section className="section">
         <div className="container">
           <div className="section-heading">
-            <h2>🏆 <span className="text-gradient">Top Performers</span> This Month</h2>
+            <h2> <span className="text-gradient">Top Performers</span> This Month</h2>
             <p>Our highest earning advisors across India — you&apos;re next.</p>
           </div>
 
@@ -39,7 +39,7 @@ export default function SuccessStoriesPage() {
             {/* Silver — 2nd */}
             <div className="podium-item podium-silver">
               <div className="podium-card">
-                <div className="podium-avatar">🥈</div>
+                <div className="podium-avatar"></div>
                 <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1rem' }}>{top3[1]?.name}</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[1]?.city}</p>
                 <div className="podium-income">{top3[1]?.income}</div>
@@ -49,13 +49,13 @@ export default function SuccessStoriesPage() {
 
             {/* Gold — 1st (tallest) */}
             <div className="podium-item podium-gold" style={{ zIndex: 2 }}>
-              <div className="podium-crown">👑</div>
+              <div className="podium-crown"></div>
               <div className="podium-card">
-                <div className="podium-avatar">🥇</div>
+                <div className="podium-avatar"></div>
                 <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1.1rem' }}>{top3[0]?.name}</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[0]?.city}</p>
                 <div className="podium-income text-shimmer">{top3[0]?.income}</div>
-                <span className="badge badge-accent" style={{ marginTop: '0.5rem', fontSize: '0.7rem' }}>Top Earner 🔥</span>
+                <span className="badge badge-accent" style={{ marginTop: '0.5rem', fontSize: '0.7rem' }}>Top Earner </span>
               </div>
               <div className="podium-base">#1</div>
             </div>
@@ -63,7 +63,7 @@ export default function SuccessStoriesPage() {
             {/* Bronze — 3rd */}
             <div className="podium-item podium-bronze">
               <div className="podium-card">
-                <div className="podium-avatar">🥉</div>
+                <div className="podium-avatar"></div>
                 <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1rem' }}>{top3[2]?.name}</h4>
                 <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[2]?.city}</p>
                 <div className="podium-income">{top3[2]?.income}</div>
@@ -93,7 +93,7 @@ export default function SuccessStoriesPage() {
         <div className="container">
           <div className="cta-strip-inner">
             <div>
-              <h3 style={{ margin: 0, marginBottom: '0.25rem' }}>You Could Be Next 🚀</h3>
+              <h3 style={{ margin: 0, marginBottom: '0.25rem' }}>You Could Be Next </h3>
               <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>Join 5,000+ advisors who turned their career around with GrowthNest.</p>
             </div>
             <div className="flex gap-md">
@@ -120,7 +120,7 @@ export default function SuccessStoriesPage() {
                 className={`chip ${activeFilter === city ? 'active' : ''}`}
                 onClick={() => setActiveFilter(city)}
               >
-                {city === 'All' ? '🗺️ All Cities' : `📍 ${city}`}
+                {city === 'All' ? '️ All Cities' : ` ${city}`}
               </button>
             ))}
           </div>
@@ -145,7 +145,7 @@ export default function SuccessStoriesPage() {
                       ~₹{t.joinYear <= 2019 ? '15,000' : t.joinYear <= 2020 ? '25,000' : '30,000'}/mo
                     </div>
                   </div>
-                  <div className="story-income-arrow">▶</div>
+                  <div className="story-income-arrow"></div>
                   <div>
                     <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Now</div>
                     <div className="text-gradient" style={{ fontSize: '1.15rem', fontWeight: 800 }}>{t.monthlyIncome}/mo</div>
