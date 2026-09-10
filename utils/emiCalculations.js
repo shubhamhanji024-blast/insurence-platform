@@ -43,6 +43,7 @@ export function calculateEMI(principal, annualRate, totalMonths) {
 
   return {
     monthlyEMI,
+    principalAmount: P,
     totalInterest,
     totalPayment,
     principalRatio: Number(principalRatio.toFixed(1)),

@@ -76,6 +76,22 @@ export function calculateRetirementPlan({
   const rawReadiness = requiredCorpus > 0 ? (projectedSavings / requiredCorpus) * 100 : 100;
   const readinessPercentage = Math.min(100, Math.round(rawReadiness));
 
+  // 7. Additional Monthly SIP needed to bridge shortfall (if any)
+  let additionalMonthlySIP = 0;
+  if (netDifference < 0) {
+    const shortfall = Math.abs(netDifference);
+    const totalMonthsPre = yearsToRetire * 12;
+    if (ratePre === 0) {
+      additionalMonthlySIP = Math.round(shortfall / totalMonthsPre);
+    } else {
+      const i = ratePre / 12 / 100;
+      // SIP formula rearranged: SIP = FV * i / ((1+i)^n - 1) / (1+i)
+      additionalMonthlySIP = Math.round(
+        (shortfall * i) / ((Math.pow(1 + i, totalMonthsPre) - 1) * (1 + i))
+      );
+    }
+  }
+
   return {
     currentAge: cAge,
     retirementAge: rAge,
@@ -92,6 +108,14 @@ export function calculateRetirementPlan({
     isSurplus,
     readinessPercentage,
     rawReadiness: Number(rawReadiness.toFixed(1)),
+    additionalMonthlySIP,
+    // Aliases for backward compatibility with RetirementCalculator.js prop names
+    readinessPct: readinessPercentage,
+    isFullyFunded: isSurplus,
+    surplusDeficit: netDifference,
+    totalSavingsAtRetirement: projectedSavings,
+    monthlyExpenseAtRetirement: futureMonthlyExpenses,
+    targetCorpus: requiredCorpus,
   };
 }
 

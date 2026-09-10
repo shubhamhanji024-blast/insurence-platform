@@ -154,8 +154,12 @@ export default function RetirementCalculator() {
   }, [safeInputs]);
 
   const postSchedule = useMemo(() => {
-    return calculatePostRetirementSchedule(safeInputs, planResult.targetCorpus);
-  }, [safeInputs, planResult.targetCorpus]);
+    return calculatePostRetirementSchedule({
+      ...safeInputs,
+      projectedSavings: planResult.projectedSavings,
+      futureMonthlyExpenses: planResult.futureMonthlyExpenses,
+    });
+  }, [safeInputs, planResult.projectedSavings, planResult.futureMonthlyExpenses]);
 
   // Handlers
   const handleReset = () => {
@@ -181,6 +185,7 @@ export default function RetirementCalculator() {
     <div className="sip-calculator-root">
       {/* Dynamic Readiness Banner */}
       <RetirementReadiness
+        plan={planResult}
         readinessPct={planResult.readinessPct}
         isFullyFunded={planResult.isFullyFunded}
         surplusDeficit={planResult.surplusDeficit}
@@ -217,6 +222,7 @@ export default function RetirementCalculator() {
         {/* Right Column: Key Results & Save Button */}
         <div>
           <RetirementResults
+            plan={planResult}
             targetCorpus={planResult.targetCorpus}
             projectedSavings={planResult.totalSavingsAtRetirement}
             monthlyExpenseAtRetirement={planResult.monthlyExpenseAtRetirement}
@@ -235,13 +241,8 @@ export default function RetirementCalculator() {
 
       {/* Structured Executive Summary Cards */}
       <RetirementSummary
-        targetCorpus={planResult.targetCorpus}
-        projectedSavings={planResult.totalSavingsAtRetirement}
-        yearsToRetire={planResult.yearsToRetire}
-        retirementYears={planResult.retirementYears}
-        monthlyExpenseAtRetirement={planResult.monthlyExpenseAtRetirement}
-        additionalMonthlySIP={planResult.additionalMonthlySIP}
-        isFullyFunded={planResult.isFullyFunded}
+        plan={planResult}
+        inputs={safeInputs}
       />
 
       {/* Charts */}

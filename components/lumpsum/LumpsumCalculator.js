@@ -108,8 +108,8 @@ export default function LumpsumCalculator() {
         <div>
           <LumpsumResults
             initialInvestment={result.initialInvestment}
-            totalReturns={result.totalReturns}
-            totalValue={result.totalValue}
+            totalReturns={result.estimatedReturns}
+            totalValue={result.futureValue}
           />
 
           <SaveCalculationModal
@@ -131,7 +131,7 @@ export default function LumpsumCalculator() {
       />
 
       {/* Full Width Visual Components */}
-      <LumpsumGrowthChart yearlyData={yearlyData} totalValue={result.totalValue} />
+      <LumpsumGrowthChart yearlyData={yearlyData} totalValue={result.futureValue} />
       <LumpsumYearlyBreakdown yearlyData={yearlyData} />
       <LumpsumEducation />
       <LumpsumDisclaimer />

@@ -98,9 +98,9 @@ export default function SIPCalculator() {
         {/* Right Column: Key Results & Save Button */}
         <div>
           <SIPResults
-            investedAmount={result.investedAmount}
+            investedAmount={result.totalInvested}
             estimatedReturns={result.estimatedReturns}
-            totalValue={result.totalValue}
+            totalValue={result.futureValue}
           />
 
           {/* Save Calculation Component */}
@@ -113,7 +113,7 @@ export default function SIPCalculator() {
       </div>
 
       {/* Full Width Visual Components */}
-      <SIPGrowthChart yearlyData={yearlyData} totalValue={result.totalValue} />
+      <SIPGrowthChart yearlyData={yearlyData} totalValue={result.futureValue} />
       <SIPYearlyBreakdown yearlyData={yearlyData} />
       <SIPEducation />
       <SIPDisclaimer />
