@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -21,8 +21,14 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
 
-  const { register } = useAuth();
+  const { register, user, loading } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, loading, router]);
 
   const strength = checkPasswordStrength(form.password);
 
@@ -111,6 +117,19 @@ export default function RegisterPage() {
       setIsSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="text-center">
+          <div style={{ width: 44, height: 44, border: '4px solid #19C3A3', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }} />
+          <p style={{ color: 'var(--gray-600)', fontSize: '0.95rem' }}>Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (user) return null;
 
   return (
     <>

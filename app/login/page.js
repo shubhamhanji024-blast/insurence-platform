@@ -1,5 +1,5 @@
 'use client';
-import { useState, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -212,6 +212,28 @@ function LoginForm() {
 }
 
 export default function LoginPage() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && user) {
+      router.push('/dashboard');
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div className="text-center">
+          <div style={{ width: 44, height: 44, border: '4px solid #19C3A3', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }} />
+          <p style={{ color: 'var(--gray-600)', fontSize: '0.95rem' }}>Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (user) return null;
+
   return (
     <>
       <section className="page-hero" style={{ padding: '3.5rem 0 2.5rem' }}>
