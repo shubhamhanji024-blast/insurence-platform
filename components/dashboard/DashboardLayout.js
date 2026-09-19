@@ -169,7 +169,7 @@ export default function DashboardLayout({ children }) {
               <div className="db-sidebar-user-email">{user.email}</div>
             </div>
           </div>
-          <button type="button" onClick={logout} className="db-logout-btn">
+          <button type="button" onClick={() => logout()} className="db-logout-btn">
             <span>🚪</span> Sign Out
           </button>
         </div>

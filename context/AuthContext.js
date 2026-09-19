@@ -75,10 +75,11 @@ export function AuthProvider({ children }) {
       console.error('[Logout Error]:', err);
     } finally {
       setUser(null);
+      const target = typeof redirectTo === 'string' && redirectTo.trim().startsWith('/') ? redirectTo.trim() : '/';
       if (typeof window !== 'undefined') {
-        window.location.replace(redirectTo || '/');
+        window.location.replace(target);
       } else {
-        router.replace(redirectTo || '/');
+        router.replace(target);
       }
     }
   };

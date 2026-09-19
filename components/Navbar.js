@@ -228,7 +228,7 @@ export default function Navbar() {
                   </Link>
                   <button
                     type="button"
-                    onClick={logout}
+                    onClick={() => logout()}
                     className="dropdown-item"
                     style={{
                       width: '100%',
