@@ -5,6 +5,6 @@ export const metadata = {
   description: 'Enterprise Administrative Portal for GrowthNest Financial Platform',
 };
 
-export default function AdminPage() {
+export default function AdminDashboardPage() {
   return <AdminDashboardOverview />;
 }

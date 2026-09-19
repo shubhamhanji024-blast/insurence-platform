@@ -31,6 +31,12 @@ const UserSchema = new mongoose.Schema(
       default: 'USER',
       index: true,
     },
+    status: {
+      type: String,
+      enum: ['ACTIVE', 'INACTIVE'],
+      default: 'ACTIVE',
+      index: true,
+    },
     emailVerified: {
       type: Boolean,
       default: false,

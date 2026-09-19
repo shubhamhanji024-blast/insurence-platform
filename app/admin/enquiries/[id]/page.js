@@ -222,6 +222,45 @@ export default function AdminEnquiryDetailPage({ params }) {
                   </button>
                 ))}
               </div>
+
+              <div style={{ marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9' }}>
+                <button
+                  type="button"
+                  disabled={updating}
+                  onClick={async () => {
+                    if (window.confirm(`Are you sure you want to permanently delete this enquiry from ${enquiry.name}?`)) {
+                      setUpdating(true);
+                      try {
+                        const res = await fetch(`/api/admin/enquiries/${enquiryId}`, { method: 'DELETE' });
+                        const json = await res.json();
+                        if (res.ok && json.success) {
+                          alert('Enquiry deleted successfully.');
+                          window.location.href = '/admin/enquiries';
+                        } else {
+                          alert(json.message || 'Delete failed.');
+                          setUpdating(false);
+                        }
+                      } catch {
+                        alert('Error deleting enquiry.');
+                        setUpdating(false);
+                      }
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    padding: '0.6rem',
+                    background: '#fef2f2',
+                    border: '1px solid #fca5a5',
+                    color: '#dc2626',
+                    borderRadius: 8,
+                    fontWeight: 600,
+                    fontSize: '0.84rem',
+                    cursor: 'pointer',
+                  }}
+                >
+                  🗑️ Delete Contact Request
+                </button>
+              </div>
             </div>
           </div>
         </div>
