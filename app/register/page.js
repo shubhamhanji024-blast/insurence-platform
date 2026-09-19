@@ -26,7 +26,7 @@ export default function RegisterPage() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.push('/dashboard');
+      router.replace('/dashboard');
     }
   }, [user, loading, router]);
 
@@ -103,7 +103,7 @@ export default function RegisterPage() {
     try {
       const res = await register(form);
       if (res && res.success) {
-        router.push('/dashboard');
+        router.replace('/dashboard');
       } else if (res && res.errors) {
         setErrors(res.errors);
         setServerError(res.message || 'Please fix the validation errors below.');

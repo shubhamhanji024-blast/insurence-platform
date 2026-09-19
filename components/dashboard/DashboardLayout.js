@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push(`/login?redirectTo=${encodeURIComponent(pathname || '/dashboard')}`);
+      router.replace(`/login?redirectTo=${encodeURIComponent(pathname || '/dashboard')}`);
     }
   }, [user, loading, router, pathname]);
 

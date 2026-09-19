@@ -68,14 +68,18 @@ export function AuthProvider({ children }) {
     return data;
   };
 
-  const logout = async () => {
+  const logout = async (redirectTo = '/') => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
     } catch (err) {
       console.error('[Logout Error]:', err);
     } finally {
       setUser(null);
-      router.push('/login');
+      if (typeof window !== 'undefined') {
+        window.location.replace(redirectTo || '/');
+      } else {
+        router.replace(redirectTo || '/');
+      }
     }
   };
 

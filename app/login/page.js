@@ -16,7 +16,11 @@ function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get('redirectTo') || '/dashboard';
+  const rawRedirect = searchParams.get('redirectTo') || searchParams.get('redirect');
+  const redirectTo =
+    rawRedirect && rawRedirect !== '/' && rawRedirect !== '/login' && rawRedirect !== '/register'
+      ? rawRedirect
+      : '/dashboard';
   const isVerified = searchParams.get('verified') === 'true';
 
   const validate = () => {
@@ -47,7 +51,7 @@ function LoginForm() {
     try {
       const res = await login(email, password, rememberMe);
       if (res && res.success) {
-        router.push(redirectTo);
+        router.replace(redirectTo);
       } else {
         setServerError(res?.message || 'Invalid email or password.');
       }
@@ -211,15 +215,27 @@ function LoginForm() {
   );
 }
 
-export default function LoginPage() {
+function LoginRedirectWatcher() {
   const { user, loading } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const rawRedirect = searchParams.get('redirectTo') || searchParams.get('redirect');
+  const target =
+    rawRedirect && rawRedirect !== '/' && rawRedirect !== '/login' && rawRedirect !== '/register'
+      ? rawRedirect
+      : '/dashboard';
 
   useEffect(() => {
     if (!loading && user) {
-      router.push('/dashboard');
+      router.replace(target);
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, target]);
+
+  return null;
+}
+
+export default function LoginPage() {
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -232,7 +248,13 @@ export default function LoginPage() {
     );
   }
 
-  if (user) return null;
+  if (user) {
+    return (
+      <Suspense fallback={null}>
+        <LoginRedirectWatcher />
+      </Suspense>
+    );
+  }
 
   return (
     <>
