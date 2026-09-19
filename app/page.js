@@ -88,30 +88,6 @@ const services = [
   },
 ];
 
-/* ---- Testimonials Data ---- */
-const testimonials = [
-  {
-    name: 'Rajesh Sharma',
-    title: 'Business Owner, Delhi',
-    initial: 'R',
-    text: 'GrowthNest completely transformed my financial approach. Their personalized planning is precise and the team is always available to guide me. My portfolio has grown 40% in just 18 months.',
-    stars: 5,
-  },
-  {
-    name: 'Priya Mehta',
-    title: 'Software Engineer, Bangalore',
-    initial: 'P',
-    text: 'The retirement planning service is exceptional. They helped me structure my savings in a tax-efficient way. I feel completely secure about my financial future now.',
-    stars: 5,
-  },
-  {
-    name: 'Amit Patel',
-    title: 'Doctor, Mumbai',
-    initial: 'A',
-    text: 'As a busy professional I needed someone to manage my finances. GrowthNest handles everything perfectly. The transparent advice and data-driven insights are incredible.',
-    stars: 5,
-  },
-];
 
 /* ---- Blog Posts ---- */
 const blogPosts = [
@@ -493,32 +469,6 @@ export default function HomePage() {
               <div key={i} className="why-card">
                 <div className="why-icon">{item.icon}</div>
                 <div className="why-text"><h4>{item.title}</h4><p>{item.desc}</p></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ======= TESTIMONIALS ======= */}
-      <section className="section" id="client-experiences">
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-label">Client Experiences</span>
-            <h2 className="section-title">What Our Clients Say</h2>
-            <p className="section-desc">Real stories from people who trusted us with their financial journey.</p>
-          </div>
-          <div className="testimonials-grid">
-            {testimonials.map((t, i) => (
-              <div key={i} className="testimonial-card" id={`testimonial-${i}`}>
-                <div className="stars">{'★'.repeat(t.stars)}</div>
-                <p className="testimonial-text">&ldquo;{t.text}&rdquo;</p>
-                <div className="testimonial-author">
-                  <div className="author-avatar">{t.initial}</div>
-                  <div>
-                    <p className="author-name">{t.name}</p>
-                    <p className="author-title">{t.title}</p>
-                  </div>
-                </div>
               </div>
             ))}
           </div>

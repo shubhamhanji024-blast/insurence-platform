@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { team, milestones } from '@/data/team';
 
 export default function AboutPage() {
   return (
@@ -65,52 +64,8 @@ export default function AboutPage() {
                 We combine deep domain expertise in investment planning, tax strategy, and wealth management with modern digital tools to deliver an unmatched client experience.
               </p>
 
-              <div className="grid grid-2" style={{ gap: '1rem', marginBottom: '2rem' }}>
-                {[
-                  { num: '10K+', lbl: 'Clients Supported' },
-                  { num: '₹100Cr+', lbl: 'Financial Goals Planned' },
-                  { num: '95%', lbl: 'Customer Satisfaction' },
-                  { num: '10+', lbl: 'Years of Expertise' },
-                ].map((s, i) => (
-                  <div key={i} style={{ padding: '1rem', background: 'var(--gray-50)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--gray-200)' }}>
-                    <div style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.5rem', fontWeight: 700, color: 'var(--primary-700)' }}>{s.num}</div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginTop: '0.2rem' }}>{s.lbl}</div>
-                  </div>
-                ))}
-              </div>
-
               <Link href="/contact" className="btn btn-primary">Talk to an Advisor</Link>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Leadership Team */}
-      <section className="section bg-gray-50">
-        <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <span className="section-label">Leadership</span>
-            <h2 className="section-title">Meet Our Experts</h2>
-            <p className="section-desc">Experienced professionals dedicated to guiding your financial success.</p>
-          </div>
-
-          <div className="grid grid-3" style={{ gap: '1.5rem' }}>
-            {team.map((member, i) => (
-              <div key={i} className="service-card" style={{ textAlign: 'center' }}>
-                <div style={{
-                  width: 72, height: 72, borderRadius: '50%',
-                  background: 'var(--primary-700)', color: '#fff',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 700, fontSize: '1.25rem', margin: '0 auto 1.25rem',
-                  fontFamily: 'Playfair Display, serif'
-                }}>
-                  {member.name.split(' ').map(n => n[0]).join('')}
-                </div>
-                <h3 style={{ fontSize: '1.15rem', marginBottom: '0.25rem' }}>{member.name}</h3>
-                <p style={{ fontSize: '0.825rem', color: 'var(--primary-700)', fontWeight: 600, marginBottom: '0.75rem' }}>{member.role}</p>
-                <p style={{ fontSize: '0.875rem', color: 'var(--gray-600)', lineHeight: 1.6, margin: 0 }}>{member.bio}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
