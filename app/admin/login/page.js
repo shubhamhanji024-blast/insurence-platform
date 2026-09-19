@@ -60,7 +60,7 @@ function AdminLoginForm() {
         if (refetchUser) await refetchUser();
         router.replace(redirectTo);
       } else {
-        setServerError(data.message || 'Invalid administrator credentials.');
+        setServerError(data.message || 'Invalid admin email or password.');
       }
     } catch (err) {
       console.error('[Admin Login Submit Error]:', err);
@@ -144,7 +144,7 @@ function AdminLoginForm() {
               if (fieldErrors.email) setFieldErrors((prev) => ({ ...prev, email: '' }));
               if (serverError) setServerError('');
             }}
-            placeholder="admin@growthnest.com"
+            placeholder="shubhamhanji024@gmail.com"
             autoComplete="email"
             style={{
               width: '100%',
@@ -250,7 +250,7 @@ function AdminLoginForm() {
             opacity: isSubmitting ? 0.75 : 1,
           }}
         >
-          {isSubmitting ? 'Verifying Credentials...' : 'Sign In to Admin Console'}
+          {isSubmitting ? 'Authenticating...' : 'Login'}
         </button>
       </form>
 
