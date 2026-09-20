@@ -1,7 +1,7 @@
 /**
  * Utility functions for Retirement Corpus & Savings Projections
  */
-import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations';
+import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations.js';
 
 /**
  * Perform comprehensive Retirement Plan Calculations

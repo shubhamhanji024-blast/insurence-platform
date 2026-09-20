@@ -63,29 +63,35 @@ export default function EMICalculator() {
   // Input Validation
   const errors = useMemo(() => {
     const errs = {};
-    if (loanAmount !== '' && (loanAmount < 50000 || loanAmount > 20000000)) {
-      errs.amount = 'Loan amount must be between ₹50,000 and ₹2,00,00,000.';
+    if (loanAmount !== '') {
+      if (Number(loanAmount) < 0) {
+        errs.amount = 'Loan amount cannot be negative.';
+      } else if (Number(loanAmount) > 100000000) {
+        errs.amount = 'Loan amount cannot exceed ₹10,00,00,000.';
+      }
     }
-    if (interestRate !== '' && (interestRate < 1 || interestRate > 25)) {
-      errs.rate = 'Interest rate must be between 1% and 25%.';
+    if (interestRate !== '') {
+      if (Number(interestRate) < 0 || Number(interestRate) > 50) {
+        errs.rate = 'Interest rate must be between 0% and 50%.';
+      }
     }
     const months = tenureUnit === 'years' ? (Number(tenureValue) || 1) * 12 : Number(tenureValue) || 1;
-    if (tenureValue !== '' && (months < 12 || months > 360)) {
-      errs.tenure = 'Loan tenure must be between 1 and 30 years (12 to 360 months).';
+    if (tenureValue !== '' && (months < 1 || months > 480)) {
+      errs.tenure = 'Loan tenure must be between 1 month and 40 years (1 to 480 months).';
     }
     return errs;
   }, [loanAmount, interestRate, tenureValue, tenureUnit]);
 
-  // Safe Values for Calculation
-  const safeAmount = Math.max(50000, Math.min(20000000, Number(loanAmount) || 50000));
-  const safeRate = Math.max(0, Math.min(25, Number(interestRate) || 0));
+  // Safe Values for Real-time Calculation
+  const safeAmount = loanAmount === '' ? 0 : Math.max(0, Number(loanAmount) || 0);
+  const safeRate = Math.max(0, Math.min(50, Number(interestRate) || 0));
 
   const totalMonths = useMemo(() => {
-    const rawVal = Number(tenureValue) || 1;
+    const rawVal = Math.max(1, Number(tenureValue) || 1);
     if (tenureUnit === 'years') {
-      return Math.max(12, Math.min(360, rawVal * 12));
+      return Math.max(1, Math.min(480, rawVal * 12));
     }
-    return Math.max(1, Math.min(360, rawVal));
+    return Math.max(1, Math.min(480, rawVal));
   }, [tenureValue, tenureUnit]);
 
   // Dynamic Calculation

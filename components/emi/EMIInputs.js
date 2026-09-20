@@ -98,8 +98,8 @@ export default function EMIInputs({
             <input
               id="loan-amount-input"
               type="number"
-              min={50000}
-              max={20000000}
+              min={0}
+              max={100000000}
               step={10000}
               value={loanAmount}
               onChange={(e) => handleAmountChange(e.target.value)}
@@ -138,8 +138,8 @@ export default function EMIInputs({
             <input
               id="interest-rate-input"
               type="number"
-              min={1}
-              max={25}
+              min={0}
+              max={50}
               step={0.1}
               value={interestRate}
               onChange={(e) => handleRateChange(e.target.value)}
@@ -153,16 +153,16 @@ export default function EMIInputs({
 
         <input
           type="range"
-          min={1}
+          min={0}
           max={25}
           step={0.1}
-          value={interestRate || 1}
+          value={interestRate === '' ? 0 : interestRate}
           onChange={(e) => handleRateChange(e.target.value)}
           className="sip-slider"
           aria-label="Interest Rate Slider"
         />
         <div className="sip-slider-ticks">
-          <span>1%</span>
+          <span>0%</span>
           <span>12.5%</span>
           <span>25%</span>
         </div>

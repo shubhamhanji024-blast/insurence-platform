@@ -65,8 +65,8 @@ export default function SIPInputs({
             <input
               id="monthly-investment-input"
               type="number"
-              min={500}
-              max={100000}
+              min={0}
+              max={10000000}
               step={500}
               value={monthlyInvestment}
               onChange={(e) => handleMonthlyChange(e.target.value)}
@@ -105,7 +105,7 @@ export default function SIPInputs({
               id="duration-years-input"
               type="number"
               min={1}
-              max={40}
+              max={50}
               step={1}
               value={years}
               onChange={(e) => handleYearsChange(e.target.value)}
@@ -145,8 +145,8 @@ export default function SIPInputs({
             <input
               id="annual-return-input"
               type="number"
-              min={1}
-              max={30}
+              min={0}
+              max={50}
               step={0.5}
               value={annualReturn}
               onChange={(e) => handleReturnChange(e.target.value)}
@@ -160,16 +160,16 @@ export default function SIPInputs({
 
         <input
           type="range"
-          min={1}
+          min={0}
           max={30}
           step={0.5}
-          value={annualReturn || 1}
+          value={annualReturn === '' ? 0 : annualReturn}
           onChange={(e) => handleReturnChange(e.target.value)}
           className="sip-slider"
           aria-label="Expected Annual Return Slider"
         />
         <div className="sip-slider-ticks">
-          <span>1%</span>
+          <span>0%</span>
           <span>15%</span>
           <span>30%</span>
         </div>

@@ -1,7 +1,7 @@
 /**
  * Utility functions for Lumpsum Investment Calculations & Growth Schedules
  */
-import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations';
+import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations.js';
 
 /**
  * Calculate Lumpsum Future Value, Total Gain, and Investment Ratios

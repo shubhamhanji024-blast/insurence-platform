@@ -64,7 +64,7 @@ export default function LumpsumInputs({
             <input
               id="lumpsum-amount-input"
               type="number"
-              min={1000}
+              min={0}
               max={100000000}
               step={1000}
               value={initialInvestment}

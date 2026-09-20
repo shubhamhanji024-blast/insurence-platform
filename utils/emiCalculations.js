@@ -1,7 +1,7 @@
 /**
  * Utility functions for EMI Calculations and Amortization Schedules
  */
-import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations';
+import { formatIndianCurrency, formatShortIndianCurrency } from './sipCalculations.js';
 
 /**
  * Calculate Monthly EMI, Total Interest, and Total Payment

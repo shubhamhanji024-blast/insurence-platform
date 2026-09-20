@@ -52,22 +52,30 @@ export default function SIPCalculator() {
   // Input Validation
   const errors = useMemo(() => {
     const errs = {};
-    if (monthlyInvestment !== '' && (monthlyInvestment < 500 || monthlyInvestment > 100000)) {
-      errs.monthly = 'Monthly investment must be between ₹500 and ₹1,00,000.';
+    if (monthlyInvestment !== '') {
+      if (Number(monthlyInvestment) < 0) {
+        errs.monthly = 'Monthly investment cannot be negative.';
+      } else if (Number(monthlyInvestment) > 10000000) {
+        errs.monthly = 'Monthly investment cannot exceed ₹1,00,00,000.';
+      }
     }
-    if (years !== '' && (years < 1 || years > 40)) {
-      errs.years = 'Investment duration must be between 1 and 40 years.';
+    if (years !== '') {
+      if (Number(years) < 1 || Number(years) > 50) {
+        errs.years = 'Investment duration must be between 1 and 50 years.';
+      }
     }
-    if (annualReturn !== '' && (annualReturn < 1 || annualReturn > 30)) {
-      errs.annualReturn = 'Expected annual return must be between 1% and 30%.';
+    if (annualReturn !== '') {
+      if (Number(annualReturn) < 0 || Number(annualReturn) > 50) {
+        errs.annualReturn = 'Expected annual return must be between 0% and 50%.';
+      }
     }
     return errs;
   }, [monthlyInvestment, years, annualReturn]);
 
-  // Safe Values for Calculation
-  const safeMonthly = Math.max(500, Math.min(100000, Number(monthlyInvestment) || 500));
-  const safeYears = Math.max(1, Math.min(40, Number(years) || 1));
-  const safeReturn = Math.max(0, Math.min(30, Number(annualReturn) || 0));
+  // Safe Values for Real-time Calculation
+  const safeMonthly = monthlyInvestment === '' ? 0 : Math.max(0, Number(monthlyInvestment) || 0);
+  const safeYears = Math.max(0, Math.min(50, Number(years) || 0));
+  const safeReturn = Math.max(0, Math.min(50, Number(annualReturn) || 0));
 
   // Dynamic Calculation
   const result = useMemo(() => {

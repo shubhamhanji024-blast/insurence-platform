@@ -165,6 +165,11 @@ export default function EMIResults({
           </div>
         </div>
       </div>
+
+      {/* Educational Disclaimer */}
+      <p style={{ marginTop: '1.25rem', marginBottom: 0, fontSize: '0.75rem', color: 'var(--gray-500)', lineHeight: 1.5, textAlign: 'center' }}>
+        These calculations are estimates for educational purposes only. Actual returns, interest rates, taxes, fees, and investment outcomes may vary.
+      </p>
     </div>
   );
 }

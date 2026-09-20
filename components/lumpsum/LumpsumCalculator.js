@@ -56,22 +56,30 @@ export default function LumpsumCalculator() {
   // Input Validation
   const errors = useMemo(() => {
     const errs = {};
-    if (initialInvestment !== '' && (initialInvestment < 1000 || initialInvestment > 100000000)) {
-      errs.amount = 'Initial investment must be between ₹1,000 and ₹10,00,00,000.';
+    if (initialInvestment !== '') {
+      if (Number(initialInvestment) < 0) {
+        errs.amount = 'Initial investment cannot be negative.';
+      } else if (Number(initialInvestment) > 100000000) {
+        errs.amount = 'Initial investment cannot exceed ₹10,00,00,000.';
+      }
     }
-    if (years !== '' && (years < 1 || years > 50)) {
-      errs.years = 'Investment duration must be between 1 and 50 years.';
+    if (years !== '') {
+      if (Number(years) < 1 || Number(years) > 50) {
+        errs.years = 'Investment duration must be between 1 and 50 years.';
+      }
     }
-    if (annualReturn !== '' && (annualReturn < 0 || annualReturn > 30)) {
-      errs.annualReturn = 'Expected annual return must be between 0% and 30%.';
+    if (annualReturn !== '') {
+      if (Number(annualReturn) < 0 || Number(annualReturn) > 50) {
+        errs.annualReturn = 'Expected annual return must be between 0% and 50%.';
+      }
     }
     return errs;
   }, [initialInvestment, years, annualReturn]);
 
-  // Safe Values for Calculation
-  const safeAmount = Math.max(1000, Math.min(100000000, Number(initialInvestment) || 1000));
-  const safeYears = Math.max(1, Math.min(50, Number(years) || 1));
-  const safeReturn = Math.max(0, Math.min(30, Number(annualReturn) || 0));
+  // Safe Values for Real-time Calculation
+  const safeAmount = initialInvestment === '' ? 0 : Math.max(0, Number(initialInvestment) || 0);
+  const safeYears = Math.max(0, Math.min(50, Number(years) || 0));
+  const safeReturn = Math.max(0, Math.min(50, Number(annualReturn) || 0));
 
   // Dynamic Calculation
   const result = useMemo(() => {

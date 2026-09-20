@@ -84,30 +84,58 @@ export default function RetirementCalculator() {
     const rAge = Number(retirementAge) || 0;
     const lAge = Number(lifeExpectancy) || 0;
 
-    if (cAge < 18 || cAge > 70) {
-      errs.currentAge = 'Current age must be between 18 and 70.';
+    if (currentAge !== '') {
+      if (cAge < 0) {
+        errs.currentAge = 'Age cannot be negative.';
+      } else if (cAge < 18 || cAge > 75) {
+        errs.currentAge = 'Current age must be between 18 and 75.';
+      }
     }
-    if (rAge <= cAge) {
-      errs.retirementAge = 'Retirement age must be greater than current age.';
-    } else if (rAge > 80) {
-      errs.retirementAge = 'Retirement age cannot exceed 80.';
+    if (retirementAge !== '') {
+      if (rAge <= cAge) {
+        errs.retirementAge = 'Retirement age must be greater than current age.';
+      } else if (rAge > 85) {
+        errs.retirementAge = 'Retirement age cannot exceed 85.';
+      }
     }
-    if (lAge <= rAge) {
-      errs.lifeExpectancy = 'Life expectancy must be greater than retirement age.';
-    } else if (lAge > 100) {
-      errs.lifeExpectancy = 'Life expectancy cannot exceed 100.';
+    if (lifeExpectancy !== '') {
+      if (lAge <= rAge) {
+        errs.lifeExpectancy = 'Life expectancy must be greater than retirement age.';
+      } else if (lAge > 100) {
+        errs.lifeExpectancy = 'Life expectancy cannot exceed 100.';
+      }
     }
-    if (currentExpenses !== '' && (currentExpenses < 5000 || currentExpenses > 10000000)) {
-      errs.currentExpenses = 'Monthly expenses must be between ₹5,000 and ₹1,00,00,000.';
+    if (currentExpenses !== '') {
+      if (Number(currentExpenses) < 0) {
+        errs.currentExpenses = 'Monthly expenses cannot be negative.';
+      } else if (Number(currentExpenses) > 100000000) {
+        errs.currentExpenses = 'Monthly expenses cannot exceed ₹10,00,00,000.';
+      }
     }
-    if (inflationRate !== '' && (inflationRate < 1 || inflationRate > 15)) {
-      errs.inflationRate = 'Inflation rate must be between 1% and 15%.';
+    if (currentSavings !== '') {
+      if (Number(currentSavings) < 0) {
+        errs.savings = 'Current savings cannot be negative.';
+      }
     }
-    if (preReturn !== '' && (preReturn < 1 || preReturn > 25)) {
-      errs.preReturn = 'Pre-retirement return must be between 1% and 25%.';
+    if (monthlyInvestment !== '') {
+      if (Number(monthlyInvestment) < 0) {
+        errs.monthly = 'Monthly savings cannot be negative.';
+      }
     }
-    if (postReturn !== '' && (postReturn < 1 || postReturn > 15)) {
-      errs.postReturn = 'Post-retirement return must be between 1% and 15%.';
+    if (inflationRate !== '') {
+      if (Number(inflationRate) < 0 || Number(inflationRate) > 20) {
+        errs.inflationRate = 'Inflation rate must be between 0% and 20%.';
+      }
+    }
+    if (preReturn !== '') {
+      if (Number(preReturn) < 0 || Number(preReturn) > 30) {
+        errs.preReturn = 'Pre-retirement return must be between 0% and 30%.';
+      }
+    }
+    if (postReturn !== '') {
+      if (Number(postReturn) < 0 || Number(postReturn) > 25) {
+        errs.postReturn = 'Post-retirement return must be between 0% and 25%.';
+      }
     }
     return errs;
   }, [
@@ -115,27 +143,33 @@ export default function RetirementCalculator() {
     retirementAge,
     lifeExpectancy,
     currentExpenses,
+    currentSavings,
+    monthlyInvestment,
     inflationRate,
     preReturn,
     postReturn,
   ]);
 
-  // Safe Input Payload
+  // Safe Input Payload for Real-time Calculation
   const safeInputs = useMemo(() => {
-    const cAge = Math.max(18, Math.min(70, Number(currentAge) || 30));
-    const rAge = Math.max(cAge + 1, Math.min(80, Number(retirementAge) || 60));
-    const lAge = Math.max(rAge + 1, Math.min(100, Number(lifeExpectancy) || 85));
+    const rawC = Number(currentAge) || 30;
+    const rawR = Number(retirementAge) || 60;
+    const rawL = Number(lifeExpectancy) || 85;
+
+    const cAge = Math.max(18, Math.min(75, rawC));
+    const rAge = Math.max(cAge + 1, Math.min(85, rawR > cAge ? rawR : cAge + 1));
+    const lAge = Math.max(rAge + 1, Math.min(100, rawL > rAge ? rawL : rAge + 1));
 
     return {
       currentAge: cAge,
       retirementAge: rAge,
       lifeExpectancy: lAge,
-      currentExpenses: Math.max(5000, Math.min(10000000, Number(currentExpenses) || 50000)),
-      inflationRate: Math.max(1, Math.min(15, Number(inflationRate) || 6)),
-      currentSavings: Math.max(0, Number(currentSavings) || 0),
-      monthlyInvestment: Math.max(0, Number(monthlyInvestment) || 0),
-      preReturn: Math.max(1, Math.min(25, Number(preReturn) || 12)),
-      postReturn: Math.max(1, Math.min(15, Number(postReturn) || 7)),
+      currentExpenses: currentExpenses === '' ? 0 : Math.max(0, Number(currentExpenses) || 0),
+      inflationRate: inflationRate === '' ? 0 : Math.max(0, Math.min(20, Number(inflationRate) || 0)),
+      currentSavings: currentSavings === '' ? 0 : Math.max(0, Number(currentSavings) || 0),
+      monthlyInvestment: monthlyInvestment === '' ? 0 : Math.max(0, Number(monthlyInvestment) || 0),
+      preReturn: preReturn === '' ? 0 : Math.max(0, Math.min(30, Number(preReturn) || 0)),
+      postReturn: postReturn === '' ? 0 : Math.max(0, Math.min(25, Number(postReturn) || 0)),
     };
   }, [
     currentAge,

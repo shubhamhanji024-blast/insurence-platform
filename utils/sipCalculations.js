@@ -6,7 +6,12 @@
  * Format numbers in the Indian Numbering System (e.g. ₹1,00,000, ₹10,00,000, ₹1,00,00,000)
  */
 export function formatIndianCurrency(amount, includeSymbol = true) {
-  if (isNaN(amount) || amount === null || amount === undefined) {
+  if (
+    amount === null ||
+    amount === undefined ||
+    isNaN(amount) ||
+    !isFinite(amount)
+  ) {
     return includeSymbol ? '₹0' : '0';
   }
 
@@ -32,7 +37,14 @@ export function formatIndianCurrency(amount, includeSymbol = true) {
  * Short Indian Currency representation (e.g. ₹11.6 Lakhs, ₹1.2 Cr)
  */
 export function formatShortIndianCurrency(amount) {
-  if (isNaN(amount)) return '₹0';
+  if (
+    amount === null ||
+    amount === undefined ||
+    isNaN(amount) ||
+    !isFinite(amount)
+  ) {
+    return '₹0';
+  }
   const absVal = Math.abs(amount);
   if (absVal >= 10000000) {
     return `₹${(amount / 10000000).toFixed(2)} Cr`;
@@ -79,15 +91,17 @@ export function calculateSIP(monthlyInvestment, years, annualRate) {
   futureValue = Math.round(futureValue);
   const estimatedReturns = Math.max(0, futureValue - totalInvested);
 
-  const investedRatio = futureValue > 0 ? (totalInvested / futureValue) * 100 : 50;
-  const returnsRatio = futureValue > 0 ? (estimatedReturns / futureValue) * 100 : 50;
+  const investedRatio =
+    futureValue > 0 ? (totalInvested / futureValue) * 100 : 100;
+  const returnsRatio =
+    futureValue > 0 ? (estimatedReturns / futureValue) * 100 : 0;
 
   return {
     totalInvested,
     estimatedReturns,
     futureValue,
-    investedRatio: Number(investedRatio.toFixed(1)),
-    returnsRatio: Number(returnsRatio.toFixed(1)),
+    investedRatio: Number(Math.min(100, Math.max(0, investedRatio)).toFixed(1)),
+    returnsRatio: Number(Math.min(100, Math.max(0, returnsRatio)).toFixed(1)),
   };
 }
 
