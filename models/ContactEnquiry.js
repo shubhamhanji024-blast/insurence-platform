@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const ContactEnquirySchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+      index: true,
+    },
     name: {
       type: String,
       required: [true, 'Name is required'],
@@ -23,6 +29,11 @@ const ContactEnquirySchema = new mongoose.Schema(
       type: String,
       required: [true, 'Service is required'],
       trim: true,
+    },
+    subject: {
+      type: String,
+      trim: true,
+      default: 'General Consultation',
     },
     message: {
       type: String,

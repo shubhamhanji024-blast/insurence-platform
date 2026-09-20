@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 
 const AppointmentSchema = new mongoose.Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      default: null,
+      index: true,
+    },
     clientName: {
       type: String,
       required: [true, 'Client name is required'],

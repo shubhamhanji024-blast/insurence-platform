@@ -51,8 +51,8 @@ export default function ProfilePage() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('/api/auth/profile', {
-        method: 'PATCH',
+      const res = await fetch('/api/user/profile', {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fullName: cleanName, phone }),
       });

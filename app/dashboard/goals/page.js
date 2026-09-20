@@ -43,7 +43,7 @@ export default function FinancialGoalsPage() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/goals');
+      const res = await fetch('/api/user/goals');
       const data = await res.json();
       if (res.ok && data.success) {
         setGoals(data.goals || []);
@@ -112,8 +112,8 @@ export default function FinancialGoalsPage() {
     setIsSubmitting(true);
 
     try {
-      const url = editingGoal ? `/api/goals/${editingGoal.id}` : '/api/goals';
-      const method = editingGoal ? 'PATCH' : 'POST';
+      const url = editingGoal ? `/api/user/goals/${editingGoal.id}` : '/api/user/goals';
+      const method = editingGoal ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
         method,
@@ -147,7 +147,7 @@ export default function FinancialGoalsPage() {
     if (!deleteId) return;
     setIsDeleting(true);
     try {
-      const res = await fetch(`/api/goals/${deleteId}`, { method: 'DELETE' });
+      const res = await fetch(`/api/user/goals/${deleteId}`, { method: 'DELETE' });
       const data = await res.json();
       if (res.ok && data.success) {
         setDeleteId(null);

@@ -37,6 +37,11 @@ const FinancialGoalSchema = new mongoose.Schema(
       default: 0,
       min: [0, 'Current amount must be positive'],
     },
+    monthlyContribution: {
+      type: Number,
+      default: 0,
+      min: [0, 'Monthly contribution cannot be negative'],
+    },
     targetDate: {
       type: Date,
       default: null,

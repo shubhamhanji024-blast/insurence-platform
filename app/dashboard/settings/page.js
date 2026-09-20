@@ -92,8 +92,7 @@ export default function SettingsPage() {
 
       if (res.ok && data.success) {
         setDeleteModalOpen(false);
-        if (logout) logout();
-        router.push('/login');
+        if (logout) logout('/');
       } else {
         setDeleteError(data.message || 'Failed to delete account.');
       }
