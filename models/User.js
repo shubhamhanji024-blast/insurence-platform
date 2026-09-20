@@ -56,6 +56,23 @@ UserSchema.virtual('id').get(function () {
   return this._id.toHexString();
 });
 
+// Backward & forward compatibility aliases for name and lastLogin
+UserSchema.virtual('name')
+  .get(function () {
+    return this.fullName;
+  })
+  .set(function (val) {
+    this.fullName = val;
+  });
+
+UserSchema.virtual('lastLogin')
+  .get(function () {
+    return this.lastLoginAt;
+  })
+  .set(function (val) {
+    this.lastLoginAt = val;
+  });
+
 UserSchema.set('toJSON', {
   virtuals: true,
   transform: (doc, ret) => {

@@ -12,6 +12,7 @@ import {
   calculateLumpsum,
   calculateLumpsumYearlyBreakdown,
 } from '@/utils/lumpsumCalculations';
+import { trackCalculatorUsage } from '@/utils/trackCalculator';
 
 export default function LumpsumCalculator() {
   // Default values
@@ -22,6 +23,11 @@ export default function LumpsumCalculator() {
   const [initialInvestment, setInitialInvestment] = useState(DEFAULT_AMOUNT);
   const [years, setYears] = useState(DEFAULT_YEARS);
   const [annualReturn, setAnnualReturn] = useState(DEFAULT_RETURN);
+
+  // Track calculator usage once on load
+  useEffect(() => {
+    trackCalculatorUsage('LUMPSUM');
+  }, []);
 
   // Recalculate Pre-fill Handler (reads query param safely on client)
   useEffect(() => {

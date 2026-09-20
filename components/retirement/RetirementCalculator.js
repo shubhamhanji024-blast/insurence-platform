@@ -16,6 +16,7 @@ import {
   calculatePreRetirementSchedule,
   calculatePostRetirementSchedule,
 } from '@/utils/retirementCalculations';
+import { trackCalculatorUsage } from '@/utils/trackCalculator';
 
 export default function RetirementCalculator() {
   // Default values
@@ -40,6 +41,11 @@ export default function RetirementCalculator() {
   const [monthlyInvestment, setMonthlyInvestment] = useState(DEFAULTS.monthlyInvestment);
   const [preReturn, setPreReturn] = useState(DEFAULTS.preReturn);
   const [postReturn, setPostReturn] = useState(DEFAULTS.postReturn);
+
+  // Track calculator usage once on load
+  useEffect(() => {
+    trackCalculatorUsage('RETIREMENT');
+  }, []);
 
   // Recalculate Pre-fill Handler (reads query param safely on client)
   useEffect(() => {

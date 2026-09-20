@@ -66,7 +66,6 @@ const InsightSchema = new mongoose.Schema(
   }
 );
 
-InsightSchema.index({ slug: 1 });
 InsightSchema.index({ status: 1, publishedAt: -1 });
 InsightSchema.index({ createdAt: -1 });
 

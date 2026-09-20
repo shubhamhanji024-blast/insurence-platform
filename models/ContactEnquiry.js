@@ -52,6 +52,7 @@ const ContactEnquirySchema = new mongoose.Schema(
   }
 );
 
+ContactEnquirySchema.index({ status: 1, createdAt: -1 });
 ContactEnquirySchema.index({ createdAt: -1 });
 
 ContactEnquirySchema.virtual('id').get(function () {

@@ -5,6 +5,7 @@ import User from '@/models/User';
 import ContactEnquiry from '@/models/ContactEnquiry';
 import FinancialGoal from '@/models/FinancialGoal';
 import SavedCalculation from '@/models/SavedCalculation';
+import CalculatorUsage from '@/models/CalculatorUsage';
 import Appointment from '@/models/Appointment';
 import Service from '@/models/Service';
 import ActivityLog from '@/models/ActivityLog';
@@ -87,13 +88,24 @@ export async function GET(req) {
       })
     );
 
-    // Calculator breakdown by type
-    const [sipCount, emiCount, lumpCount, retCount] = await Promise.all([
+    // Calculator breakdown by type (combines CalculatorUsage events and SavedCalculations)
+    const [
+      sipSaved, emiSaved, lumpSaved, retSaved,
+      sipUsed, emiUsed, lumpUsed, retUsed,
+      totalUsages
+    ] = await Promise.all([
       SavedCalculation.countDocuments({ calculatorType: { $regex: /sip/i } }),
       SavedCalculation.countDocuments({ calculatorType: { $regex: /emi/i } }),
       SavedCalculation.countDocuments({ calculatorType: { $regex: /lump/i } }),
       SavedCalculation.countDocuments({ calculatorType: { $regex: /retir/i } }),
+      CalculatorUsage.countDocuments({ calculatorType: 'SIP' }),
+      CalculatorUsage.countDocuments({ calculatorType: 'EMI' }),
+      CalculatorUsage.countDocuments({ calculatorType: 'LUMPSUM' }),
+      CalculatorUsage.countDocuments({ calculatorType: 'RETIREMENT' }),
+      CalculatorUsage.countDocuments(),
     ]);
+
+    const grandTotalCalculations = totalCalculations + totalUsages;
 
     return NextResponse.json({
       success: true,
@@ -107,16 +119,16 @@ export async function GET(req) {
           newEnquiries,
           totalAppointments,
           pendingAppointments,
-          totalCalculations,
+          totalCalculations: grandTotalCalculations,
           totalServices,
           activeServices,
           totalGoals,
         },
         calculatorBreakdown: {
-          sip: sipCount,
-          emi: emiCount,
-          lumpsum: lumpCount,
-          retirement: retCount,
+          sip: sipSaved + sipUsed,
+          emi: emiSaved + emiUsed,
+          lumpsum: lumpSaved + lumpUsed,
+          retirement: retSaved + retUsed,
         },
         chartData,
         recentUsers,

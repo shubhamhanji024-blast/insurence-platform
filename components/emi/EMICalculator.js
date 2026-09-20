@@ -13,6 +13,7 @@ import {
   calculateEMIYearlyBreakdown,
   calculateEMIMonthlyAmortization,
 } from '@/utils/emiCalculations';
+import { trackCalculatorUsage } from '@/utils/trackCalculator';
 
 export default function EMICalculator() {
   // Default values
@@ -27,6 +28,11 @@ export default function EMICalculator() {
   const [interestRate, setInterestRate] = useState(DEFAULT_RATE);
   const [tenureValue, setTenureValue] = useState(DEFAULT_TENURE_VAL);
   const [tenureUnit, setTenureUnit] = useState(DEFAULT_TENURE_UNIT);
+
+  // Track calculator usage once on load
+  useEffect(() => {
+    trackCalculatorUsage('EMI');
+  }, []);
 
   // Recalculate Pre-fill Handler (reads query param safely on client)
   useEffect(() => {

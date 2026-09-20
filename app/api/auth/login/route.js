@@ -44,6 +44,13 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: genericErr }, { status: 401 });
     }
 
+    if (user.status === 'INACTIVE') {
+      return NextResponse.json(
+        { success: false, message: 'Your account has been deactivated. Please contact support.' },
+        { status: 403 }
+      );
+    }
+
     // 2. Compare Password Hash
     const isPasswordValid = await comparePassword(password, user.passwordHash);
     if (!isPasswordValid) {

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import ContactEnquiry from '@/models/ContactEnquiry';
+import { getCurrentUserFromReq } from '@/lib/auth';
 import { validateContactInput } from '@/lib/sanitizer';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { sendEnquiryNotificationEmail } from '@/lib/emailService';
@@ -67,12 +68,17 @@ export async function POST(req) {
       );
     }
 
-    // 5. Save Enquiry in MongoDB (contact_enquiries collection)
+    // 5. Check if user is authenticated
+    const currentUser = await getCurrentUserFromReq(req).catch(() => null);
+
+    // 6. Save Enquiry in MongoDB (contact_enquiries collection)
     const newEnquiry = await ContactEnquiry.create({
+      userId: currentUser?.id || null,
       name: validation.sanitized.name,
       email: validation.sanitized.email,
       phone: validation.sanitized.phone || null,
       service: validation.sanitized.service,
+      subject: validation.sanitized.service || 'General Consultation',
       message: validation.sanitized.message,
       status: 'NEW',
     });

@@ -62,6 +62,7 @@ const AppointmentSchema = new mongoose.Schema(
   }
 );
 
+AppointmentSchema.index({ userId: 1, appointmentDate: 1 });
 AppointmentSchema.index({ appointmentDate: 1, appointmentTime: 1 });
 AppointmentSchema.index({ createdAt: -1 });
 

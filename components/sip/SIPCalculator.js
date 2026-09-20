@@ -8,6 +8,7 @@ import SIPEducation from './SIPEducation';
 import SIPDisclaimer from './SIPDisclaimer';
 import SaveCalculationModal from '@/components/SaveCalculationModal';
 import { calculateSIP, calculateYearlyBreakdown } from '@/utils/sipCalculations';
+import { trackCalculatorUsage } from '@/utils/trackCalculator';
 
 export default function SIPCalculator() {
   // Default values
@@ -18,6 +19,11 @@ export default function SIPCalculator() {
   const [monthlyInvestment, setMonthlyInvestment] = useState(DEFAULT_MONTHLY);
   const [years, setYears] = useState(DEFAULT_YEARS);
   const [annualReturn, setAnnualReturn] = useState(DEFAULT_RETURN);
+
+  // Track calculator usage once on load
+  useEffect(() => {
+    trackCalculatorUsage('SIP');
+  }, []);
 
   // Recalculate Pre-fill Handler (reads query param safely on client)
   useEffect(() => {
