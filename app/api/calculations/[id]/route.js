@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import { getCurrentUserFromReq } from '@/lib/auth';
 import SavedCalculation from '@/models/SavedCalculation';
 import { logActivity } from '@/lib/activityServer';
+import { isValidObjectId } from '@/lib/validateObjectId';
 
 export async function GET(req, { params }) {
   try {
@@ -13,6 +14,10 @@ export async function GET(req, { params }) {
     }
 
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'Saved calculation not found.' }, { status: 404 });
+    }
 
     const calc = await SavedCalculation.findById(id);
 
@@ -39,6 +44,10 @@ export async function DELETE(req, { params }) {
     }
 
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'Saved calculation not found.' }, { status: 404 });
+    }
 
     const calc = await SavedCalculation.findById(id);
 

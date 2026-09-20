@@ -82,12 +82,18 @@ export function middleware(request) {
   // 4. Authenticated users opening /login or /register
   if (isUserAuthRoute && isTokenValid) {
     const rawRedirect = request.nextUrl.searchParams.get('redirectTo') || request.nextUrl.searchParams.get('redirect');
-    const target =
-      rawRedirect && rawRedirect !== '/' && rawRedirect !== '/login' && rawRedirect !== '/register'
-        ? rawRedirect
-        : isAdmin
-        ? '/admin/dashboard'
-        : '/dashboard';
+    // Open redirect prevention: only allow same-origin relative paths (must start with /)
+    const isSafeRedirect =
+      rawRedirect &&
+      rawRedirect.startsWith('/') &&
+      !rawRedirect.startsWith('//') &&
+      rawRedirect !== '/login' &&
+      rawRedirect !== '/register';
+    const target = isSafeRedirect
+      ? rawRedirect
+      : isAdmin
+      ? '/admin/dashboard'
+      : '/dashboard';
     return NextResponse.redirect(new URL(target, request.url));
   }
 

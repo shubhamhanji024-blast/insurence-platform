@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import ContactEnquiry from '@/models/ContactEnquiry';
+import { escapeRegex } from '@/lib/sanitizer';
 
 // GET /api/admin/contacts — List, search, filter contact requests
 export async function GET(req) {
@@ -24,12 +25,13 @@ export async function GET(req) {
       query.status = status.toUpperCase();
     }
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } },
-        { phone: { $regex: search, $options: 'i' } },
-        { subject: { $regex: search, $options: 'i' } },
-        { message: { $regex: search, $options: 'i' } },
+        { name: { $regex: safeSearch, $options: 'i' } },
+        { email: { $regex: safeSearch, $options: 'i' } },
+        { phone: { $regex: safeSearch, $options: 'i' } },
+        { subject: { $regex: safeSearch, $options: 'i' } },
+        { message: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import User from '@/models/User';
+import { escapeRegex } from '@/lib/sanitizer';
 
 // GET /api/admin/users — List, search, paginate users
 export async function GET(req) {
@@ -22,10 +23,11 @@ export async function GET(req) {
       query.role = role;
     }
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { fullName: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } },
-        { phone: { $regex: search, $options: 'i' } },
+        { fullName: { $regex: safeSearch, $options: 'i' } },
+        { email: { $regex: safeSearch, $options: 'i' } },
+        { phone: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

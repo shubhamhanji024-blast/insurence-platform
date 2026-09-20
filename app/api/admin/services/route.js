@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import Service from '@/models/Service';
 import { logAdminActivity } from '@/lib/logActivity';
+import { escapeRegex } from '@/lib/sanitizer';
 
 const DEFAULT_SERVICES = [
   {
@@ -88,10 +89,11 @@ export async function GET(req) {
       query.status = status;
     }
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { name: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } },
-        { category: { $regex: search, $options: 'i' } },
+        { name: { $regex: safeSearch, $options: 'i' } },
+        { description: { $regex: safeSearch, $options: 'i' } },
+        { category: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

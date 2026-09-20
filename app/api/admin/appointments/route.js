@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import Appointment from '@/models/Appointment';
 import { logAdminActivity } from '@/lib/logActivity';
+import { escapeRegex } from '@/lib/sanitizer';
 
 // GET /api/admin/appointments — List, filter, search, paginate appointments
 export async function GET(req) {
@@ -25,7 +26,7 @@ export async function GET(req) {
       query.status = status;
     }
     if (service) {
-      query.service = { $regex: service, $options: 'i' };
+      query.service = { $regex: escapeRegex(service), $options: 'i' };
     }
     if (date) {
       const startOfDay = new Date(date);
@@ -35,11 +36,12 @@ export async function GET(req) {
       query.appointmentDate = { $gte: startOfDay, $lte: endOfDay };
     }
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { clientName: { $regex: search, $options: 'i' } },
-        { email: { $regex: search, $options: 'i' } },
-        { phone: { $regex: search, $options: 'i' } },
-        { service: { $regex: search, $options: 'i' } },
+        { clientName: { $regex: safeSearch, $options: 'i' } },
+        { email: { $regex: safeSearch, $options: 'i' } },
+        { phone: { $regex: safeSearch, $options: 'i' } },
+        { service: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import Insight from '@/models/Insight';
+import { escapeRegex } from '@/lib/sanitizer';
 
 function generateSlug(title) {
   return title
@@ -32,10 +33,11 @@ export async function GET(req) {
       query.status = statusFilter;
     }
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { category: { $regex: search, $options: 'i' } },
-        { author: { $regex: search, $options: 'i' } },
+        { title: { $regex: safeSearch, $options: 'i' } },
+        { category: { $regex: safeSearch, $options: 'i' } },
+        { author: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

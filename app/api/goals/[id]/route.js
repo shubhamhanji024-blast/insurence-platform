@@ -3,6 +3,7 @@ import connectToDatabase from '@/lib/mongodb';
 import { getCurrentUserFromReq } from '@/lib/auth';
 import FinancialGoal from '@/models/FinancialGoal';
 import { logActivity } from '@/lib/activityServer';
+import { isValidObjectId } from '@/lib/validateObjectId';
 
 const GOAL_TYPE_MAP = {
   'Retirement': 'RETIREMENT',
@@ -33,6 +34,10 @@ export async function GET(req, { params }) {
 
     const { id } = await params;
 
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'Goal not found.' }, { status: 404 });
+    }
+
     const goal = await FinancialGoal.findById(id);
 
     if (!goal || goal.userId.toString() !== user.id) {
@@ -55,6 +60,10 @@ export async function PATCH(req, { params }) {
     }
 
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'Goal not found.' }, { status: 404 });
+    }
 
     const existingGoal = await FinancialGoal.findById(id);
 
@@ -148,6 +157,10 @@ export async function DELETE(req, { params }) {
     }
 
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'Goal not found.' }, { status: 404 });
+    }
 
     const existingGoal = await FinancialGoal.findById(id);
 

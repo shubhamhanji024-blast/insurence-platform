@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import connectToDatabase from '@/lib/mongodb';
 import { requireAdmin } from '@/lib/adminAuth';
 import ActivityLog from '@/models/ActivityLog';
+import { escapeRegex } from '@/lib/sanitizer';
 
 // GET /api/admin/activity — List audit logs with pagination and filters
 export async function GET(req) {
@@ -22,11 +23,12 @@ export async function GET(req) {
     if (action) query.action = action;
     if (targetType) query.targetType = targetType;
     if (search) {
+      const safeSearch = escapeRegex(search);
       query.$or = [
-        { adminEmail: { $regex: search, $options: 'i' } },
-        { adminName: { $regex: search, $options: 'i' } },
-        { action: { $regex: search, $options: 'i' } },
-        { details: { $regex: search, $options: 'i' } },
+        { adminEmail: { $regex: safeSearch, $options: 'i' } },
+        { adminName: { $regex: safeSearch, $options: 'i' } },
+        { action: { $regex: safeSearch, $options: 'i' } },
+        { details: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 

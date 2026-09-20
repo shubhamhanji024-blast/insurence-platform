@@ -5,6 +5,7 @@ import User from '@/models/User';
 import FinancialGoal from '@/models/FinancialGoal';
 import SavedCalculation from '@/models/SavedCalculation';
 import { logAdminActivity } from '@/lib/logActivity';
+import { isValidObjectId } from '@/lib/validateObjectId';
 
 // GET /api/admin/users/[id] — User detail (no secrets)
 export async function GET(req, { params }) {
@@ -14,6 +15,10 @@ export async function GET(req, { params }) {
   try {
     await connectToDatabase();
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'User not found.' }, { status: 404 });
+    }
 
     const targetUser = await User.findById(id).select('-passwordHash -__v');
     if (!targetUser) {
@@ -58,6 +63,10 @@ async function handleUpdate(req, params) {
   try {
     await connectToDatabase();
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'User not found.' }, { status: 404 });
+    }
 
     let body;
     try { body = await req.json(); } catch {
@@ -148,6 +157,10 @@ export async function DELETE(req, { params }) {
   try {
     await connectToDatabase();
     const { id } = await params;
+
+    if (!isValidObjectId(id)) {
+      return NextResponse.json({ success: false, message: 'User not found.' }, { status: 404 });
+    }
 
     const targetUser = await User.findById(id);
     if (!targetUser) {

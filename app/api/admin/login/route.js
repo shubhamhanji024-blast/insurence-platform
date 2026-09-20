@@ -1,9 +1,26 @@
 import { NextResponse } from 'next/server';
+import crypto from 'crypto';
 import connectToDatabase from '@/lib/mongodb';
 import User from '@/models/User';
 import { comparePassword, hashPassword, signToken, COOKIE_NAME, toSafeUser } from '@/lib/auth';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { logAdminActivity } from '@/lib/logActivity';
+
+/**
+ * Constant-time string comparison to prevent timing attacks.
+ * Always compares the full string length regardless of match result.
+ */
+function timingSafeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string') return false;
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) {
+    // Still compare to consume similar time
+    crypto.timingSafeEqual(Buffer.alloc(bufA.length), Buffer.alloc(bufA.length));
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
 
 export async function POST(req) {
   try {
@@ -14,8 +31,8 @@ export async function POST(req) {
       req.headers.get('x-real-ip') ||
       '127.0.0.1';
 
-    // Rate Limit: 10 admin login attempts per 15 mins
-    const rateLimit = checkRateLimit(`admin_login_${clientIp}`, 10, 15 * 60 * 1000);
+    // Rate Limit: 5 admin login attempts per 15 mins (stricter than user login)
+    const rateLimit = checkRateLimit(`admin_login_${clientIp}`, 5, 15 * 60 * 1000);
     if (!rateLimit.allowed) {
       return NextResponse.json({ success: false, message: rateLimit.message }, { status: 429 });
     }
@@ -46,8 +63,8 @@ export async function POST(req) {
     // 1. Check against securely stored environment variable credentials
     if (
       configuredAdminPassword &&
-      cleanEmail === configuredAdminEmail &&
-      password === configuredAdminPassword
+      timingSafeEqual(cleanEmail, configuredAdminEmail) &&
+      timingSafeEqual(password, configuredAdminPassword)
     ) {
       adminAuthenticated = true;
 
