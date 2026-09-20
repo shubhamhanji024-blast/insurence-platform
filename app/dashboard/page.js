@@ -45,9 +45,9 @@ const plansList = [
     id: 'plan-1',
     name: 'Investment Planning',
     desc: 'Asset allocation, diversified mutual fund portfolio, and risk profile optimization.',
-    status: 'ACTIVE',
-    createdDate: '15 Jan 2026',
-    nextAction: 'Review annual rebalancing',
+    status: 'AVAILABLE',
+    focus: 'Wealth Creation & Alpha',
+    advisorTier: 'Senior Portfolio Manager',
     icon: '💹',
     link: '/services/investment-planning',
   },
@@ -55,9 +55,9 @@ const plansList = [
     id: 'plan-2',
     name: 'Retirement Planning',
     desc: 'Targeted pension accumulation, inflation-adjusted corpus projection, and annuity planning.',
-    status: 'ACTIVE',
-    createdDate: '02 Feb 2026',
-    nextAction: 'Increase SIP contribution by 10%',
+    status: 'AVAILABLE',
+    focus: 'Post-Retirement Security',
+    advisorTier: 'Retirement Specialist',
     icon: '🌴',
     link: '/services/retirement-planning',
   },
@@ -65,9 +65,9 @@ const plansList = [
     id: 'plan-3',
     name: 'Insurance Planning',
     desc: 'Comprehensive term cover, family floater health cover, and critical illness shielding.',
-    status: 'IN_REVIEW',
-    createdDate: '20 Feb 2026',
-    nextAction: 'Submit medical disclosure documents',
+    status: 'AVAILABLE',
+    focus: 'Risk & Family Protection',
+    advisorTier: 'Insurance Advisory Desk',
     icon: '🛡️',
     link: '/services/insurance-planning',
   },
@@ -75,9 +75,9 @@ const plansList = [
     id: 'plan-4',
     name: 'Tax Planning',
     desc: 'Section 80C, 80D deductions optimization, ELSS routing, and capital gains harvesting.',
-    status: 'ACTIVE',
-    createdDate: '10 Mar 2026',
-    nextAction: 'Schedule FY26 tax review',
+    status: 'AVAILABLE',
+    focus: 'Fiscal Deductions & NPS',
+    advisorTier: 'Tax & Compliance Consultant',
     icon: '📋',
     link: '/services/tax-planning',
   },
@@ -85,9 +85,9 @@ const plansList = [
     id: 'plan-5',
     name: 'Wealth Management',
     desc: 'Bespoke high-net-worth portfolio management, multi-asset diversification, and legacy planning.',
-    status: 'RECOMMENDED',
-    createdDate: '—',
-    nextAction: 'Connect with a senior wealth advisor',
+    status: 'AVAILABLE',
+    focus: 'HNI & Multi-Asset Structuring',
+    advisorTier: 'Executive Wealth Director',
     icon: '🏦',
     link: '/services/wealth-management',
   },
@@ -95,9 +95,9 @@ const plansList = [
     id: 'plan-6',
     name: 'Financial Planning',
     desc: 'Holistic 360-degree financial health roadmap covering emergency reserves and debt reduction.',
-    status: 'ACTIVE',
-    createdDate: '01 Jan 2026',
-    nextAction: 'Maintain 6-month emergency reserve',
+    status: 'AVAILABLE',
+    focus: 'Foundational Roadmap',
+    advisorTier: 'Lead Financial Planner',
     icon: '📊',
     link: '/services/financial-planning',
   },
@@ -692,19 +692,19 @@ export default function UserDashboardPage() {
             )}
           </section>
 
-          {/* SECTION 6: MY PLANS */}
+          {/* SECTION 6: ADVISORY TRACKS */}
           <section>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <div>
                 <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary-900)' }}>
-                  My Plans
+                  Advisory Tracks
                 </h3>
                 <p style={{ margin: 0, fontSize: '0.82rem', color: 'var(--gray-500)' }}>
-                  Financial planning tracks and advisory blueprints
+                  Specialized financial planning tracks and advisory blueprints
                 </p>
               </div>
               <Link href="/dashboard/plans" className="btn btn-outline btn-sm" style={{ color: '#1e3a8a', borderColor: '#1e3a8a' }}>
-                Explore Services →
+                View All Tracks →
               </Link>
             </div>
 
@@ -732,10 +732,8 @@ export default function UserDashboardPage() {
                           fontWeight: 700,
                           padding: '0.2rem 0.6rem',
                           borderRadius: '12px',
-                          background:
-                            plan.status === 'ACTIVE' ? '#dcfce7' : plan.status === 'IN_REVIEW' ? '#fef3c7' : '#f1f5f9',
-                          color:
-                            plan.status === 'ACTIVE' ? '#15803d' : plan.status === 'IN_REVIEW' ? '#b45309' : '#475569',
+                          background: '#e0f2fe',
+                          color: '#0369a1',
                         }}
                       >
                         {plan.status}
@@ -751,19 +749,19 @@ export default function UserDashboardPage() {
 
                   <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.75rem', fontSize: '0.75rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem', color: 'var(--gray-500)' }}>
-                      <span>Enrolled Date:</span>
-                      <strong style={{ color: 'var(--gray-700)' }}>{plan.createdDate}</strong>
+                      <span>Advisor Desk:</span>
+                      <strong style={{ color: 'var(--gray-700)' }}>{plan.advisorTier}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem', color: 'var(--gray-500)' }}>
-                      <span>Next Action:</span>
-                      <span style={{ color: '#0369a1', fontWeight: 600, textAlign: 'right' }}>{plan.nextAction}</span>
+                      <span>Core Focus:</span>
+                      <span style={{ color: '#0369a1', fontWeight: 600, textAlign: 'right' }}>{plan.focus}</span>
                     </div>
                     <Link
                       href={plan.link}
                       className="btn btn-outline btn-sm"
                       style={{ width: '100%', justifyContent: 'center', fontSize: '0.78rem' }}
                     >
-                      Plan Overview →
+                      Explore Track →
                     </Link>
                   </div>
                 </div>

@@ -58,7 +58,7 @@ export default function AboutPage() {
                 Built on Trust, Transparency &amp; Expertise
               </h2>
               <p style={{ color: 'var(--gray-600)', marginBottom: '1rem', lineHeight: 1.7 }}>
-                Founded with a mission to eliminate confusion in financial planning, GrowthNest has grown into a trusted financial services platform serving thousands of clients across India.
+                Founded with a mission to eliminate confusion in financial planning, GrowthNest is a modern financial advisory platform built for individuals and families across India.
               </p>
               <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', lineHeight: 1.7 }}>
                 We combine deep domain expertise in investment planning, tax strategy, and wealth management with modern digital tools to deliver an unmatched client experience.

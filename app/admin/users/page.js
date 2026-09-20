@@ -116,7 +116,7 @@ export default function AdminUsersPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name, email (e.g. shubham@gmail.com) or phone..."
+            placeholder="Search by name, email, or phone number..."
             style={{ width: '100%', padding: '0.65rem 1rem', borderRadius: 8, border: '1px solid #cbd5e1', fontSize: '0.88rem', outline: 'none' }}
           />
         </div>

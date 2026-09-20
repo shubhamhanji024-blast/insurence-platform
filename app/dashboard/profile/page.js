@@ -132,7 +132,7 @@ export default function ProfilePage() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 className={`form-input ${fieldErrors.fullName ? 'is-invalid' : ''}`}
-                placeholder="John Doe"
+                placeholder="Enter your full name"
               />
               {fieldErrors.fullName && <p className="sip-error-msg">{fieldErrors.fullName}</p>}
             </div>

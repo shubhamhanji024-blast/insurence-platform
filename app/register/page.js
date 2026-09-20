@@ -179,7 +179,7 @@ export default function RegisterPage() {
                   value={form.fullName}
                   onChange={handleChange}
                   className={`form-input ${errors.fullName ? 'is-invalid' : ''}`}
-                  placeholder="John Doe"
+                  placeholder="Enter your full name"
                   aria-required="true"
                   aria-describedby={errors.fullName ? 'fullname-error' : undefined}
                 />
@@ -202,7 +202,7 @@ export default function RegisterPage() {
                   value={form.email}
                   onChange={handleChange}
                   className={`form-input ${errors.email ? 'is-invalid' : ''}`}
-                  placeholder="john@example.com"
+                  placeholder="name@email.com"
                   aria-required="true"
                   aria-describedby={errors.email ? 'email-error' : undefined}
                 />

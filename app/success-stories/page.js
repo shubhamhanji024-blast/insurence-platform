@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { testimonials, leaderboard } from '@/data/testimonials';
+import { testimonials } from '@/data/testimonials';
 
 export default function SuccessStoriesPage() {
   const [activeFilter, setActiveFilter] = useState('All');
@@ -8,80 +8,70 @@ export default function SuccessStoriesPage() {
   const cities = ['All', ...new Set(testimonials.map(t => t.city))];
   const filtered = activeFilter === 'All' ? testimonials : testimonials.filter(t => t.city === activeFilter);
 
-  const top3 = leaderboard.slice(0, 3);
-  const rest = leaderboard.slice(3);
-
   return (
     <>
       {/* Hero */}
       <section className="stories-hero">
         <div className="stories-hero-bg" />
         <div className="container text-center">
-          <span className="label">Success Stories</span>
+          <span className="label">Client Journeys</span>
           <h1 style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-            Real People, <span className="text-gradient">Real Results</span>
+            Real Milestones, <span className="text-gradient">Structured Planning</span>
           </h1>
           <p style={{ maxWidth: '600px', margin: '0 auto', fontSize: '1.05rem' }}>
-            Discover how ordinary people achieved extraordinary financial success through the GrowthNest platform.
+            Discover how individuals and families navigated major life transitions and reached their goals through GrowthNest advisory.
           </p>
         </div>
       </section>
 
-      {/* ---- Podium Section ---- */}
-      <section className="section">
+      {/* ---- Stories Grid ---- */}
+      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="container">
           <div className="section-heading">
-            <h2> <span className="text-gradient">Top Performers</span> This Month</h2>
-            <p>Our highest earning advisors across India — you&apos;re next.</p>
+            <h2>Financial <span className="text-gradient">Case Studies</span></h2>
+            <p>Practical examples of structured goal planning, tax optimization, and long-term wealth protection.</p>
           </div>
 
-          <div className="podium-container" style={{ marginBottom: '3rem' }}>
-            {/* Silver — 2nd */}
-            <div className="podium-item podium-silver">
-              <div className="podium-card">
-                <div className="podium-avatar"></div>
-                <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1rem' }}>{top3[1]?.name}</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[1]?.city}</p>
-                <div className="podium-income">{top3[1]?.income}</div>
-              </div>
-              <div className="podium-base">#2</div>
-            </div>
-
-            {/* Gold — 1st (tallest) */}
-            <div className="podium-item podium-gold" style={{ zIndex: 2 }}>
-              <div className="podium-crown"></div>
-              <div className="podium-card">
-                <div className="podium-avatar"></div>
-                <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1.1rem' }}>{top3[0]?.name}</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[0]?.city}</p>
-                <div className="podium-income text-shimmer">{top3[0]?.income}</div>
-                <span className="badge badge-accent" style={{ marginTop: '0.5rem', fontSize: '0.7rem' }}>Top Earner </span>
-              </div>
-              <div className="podium-base">#1</div>
-            </div>
-
-            {/* Bronze — 3rd */}
-            <div className="podium-item podium-bronze">
-              <div className="podium-card">
-                <div className="podium-avatar"></div>
-                <h4 style={{ margin: '0.5rem 0 0.25rem', fontSize: '1rem' }}>{top3[2]?.name}</h4>
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', margin: 0 }}>{top3[2]?.city}</p>
-                <div className="podium-income">{top3[2]?.income}</div>
-              </div>
-              <div className="podium-base">#3</div>
-            </div>
+          {/* City Filter */}
+          <div className="flex justify-center gap-sm flex-wrap" style={{ marginBottom: '2.5rem' }}>
+            {cities.map(city => (
+              <button
+                key={city}
+                className={`chip ${activeFilter === city ? 'active' : ''}`}
+                onClick={() => setActiveFilter(city)}
+              >
+                {city === 'All' ? 'All Regions' : city}
+              </button>
+            ))}
           </div>
 
-          {/* Rest of leaderboard */}
-          <div className="leaderboard-rest glass-card" style={{ maxWidth: '700px', margin: '0 auto', padding: 0 }}>
-            {rest.map((leader, i) => (
-              <div key={i} className="leader-row-item">
-                <span style={{ fontSize: '1.5rem' }}>{leader.emoji}</span>
-                <div style={{ flex: 1 }}>
-                  <h5 style={{ margin: 0 }}>{leader.name}</h5>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{leader.city}</span>
+          <div className="grid grid-3">
+            {filtered.map(t => (
+              <div key={t.id} className="story-card glass-card card-hover-glow" style={{ padding: '1.5rem', background: '#ffffff', borderRadius: '14px', border: '1px solid #e2e8f0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
+                  <div>
+                    <h4 style={{ margin: '0 0 0.2rem', color: '#101b3b', fontSize: '1.1rem' }}>{t.name}</h4>
+                    <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>{t.role} · {t.city}</p>
+                  </div>
+                  <span style={{ fontSize: '0.72rem', background: '#e0f2fe', color: '#0369a1', padding: '0.25rem 0.55rem', borderRadius: '12px', fontWeight: 600 }}>
+                    {t.focusArea}
+                  </span>
                 </div>
-                <div className="text-gradient" style={{ fontSize: '1.2rem', fontWeight: 800 }}>{leader.income}</div>
+
+                <div style={{ background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: '8px', borderLeft: '3px solid #19C3A3', marginBottom: '1rem' }}>
+                  <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.04em', fontWeight: 600 }}>Milestone Accomplished</div>
+                  <div style={{ fontSize: '0.9rem', color: '#0f172a', fontWeight: 700, marginTop: '0.15rem' }}>{t.milestone}</div>
+                </div>
+
+                {/* Journey quote */}
+                <div style={{ fontStyle: 'italic', fontSize: '0.88rem', color: '#334155', paddingLeft: '0.75rem', borderLeft: '3px solid #cbd5e1', marginBottom: '1rem', lineHeight: 1.5 }}>
+                  &ldquo;{t.quote}&rdquo;
+                </div>
+
+                {/* Journey text */}
+                <p style={{ fontSize: '0.84rem', color: '#64748b', lineHeight: 1.6, margin: 0 }}>
+                  {t.journey}
+                </p>
               </div>
             ))}
           </div>
@@ -93,83 +83,13 @@ export default function SuccessStoriesPage() {
         <div className="container">
           <div className="cta-strip-inner">
             <div>
-              <h3 style={{ margin: 0, marginBottom: '0.25rem' }}>You Could Be Next </h3>
-              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>Join 5,000+ advisors who turned their career around with GrowthNest.</p>
+              <h3 style={{ margin: 0, marginBottom: '0.25rem' }}>Begin Your Financial Plan</h3>
+              <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem' }}>Schedule a consultation with a certified wealth advisor to structure your personal goals.</p>
             </div>
             <div className="flex gap-md">
-              <a href="/careers" className="btn btn-accent">Start Your Journey →</a>
-              <a href="/calculator" className="btn btn-glass">Calculate Income</a>
+              <a href="/contact" className="btn btn-accent">Talk to an Advisor →</a>
+              <a href="/calculators" className="btn btn-glass">Explore Calculators</a>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ---- Stories Grid ---- */}
-      <section className="section" style={{ background: 'var(--bg-secondary)' }}>
-        <div className="container">
-          <div className="section-heading">
-            <h2>Advisor <span className="text-gradient">Journeys</span></h2>
-            <p>From all walks of life — every story is unique.</p>
-          </div>
-
-          {/* City Filter */}
-          <div className="flex justify-center gap-sm flex-wrap" style={{ marginBottom: '2.5rem' }}>
-            {cities.map(city => (
-              <button
-                key={city}
-                className={`chip ${activeFilter === city ? 'active' : ''}`}
-                onClick={() => setActiveFilter(city)}
-              >
-                {city === 'All' ? '️ All Cities' : ` ${city}`}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid grid-3">
-            {filtered.map(t => (
-              <div key={t.id} className="story-card glass-card card-hover-glow">
-                <div className="story-card-header">
-                  <div className="story-avatar">{t.image}</div>
-                  <div style={{ flex: 1 }}>
-                    <h4 style={{ margin: 0, marginBottom: '2px' }}>{t.name}</h4>
-                    <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{t.role} · {t.city}</p>
-                    <p style={{ margin: 0, fontSize: '0.75rem', color: 'var(--primary)' }}>Joined {t.joinYear}</p>
-                  </div>
-                </div>
-
-                {/* Income comparison */}
-                <div className="story-income-bar">
-                  <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Then</div>
-                    <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textDecoration: 'line-through' }}>
-                      ~₹{t.joinYear <= 2019 ? '15,000' : t.joinYear <= 2020 ? '25,000' : '30,000'}/mo
-                    </div>
-                  </div>
-                  <div className="story-income-arrow"></div>
-                  <div>
-                    <div style={{ fontSize: '0.65rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Now</div>
-                    <div className="text-gradient" style={{ fontSize: '1.15rem', fontWeight: 800 }}>{t.monthlyIncome}/mo</div>
-                  </div>
-                </div>
-
-                {/* Journey quote */}
-                <div className="story-quote">
-                  &ldquo;{t.quote}&rdquo;
-                </div>
-
-                {/* Journey text */}
-                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: 1.6, flex: 1 }}>
-                  {t.journey}
-                </p>
-
-                {/* Awards */}
-                <div className="story-awards">
-                  {t.awards.map((award, i) => (
-                    <span key={i} className="story-award-chip">{award}</span>
-                  ))}
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

@@ -88,21 +88,20 @@ export default function CareersPage() {
               Start Your <span className="text-gradient">Insurance Career</span> Today
             </h2>
             <p style={{ marginBottom: '2rem' }}>
-              No experience needed. Join 5,000+ advisors building financial freedom with GrowthNest.
+              No prior experience needed. Build a rewarding advisory career with comprehensive training and mentorship at GrowthNest.
             </p>
 
-            {/* Income Calculator Mini */}
-            <div className="income-calc-mini glass-card-static" style={{ marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>
-                 Potential First-Year Earnings
+            {/* Advisory Progression Pathway */}
+            <div className="income-calc-mini glass-card-static" style={{ marginBottom: '1.5rem', padding: '1rem 1.25rem' }}>
+              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.6rem' }}>
+                Structured Advisory Pathway
               </div>
-              <div className="income-range-bar">
-                <div className="income-range-fill" />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '6px', fontSize: '0.8rem' }}>
-                <span style={{ color: 'var(--text-muted)' }}>₹60K/year</span>
-                <span className="text-gradient" style={{ fontWeight: 700 }}>Avg ₹3.6L/year</span>
-                <span style={{ color: 'var(--text-muted)' }}>₹38L+/year</span>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', fontSize: '0.78rem' }}>
+                <span style={{ background: '#f1f5f9', padding: '0.35rem 0.6rem', borderRadius: '6px', color: '#101b3b', fontWeight: 600 }}>1. Foundation</span>
+                <span style={{ color: '#cbd5e1' }}>→</span>
+                <span style={{ background: '#e0f2fe', padding: '0.35rem 0.6rem', borderRadius: '6px', color: '#0369a1', fontWeight: 600 }}>2. Certified Advisor</span>
+                <span style={{ color: '#cbd5e1' }}>→</span>
+                <span style={{ background: '#fef3c7', padding: '0.35rem 0.6rem', borderRadius: '6px', color: '#b45309', fontWeight: 600 }}>3. Practice Lead</span>
               </div>
             </div>
 

@@ -2,90 +2,84 @@
 import Link from 'next/link';
 import DashboardLayout from '@/components/dashboard/DashboardLayout';
 
-const detailedPlans = [
+const advisoryTracks = [
   {
     id: 'investment-planning',
     name: 'Investment Planning',
     category: 'Wealth Growth',
     desc: 'Asset allocation, curated mutual fund portfolios, equity distribution, and periodic risk profiling.',
-    status: 'ACTIVE',
-    createdDate: '15 Jan 2026',
-    nextAction: 'Review portfolio rebalancing with advisor',
-    advisor: 'Senior Portfolio Manager',
+    status: 'AVAILABLE',
+    focus: 'Capital Appreciation & Compounding',
+    advisorTier: 'Senior Portfolio Manager',
     icon: '💹',
     link: '/services/investment-planning',
-    badgeColor: '#dcfce7',
-    textColor: '#15803d',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
   {
     id: 'retirement-planning',
     name: 'Retirement Planning',
     category: 'Long-term Security',
     desc: 'Corpus calculation, pension indexation, annuity purchasing, and tax-efficient withdrawal structures.',
-    status: 'ACTIVE',
-    createdDate: '02 Feb 2026',
-    nextAction: 'Increase monthly voluntary SIP by 10%',
-    advisor: 'Retirement Specialist',
+    status: 'AVAILABLE',
+    focus: 'Post-Retirement Income Security',
+    advisorTier: 'Retirement Specialist',
     icon: '🌴',
     link: '/services/retirement-planning',
-    badgeColor: '#dcfce7',
-    textColor: '#15803d',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
   {
     id: 'insurance-planning',
     name: 'Insurance Planning',
     category: 'Risk Protection',
     desc: 'Term life adequacy assessment, comprehensive health cover, and personal accident shield.',
-    status: 'IN_REVIEW',
-    createdDate: '20 Feb 2026',
-    nextAction: 'Provide updated diagnostic reports for premium underwriting',
-    advisor: 'Insurance Advisory Desk',
+    status: 'AVAILABLE',
+    focus: 'Pure Protection & Family Shield',
+    advisorTier: 'Insurance Advisory Desk',
     icon: '🛡️',
     link: '/services/insurance-planning',
-    badgeColor: '#fef3c7',
-    textColor: '#b45309',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
   {
     id: 'tax-planning',
     name: 'Tax Planning',
     category: 'Fiscal Optimization',
     desc: 'Section 80C, 80D structuring, NPS tax deductions, ELSS investments, and capital gains advisory.',
-    status: 'ACTIVE',
-    createdDate: '10 Mar 2026',
-    nextAction: 'Finalize FY 2025-26 tax-saving investment certificates',
-    advisor: 'Tax & Compliance Consultant',
+    status: 'AVAILABLE',
+    focus: 'Tax Deduction & Compliance',
+    advisorTier: 'Tax & Compliance Consultant',
     icon: '📋',
     link: '/services/tax-planning',
-    badgeColor: '#dcfce7',
-    textColor: '#15803d',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
   {
     id: 'wealth-management',
     name: 'Wealth Management',
     category: 'High Net Worth Advisory',
     desc: 'Private equity, bespoke debt syndication, estate succession planning, and family trust management.',
-    status: 'EXPLORE',
-    createdDate: 'Available',
-    nextAction: 'Book consultation to unlock HNI advisory tier',
-    advisor: 'Executive Wealth Director',
+    status: 'AVAILABLE',
+    focus: 'Estate & Multi-Asset Structuring',
+    advisorTier: 'Executive Wealth Director',
     icon: '🏦',
     link: '/services/wealth-management',
-    badgeColor: '#f1f5f9',
-    textColor: '#475569',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
   {
     id: 'financial-planning',
     name: '360° Financial Planning',
     category: 'Foundational Roadmap',
     desc: 'End-to-end financial roadmap integrating emergency reserves, budgeting, and debt clearance.',
-    status: 'ACTIVE',
-    createdDate: '01 Jan 2026',
-    nextAction: 'Maintain minimum 6 months living expenses in liquid buffer',
-    advisor: 'Lead Financial Planner',
+    status: 'AVAILABLE',
+    focus: 'Holistic Financial Health',
+    advisorTier: 'Lead Financial Planner',
     icon: '📊',
     link: '/services/financial-planning',
-    badgeColor: '#dcfce7',
-    textColor: '#15803d',
+    badgeColor: '#e0f2fe',
+    textColor: '#0369a1',
   },
 ];
 
@@ -93,7 +87,7 @@ export default function PlansPage() {
   return (
     <DashboardLayout>
       <head>
-        <title>My Financial Plans | GrowthNest Dashboard</title>
+        <title>Advisory Tracks | GrowthNest Dashboard</title>
         <meta name="robots" content="noindex, nofollow" />
       </head>
 
@@ -101,23 +95,41 @@ export default function PlansPage() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
             <h2 style={{ fontSize: '1.65rem', fontWeight: 800, margin: '0 0 0.35rem', color: 'var(--primary-900)', fontFamily: "'Playfair Display', serif" }}>
-              My Financial Plans
+              Advisory Tracks &amp; Solutions
             </h2>
             <p style={{ margin: 0, fontSize: '0.88rem', color: 'var(--gray-600)' }}>
-              Track active financial planning advisory tracks and strategic milestones.
+              Explore specialized financial planning tracks or schedule a consultation to structure your custom plan.
             </p>
           </div>
           <Link
-            href="/services"
-            className="btn btn-outline"
-            style={{ color: '#1e3a8a', borderColor: '#1e3a8a' }}
+            href="/dashboard/appointments"
+            className="btn btn-primary"
+            style={{ background: '#101b3b', borderColor: '#101b3b' }}
           >
-            Explore All Services →
+            + Book Advisory Session
+          </Link>
+        </div>
+
+        {/* Empty / Enrollment State Notice */}
+        <div style={{ background: '#f8fafc', border: '1px dashed #cbd5e1', borderRadius: '12px', padding: '1.25rem 1.5rem', marginBottom: '1.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span style={{ fontSize: '1.5rem' }}>ℹ️</span>
+            <div>
+              <div style={{ fontWeight: 600, color: 'var(--primary-900)', fontSize: '0.92rem' }}>
+                No active custom advisory enrollment yet.
+              </div>
+              <div style={{ color: 'var(--gray-600)', fontSize: '0.82rem' }}>
+                Browse our core advisory solutions below to explore blueprints or connect with an advisor to start a customized track.
+              </div>
+            </div>
+          </div>
+          <Link href="/dashboard/appointments" className="btn btn-outline btn-sm" style={{ color: '#1e3a8a', borderColor: '#1e3a8a' }}>
+            Schedule Consultation
           </Link>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
-          {detailedPlans.map((plan) => (
+          {advisoryTracks.map((plan) => (
             <div
               key={plan.id}
               className="glass-card-static"
@@ -161,17 +173,13 @@ export default function PlansPage() {
 
               <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.85rem', fontSize: '0.8rem' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem', color: 'var(--gray-500)' }}>
-                  <span>Advisor:</span>
-                  <strong style={{ color: 'var(--gray-800)' }}>{plan.advisor}</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.35rem', color: 'var(--gray-500)' }}>
-                  <span>Created:</span>
-                  <span style={{ color: 'var(--gray-700)' }}>{plan.createdDate}</span>
+                  <span>Advisor Desk:</span>
+                  <strong style={{ color: 'var(--gray-800)' }}>{plan.advisorTier}</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', color: 'var(--gray-500)' }}>
-                  <span>Next Action:</span>
+                  <span>Core Focus:</span>
                   <span style={{ color: '#0369a1', fontWeight: 600, textAlign: 'right', maxWidth: '60%' }}>
-                    {plan.nextAction}
+                    {plan.focus}
                   </span>
                 </div>
 
@@ -181,14 +189,14 @@ export default function PlansPage() {
                     className="btn btn-outline btn-sm"
                     style={{ flex: 1, justifyContent: 'center', fontSize: '0.78rem' }}
                   >
-                    Learn More
+                    Explore Track
                   </Link>
                   <Link
-                    href="/dashboard/support"
+                    href="/dashboard/appointments"
                     className="btn btn-primary btn-sm"
                     style={{ flex: 1, justifyContent: 'center', fontSize: '0.78rem', background: '#101b3b', borderColor: '#101b3b' }}
                   >
-                    Consult Advisor
+                    Request Session
                   </Link>
                 </div>
               </div>

@@ -248,7 +248,7 @@ export default function HomePage() {
           </div>
           <div className="trust-grid">
             {[
-              { title: 'Trusted Guidance', desc: 'SEBI-registered advisors with decade-long expertise', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+              { title: 'Trusted Guidance', desc: 'Fiduciary-standard advisors dedicated to your goals', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
               { title: 'Transparent Advice', desc: 'Fee-only model — no hidden commissions, ever', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg> },
               { title: 'Personalized Planning', desc: 'Every strategy built uniquely around your goals', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
               { title: 'Long-Term Approach', desc: 'We focus on sustainable, lasting wealth creation', icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /><polyline points="16 7 22 7 22 13" /></svg> },
@@ -294,12 +294,12 @@ export default function HomePage() {
               <img src="https://images.pexels.com/photos/3183183/pexels-photo-3183183.jpeg?auto=compress&cs=tinysrgb&w=800" alt="GrowthNest team meeting" loading="lazy" />
               <div style={{ position: 'absolute', bottom: '1.5rem', left: '1.5rem', right: '1.5rem', background: 'rgba(16,27,59,0.92)', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <div style={{ textAlign: 'center', flex: 1, borderRight: '1px solid rgba(255,255,255,0.2)', paddingRight: '1rem' }}>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>95%</div>
-                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.15rem' }}>Client Satisfaction</div>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>Fiduciary</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', marginTop: '0.15rem' }}>Client-First Advisory</div>
                 </div>
                 <div style={{ textAlign: 'center', flex: 1 }}>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>10+</div>
-                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.7)', marginTop: '0.15rem' }}>Years of Expertise</div>
+                  <div style={{ fontSize: '1.15rem', fontWeight: 700, color: '#d4af37', fontFamily: "'Playfair Display', serif" }}>Transparent</div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.85)', marginTop: '0.15rem' }}>Fee-Only Guidance</div>
                 </div>
               </div>
             </div>
@@ -362,10 +362,10 @@ export default function HomePage() {
               <Link href="/register" className="btn btn-primary">Get Started Today</Link>
             </div>
 
-            {/* Dashboard Mockup */}
-            <div style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+            {/* Platform Feature Capability Showcase */}
+            <div style={{ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
               <div style={{ background: '#101b3b', padding: '1rem 1.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9rem' }}>My Financial Dashboard</span>
+                <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '0.9rem' }}>Financial Architecture Overview</span>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
                   <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} />
                   <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#f59e0b' }} />
@@ -375,46 +375,44 @@ export default function HomePage() {
               <div style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.75rem', marginBottom: '1rem' }}>
                   {[
-                    { label: 'Portfolio Value', value: '₹24.8L', delta: '+12.4%', color: '#22c55e' },
-                    { label: 'Monthly Savings', value: '₹45,000', delta: 'On Track', color: '#3b82f6' },
-                    { label: 'Financial Goals', value: '3 Active', delta: '2 Near Target', color: '#f59e0b' },
-                    { label: 'Investments', value: '₹18.2L', delta: '+8.7%', color: '#8b5cf6' },
+                    { label: 'Portfolio Allocation', value: 'Multi-Asset', delta: 'Equity, Debt & Gold', color: '#10b981' },
+                    { label: 'SIP & Lumpsum', value: 'Compounding', delta: 'Inflation Indexed', color: '#3b82f6' },
+                    { label: 'Milestone Tracking', value: 'Goal-Based', delta: 'Target Roadmaps', color: '#d97706' },
+                    { label: 'Advisory Review', value: 'Dedicated', delta: 'Periodic Check-ins', color: '#8b5cf6' },
                   ].map((s, i) => (
                     <div key={i} style={{ background: '#f9fafb', borderRadius: '10px', padding: '0.875rem', border: '1px solid #e5e7eb' }}>
                       <p style={{ fontSize: '0.7rem', color: '#6b7280', margin: '0 0 0.3rem' }}>{s.label}</p>
-                      <p style={{ fontSize: '1.1rem', fontWeight: 700, color: '#101b3b', margin: '0 0 0.2rem', fontFamily: "'Playfair Display', serif" }}>{s.value}</p>
+                      <p style={{ fontSize: '1.05rem', fontWeight: 700, color: '#101b3b', margin: '0 0 0.2rem' }}>{s.value}</p>
                       <span style={{ fontSize: '0.7rem', color: s.color, fontWeight: 600 }}>{s.delta}</span>
                     </div>
                   ))}
                 </div>
                 <div style={{ background: '#f9fafb', borderRadius: '10px', padding: '1rem', border: '1px solid #e5e7eb', marginBottom: '1rem' }}>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', marginBottom: '0.75rem' }}>Portfolio Performance — 2026</p>
-                  <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', height: '60px' }}>
-                    {[35, 45, 40, 60, 55, 70, 65, 80, 75, 90, 85, 100].map((h, i) => (
-                      <div key={i} style={{ flex: 1, height: `${h}%`, background: i === 11 ? '#1e3a8a' : i >= 9 ? '#93c5fd' : '#dbeafe', borderRadius: '3px 3px 0 0' }} />
-                    ))}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+                    <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', margin: 0 }}>Strategic Asset Diversification Model</p>
+                    <span style={{ fontSize: '0.68rem', color: '#6b7280' }}>Recommended Mix</span>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.4rem' }}>
-                    {['Jan', 'Mar', 'May', 'Jul', 'Sep', 'Nov'].map(m => (
-                      <span key={m} style={{ fontSize: '0.6rem', color: '#9ca3af' }}>{m}</span>
-                    ))}
+                  <div style={{ display: 'flex', height: '10px', borderRadius: '5px', overflow: 'hidden', gap: '2px' }}>
+                    <div style={{ width: '55%', background: '#1e3a8a' }} title="Equity - 55%" />
+                    <div style={{ width: '30%', background: '#10b981' }} title="Debt / Fixed Income - 30%" />
+                    <div style={{ width: '15%', background: '#d4af37' }} title="Gold & Liquid Reserves - 15%" />
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem', fontSize: '0.68rem', color: '#6b7280' }}>
+                    <span>🔵 Equities (55%)</span>
+                    <span>🟢 Fixed Income (30%)</span>
+                    <span>🟡 Reserves (15%)</span>
                   </div>
                 </div>
                 <div style={{ background: '#f9fafb', borderRadius: '10px', padding: '1rem', border: '1px solid #e5e7eb' }}>
-                  <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', marginBottom: '0.75rem' }}>Goal Progress</p>
+                  <p style={{ fontSize: '0.75rem', fontWeight: 600, color: '#374151', marginBottom: '0.65rem' }}>Integrated Planning Modules</p>
                   {[
-                    { goal: 'Emergency Fund', pct: 85, color: '#1e3a8a' },
-                    { goal: 'Home Down Payment', pct: 42, color: '#d4af37' },
-                    { goal: 'Retirement Corpus', pct: 28, color: '#22c55e' },
-                  ].map((g, i) => (
-                    <div key={i} style={{ marginBottom: '0.6rem' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
-                        <span style={{ fontSize: '0.72rem', color: '#374151' }}>{g.goal}</span>
-                        <span style={{ fontSize: '0.72rem', color: g.color, fontWeight: 600 }}>{g.pct}%</span>
-                      </div>
-                      <div style={{ height: '6px', background: '#e5e7eb', borderRadius: '3px', overflow: 'hidden' }}>
-                        <div style={{ width: `${g.pct}%`, height: '100%', background: g.color, borderRadius: '3px' }} />
-                      </div>
+                    { module: 'Emergency Fund Protection', desc: 'Liquid buffer covering 6 months expenses' },
+                    { module: 'Retirement Corpus Calculation', desc: 'Inflation-adjusted annuity modeling' },
+                    { module: 'Tax Optimization Review', desc: 'Section 80C, 80D & capital gains guidance' },
+                  ].map((m, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.35rem 0', borderBottom: i < 2 ? '1px solid #f3f4f6' : 'none' }}>
+                      <span style={{ fontSize: '0.73rem', fontWeight: 600, color: '#1e3a8a' }}>{m.module}</span>
+                      <span style={{ fontSize: '0.7rem', color: '#6b7280' }}>{m.desc}</span>
                     </div>
                   ))}
                 </div>
