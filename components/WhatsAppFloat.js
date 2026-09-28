@@ -11,10 +11,8 @@ export default function WhatsAppFloat() {
 
   if (!visible) return null;
 
-  const phone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE;
-  const href = phone
-    ? `https://wa.me/${phone}?text=Hi%20GrowthNest%2C%20I%20would%20like%20to%20know%20more%20about%20your%20financial%20planning%20services.`
-    : '/contact';
+  const phone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || '918884440166';
+  const href = `https://wa.me/${phone}?text=Hi%20GrowthNest%2C%20I%20would%20like%20to%20know%20more%20about%20your%20financial%20planning%20services.`;
 
   return (
     <a

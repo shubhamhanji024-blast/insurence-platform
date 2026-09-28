@@ -9,7 +9,12 @@
  */
 
 export async function register() {
-  if (process.env.NEXT_RUNTIME === 'edge') return;
-  // DNS is set by dns-preload.cjs (loaded via NODE_OPTIONS --require)
-  // No additional setup needed here
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    try {
+      const dns = await import('node:dns');
+      dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
+    } catch {
+      // Ignore
+    }
+  }
 }
