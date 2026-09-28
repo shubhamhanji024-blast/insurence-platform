@@ -14,6 +14,9 @@ export default function Footer() {
             <p style={{ marginTop: '1rem' }}>
               Helping you grow, plan, and build a stronger financial future.
             </p>
+            <p style={{ marginTop: '0.5rem', fontSize: '0.75rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.45)', fontWeight: 600, textTransform: 'uppercase' }}>
+              GROW BEYOND LIMITS
+            </p>
             {/* Social Icons */}
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '1.25rem' }}>
               {[
@@ -103,14 +106,14 @@ export default function Footer() {
                 Advisory Desk
               </Link>
               <a
-                href="mailto:hello@growthnest.com"
+                href="mailto:growthnestconnect@gmail.com"
                 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)' }}
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
-                hello@growthnest.com
+                growthnestconnect@gmail.com
               </a>
             </div>
           </div>

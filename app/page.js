@@ -141,7 +141,7 @@ const faqs = [
   },
   {
     question: 'How do I contact a financial advisor?',
-    answer: 'You can contact us through our Contact page, by email at hello@growthnest.com, or by phone at +91 98765 43210. Our advisors are available Monday to Friday from 9 AM to 7 PM IST, and Saturday from 10 AM to 5 PM. We also offer video consultations.',
+    answer: 'You can contact us through our Contact page, by email at growthnestconnect@gmail.com, or by phone at 8884440166. Our advisors are available Monday to Friday from 9 AM to 7 PM IST, and Saturday from 10 AM to 5 PM. We also offer video consultations.',
   },
 ];
 

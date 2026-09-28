@@ -58,10 +58,13 @@ export default function AboutPage() {
                 Built on Trust, Transparency &amp; Expertise
               </h2>
               <p style={{ color: 'var(--gray-600)', marginBottom: '1rem', lineHeight: 1.7 }}>
-                Founded with a mission to eliminate confusion in financial planning, GrowthNest is a modern financial advisory platform built for individuals and families across India.
+                Founded by <strong style={{ color: 'var(--primary-900)' }}>Vishal Khyadi</strong> with a mission to eliminate confusion in financial planning, GrowthNest is a modern financial advisory platform built for individuals and families across India.
               </p>
-              <p style={{ color: 'var(--gray-600)', marginBottom: '1.5rem', lineHeight: 1.7 }}>
+              <p style={{ color: 'var(--gray-600)', marginBottom: '1rem', lineHeight: 1.7 }}>
                 We combine deep domain expertise in investment planning, tax strategy, and wealth management with modern digital tools to deliver an unmatched client experience.
+              </p>
+              <p style={{ fontSize: '0.85rem', letterSpacing: '0.12em', color: 'var(--primary-700)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '1.5rem' }}>
+                GROW BEYOND LIMITS
               </p>
 
               <Link href="/contact" className="btn btn-primary">Talk to an Advisor</Link>

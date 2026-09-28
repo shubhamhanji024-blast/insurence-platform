@@ -189,7 +189,7 @@ export default function DashboardSupportPage() {
                 <span style={{ fontSize: '1.1rem' }}>📧</span>
                 <div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--gray-500)', marginBottom: '0.1rem' }}>Email</div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary-900)' }}>support@growthnest.com</div>
+                  <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary-900)' }}>growthnestconnect@gmail.com</div>
                 </div>
               </div>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>

@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
 
             <h2 style={{ color: 'var(--primary-900)', fontSize: '1.4rem', marginBottom: '1rem' }}>4. Contact Us</h2>
             <p style={{ marginBottom: '1.5rem' }}>
-              If you have questions about this Privacy Policy, please email us at <a href="mailto:privacy@growthnest.com" style={{ color: 'var(--primary-700)', fontWeight: 600 }}>privacy@growthnest.com</a>.
+              If you have questions about this Privacy Policy, please email us at <a href="mailto:growthnestconnect@gmail.com" style={{ color: 'var(--primary-700)', fontWeight: 600 }}>growthnestconnect@gmail.com</a>.
             </p>
 
             <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--gray-200)' }}>

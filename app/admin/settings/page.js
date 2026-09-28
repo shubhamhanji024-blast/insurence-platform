@@ -12,10 +12,10 @@ export default function AdminSettingsPage() {
   // Form states
   const [form, setForm] = useState({
     siteName: 'GrowthNest',
-    tagline: 'Smarter Financial Decisions for a Confident Future',
-    supportEmail: 'support@growthnest.com',
-    supportPhone: '+91 (800) 476-9840',
-    officeAddress: 'GrowthNest Towers, Financial District, Bengaluru, Karnataka, India',
+    tagline: 'GROW BEYOND LIMITS',
+    supportEmail: 'growthnestconnect@gmail.com',
+    supportPhone: '8884440166',
+    officeAddress: 'Vijayapura – 586101, Karnataka, India',
     emailNotifications: true,
     maintenanceMode: false,
     allowRegistrations: true,

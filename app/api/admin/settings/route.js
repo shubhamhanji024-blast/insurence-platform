@@ -6,10 +6,10 @@ import { logAdminActivity } from '@/lib/logActivity';
 
 const DEFAULT_SETTINGS = {
   siteName: 'GrowthNest',
-  tagline: 'Smarter Financial Decisions for a Confident Future',
-  supportEmail: 'support@growthnest.com',
-  supportPhone: '+91 (800) 476-9840',
-  officeAddress: 'GrowthNest Towers, Financial District, Bengaluru, Karnataka, India',
+  tagline: 'GROW BEYOND LIMITS',
+  supportEmail: 'growthnestconnect@gmail.com',
+  supportPhone: '8884440166',
+  officeAddress: 'Vijayapura – 586101, Karnataka, India',
   emailNotifications: true,
   maintenanceMode: false,
   allowRegistrations: true,
