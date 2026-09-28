@@ -139,8 +139,20 @@ export async function POST(req) {
     return response;
   } catch (err) {
     console.error('[Register API Error]:', err.message);
+
+    if (err.code === 11000) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'An account with this email already exists.',
+          errors: { email: 'An account with this email already exists.' },
+        },
+        { status: 400 }
+      );
+    }
+
     return NextResponse.json(
-      { success: false, message: 'Failed to create account. Please try again.' },
+      { success: false, message: 'Unable to create account. Please check your details and try again.' },
       { status: 500 }
     );
   }
