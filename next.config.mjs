@@ -35,6 +35,27 @@ const nextConfig = {
       },
     ];
   },
+
+  // Route Aliases & Redirects
+  async redirects() {
+    return [
+      {
+        source: '/signin',
+        destination: '/login',
+        permanent: true,
+      },
+      {
+        source: '/signup',
+        destination: '/register',
+        permanent: true,
+      },
+      {
+        source: '/admin/login',
+        destination: '/login',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

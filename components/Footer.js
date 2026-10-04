@@ -88,7 +88,7 @@ export default function Footer() {
             <p className="footer-heading">Resources</p>
             <ul className="footer-links">
               <li><Link href="/calculators">Calculators</Link></li>
-              <li><Link href="/dashboard">Dashboard Login</Link></li>
+              <li><Link href="/dashboard">Client Dashboard</Link></li>
               <li><Link href="/training">Training Center</Link></li>
               <li><Link href="/faq">FAQs</Link></li>
               <li><Link href="/success-stories">Success Stories</Link></li>

@@ -86,7 +86,19 @@ export async function POST(req) {
       );
     }
 
-    // 7. Check if Email Already Exists
+    // 7. Check if Email is reserved for Admin or already exists
+    const configuredAdminEmail = (process.env.ADMIN_EMAIL || 'growthnestconnect@gmail.com').trim().toLowerCase();
+    if (cleanEmail === configuredAdminEmail) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'This email is reserved for administration. Please use the Sign In page.',
+          errors: { email: 'This email is reserved for administration. Please use the Sign In page.' },
+        },
+        { status: 400 }
+      );
+    }
+
     const existingUser = await User.findOne({ email: cleanEmail });
 
     if (existingUser) {

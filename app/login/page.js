@@ -51,7 +51,13 @@ function LoginForm() {
     try {
       const res = await login(email, password, rememberMe);
       if (res && res.success) {
-        router.replace(redirectTo);
+        const role = (res.user?.role || '').toUpperCase();
+        if (role === 'ADMIN') {
+          router.replace(redirectTo.startsWith('/admin') ? redirectTo : '/admin/dashboard');
+        } else {
+          const safeUserRedirect = redirectTo.startsWith('/admin') ? '/dashboard' : redirectTo;
+          router.replace(safeUserRedirect);
+        }
       } else {
         setServerError(res?.message || 'Invalid email or password.');
       }
@@ -220,10 +226,20 @@ function LoginRedirectWatcher() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const rawRedirect = searchParams.get('redirectTo') || searchParams.get('redirect');
-  const target =
-    rawRedirect && rawRedirect !== '/' && rawRedirect !== '/login' && rawRedirect !== '/register'
+  const role = (user?.role || '').toUpperCase();
+  const defaultTarget = role === 'ADMIN' ? '/admin/dashboard' : '/dashboard';
+  let target =
+    rawRedirect &&
+    rawRedirect !== '/' &&
+    rawRedirect !== '/login' &&
+    rawRedirect !== '/register' &&
+    rawRedirect !== '/admin/login'
       ? rawRedirect
-      : '/dashboard';
+      : defaultTarget;
+
+  if (role !== 'ADMIN' && target.startsWith('/admin')) {
+    target = '/dashboard';
+  }
 
   useEffect(() => {
     if (!loading && user) {

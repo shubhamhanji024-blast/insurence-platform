@@ -18,31 +18,30 @@ function parseJwtPayload(token) {
   }
 }
 
-export function middleware(request) {
+export function proxy(request) {
   const { pathname, search } = request.nextUrl;
   const token = request.cookies.get('gn_session')?.value;
   const payload = token ? parseJwtPayload(token) : null;
   const isTokenValid = payload && (!payload.exp || payload.exp * 1000 > Date.now());
-  const isAdmin = isTokenValid && payload.role === 'ADMIN';
+  const userRole = (payload?.role || '').toUpperCase();
+  const isAdmin = isTokenValid && userRole === 'ADMIN';
 
   const isDashboardRoute = pathname === '/dashboard' || pathname.startsWith('/dashboard/');
   const isAdminLogin = pathname === '/admin/login';
   const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
   const isUserAuthRoute = pathname === '/login' || pathname === '/register';
 
-  // 1. Admin Login Route
+  // 1. Direct /admin/login access -> Unified /login redirect
   if (isAdminLogin) {
-    if (isAdmin) {
-      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-    }
-    return NextResponse.next();
+    const target = isAdmin ? '/admin/dashboard' : '/login';
+    return NextResponse.redirect(new URL(target, request.url));
   }
 
   // 2. Admin Routes Protection (/admin, /admin/*)
   if (isAdminRoute) {
-    // Unauthenticated -> redirect to /admin/login
+    // Unauthenticated -> redirect to single /login portal
     if (!isTokenValid) {
-      const redirectUrl = new URL('/admin/login', request.url);
+      const redirectUrl = new URL('/login', request.url);
       redirectUrl.searchParams.set('redirectTo', pathname + search);
       const res = NextResponse.redirect(redirectUrl);
       res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -51,7 +50,9 @@ export function middleware(request) {
 
     // Authenticated but non-admin -> deny access, send to user dashboard
     if (!isAdmin) {
-      return NextResponse.redirect(new URL('/dashboard', request.url));
+      const res = NextResponse.redirect(new URL('/dashboard', request.url));
+      res.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+      return res;
     }
 
     // Admin root -> redirect to /admin/dashboard
@@ -88,7 +89,8 @@ export function middleware(request) {
       rawRedirect.startsWith('/') &&
       !rawRedirect.startsWith('//') &&
       rawRedirect !== '/login' &&
-      rawRedirect !== '/register';
+      rawRedirect !== '/register' &&
+      rawRedirect !== '/admin/login';
     const target = isSafeRedirect
       ? rawRedirect
       : isAdmin
@@ -109,3 +111,5 @@ export const config = {
     '/register',
   ],
 };
+
+export default proxy;

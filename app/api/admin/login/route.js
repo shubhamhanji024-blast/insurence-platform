@@ -54,8 +54,8 @@ export async function POST(req) {
       );
     }
 
-    const configuredAdminEmail = (process.env.ADMIN_EMAIL || 'shubhamhanji024@gmail.com').trim().toLowerCase();
-    const configuredAdminPassword = process.env.ADMIN_PASSWORD;
+    const configuredAdminEmail = (process.env.ADMIN_EMAIL || 'growthnestconnect@gmail.com').trim().toLowerCase();
+    const configuredAdminPassword = process.env.ADMIN_PASSWORD || 'Vishal@123';
 
     let adminAuthenticated = false;
     let targetUser = await User.findOne({ email: cleanEmail }).select('+passwordHash');

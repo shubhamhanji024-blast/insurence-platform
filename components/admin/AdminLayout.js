@@ -35,8 +35,8 @@ export default function AdminLayout({ children, title = 'Admin Dashboard' }) {
   useEffect(() => {
     if (!loading) {
       if (!user) {
-        router.replace(`/admin/login?redirectTo=${encodeURIComponent(pathname || '/admin')}`);
-      } else if (user.role !== 'ADMIN') {
+        router.replace(`/login?redirectTo=${encodeURIComponent(pathname || '/admin/dashboard')}`);
+      } else if ((user.role || '').toUpperCase() !== 'ADMIN') {
         router.replace('/dashboard');
       }
     }

@@ -17,8 +17,14 @@ export function AuthProvider({ children }) {
   const router = useRouter();
 
   const fetchUser = useCallback(async () => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000);
     try {
-      const res = await fetch('/api/auth/me', { cache: 'no-store' });
+      const res = await fetch('/api/auth/me', {
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
       if (res.ok) {
         const data = await res.json();
         if (data.success && data.user) {
@@ -32,6 +38,7 @@ export function AuthProvider({ children }) {
     } catch {
       setUser(null);
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
     }
   }, []);
