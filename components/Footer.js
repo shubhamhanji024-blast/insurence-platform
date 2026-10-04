@@ -1,7 +1,14 @@
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Logo from '@/components/Logo';
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname?.startsWith('/dashboard') || pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   const year = new Date().getFullYear();
 
   return (
